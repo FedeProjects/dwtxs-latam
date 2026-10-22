@@ -1,0 +1,7 @@
+dist/
+.astro/
+node_modules/
+pnpm-lock.yaml
+CLAUDE.md
+PROJECT_SPEC.md
+.devcontainer/
