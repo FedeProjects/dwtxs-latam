@@ -25,3 +25,4 @@
 
 ## Communication
 - Reply in Spanish. Be brief: plan first for multi-file tasks, then the diff summary.
+- The developer is learning Astro (knows React, Java). When a task introduces an Astro concept (islands, frontmatter, content collections, `getStaticPaths`, `astro:assets`, i18n routing, etc.), add a short "How it works" note (2-4 lines), comparing with React when useful. Explain each concept once, not every time.
