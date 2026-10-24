@@ -1,6 +1,6 @@
 # PROJECT_SPEC — DWTXS LATAM website
 
-> Living document. Update it when a decision changes. Last update: 2026-10-22.
+> Living document. Update it when a decision changes. Last update: 2026-10-24.
 
 ## 1. Overview
 
@@ -82,16 +82,16 @@ Source: client document "Web DWTXS LATAM".
 
 ### 6.2 Routes
 
-Default locale `pt` served at root; Spanish under `/es/`. Model slugs are language-neutral.
+Default locale `pt` served at root; Spanish under `/es`. Model slugs are language-neutral. URLs have no trailing slash (D-10).
 
 | Page | pt-BR | es |
 |------|-------|----|
-| Home | `/` | `/es/` |
-| Category | `/maquinas/{convencional\|maxi-rig\|all-terrain}/` | `/es/maquinas/{...}/` |
-| Model | `/maquinas/{category}/{ddw10-04}/` | `/es/maquinas/{category}/{ddw10-04}/` |
-| Accessories | `/acessorios/` | `/es/accesorios/` |
-| About | `/sobre-nos/` | `/es/sobre-nosotros/` |
-| Contact | `/contato/` | `/es/contacto/` |
+| Home | `/` | `/es` |
+| Category | `/maquinas/{convencional\|maxi-rig\|all-terrain}` | `/es/maquinas/{...}` |
+| Model | `/maquinas/{category}/{ddw10-04}` | `/es/maquinas/{category}/{ddw10-04}` |
+| Accessories | `/acessorios` | `/es/accesorios` |
+| About | `/sobre-nos` | `/es/sobre-nosotros` |
+| Contact | `/contato` | `/es/contacto` |
 
 ### 6.3 Folder structure
 
@@ -102,6 +102,8 @@ src/
   content/
     models/          # one YAML per model (ddw10-04.yaml, ...)
     accessories/     # one YAML per accessory
+    pages/           # long texts, one Markdown per page and language (about.pt.md, ...)
+    specs.ts         # whitelists: spec sections, row keys, translatable values, key specs
   content.config.ts  # collection schemas (Zod)
   i18n/
     ui.ts            # UI strings { pt: {...}, es: {...} }
@@ -117,26 +119,31 @@ public/              # favicon, robots.txt, og defaults
 Specs are numbers shared by both languages; only text is localized. Spec labels come from the i18n dictionary, so adding a spec key requires a translation.
 
 ```yaml
-# src/content/models/ddw10-04.yaml
+# src/content/models/ddw10-04.yaml  (file name = slug)
 code: DDW10/04
-slug: ddw10-04
 category: conventional      # conventional | maxi-rig | all-terrain
 order: 1
-featured: true
-images: [./ddw10-04-1.jpg, ./ddw10-04-2.jpg]
-specs:                      # keys validated against a whitelist
-  - { key: thrustPullback, value: 100, unit: kN }
-  - { key: maxTorque, value: 4000, unit: Nm }
-  - { key: enginePower, value: 75, unit: kW }
-  - { key: maxBoreDiameter, value: 400, unit: mm }
-  - { key: maxBoreLength, value: 150, unit: m }
-  - { key: weight, value: 3500, unit: kg }
+featured: false
+images:                     # first = main photo, then up to 6 gallery photos
+  - ../../assets/images/models/ddw10-04/ddw10-04-1.jpg
+keySpecs:                   # cards and comparison (KEY_SPECS whitelist)
+  - { key: thrustPullback, value: 90, unit: kN }
+  - { key: rotaryTorque, value: 4000, unit: N·m }
+specSheet:                  # full manufacturer sheet, by section (SPEC_SECTIONS / SPEC_KEYS)
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }                 # raw string, not translated
+      - { key: ratedPower, value: 64.1, unit: kW }          # number, formatted per locale
+      - { key: entryAngle, value: { range: [13, 19] }, unit: ° }
+      - { key: rotaryTorque, value: { list: [7000, 4500, 2500], sep: / }, unit: N·m }
+      - { key: track, valueKey: rubberTrack }               # translated text (SPEC_VALUE_KEYS)
+reviewNotes: []             # source conflicts for the client review; not rendered
 i18n:
   pt: { name: "...", summary: "...", description: "..." }
   es: { name: "...", summary: "...", description: "..." }
 ```
 
-Values above are placeholders. The final spec keys are defined in Phase 1 from the manufacturer's data.
+Every spec section, row key and text value needs a label in both languages in `src/i18n/ui.ts`; `astro check` fails if one is missing.
 
 ## 7. Decisions
 
@@ -157,6 +164,23 @@ Reason: hosting-agnostic and zero maintenance. Revisit if the free tier limits a
 **D-05 — Static output, hosting-agnostic.**
 Reason: the client may migrate the site into Trader MAC USA. Static files deploy to Cloudflare Pages, any CDN or shared hosting. Note: Vercel Hobby plan is non-commercial, so it is not used.
 
+**D-06 — Specs as key specs + full spec sheet (2026-10-24).**
+Alternative: only 6–10 numeric key specs.
+Reason: technical buyers compare the full sheet (~45 fields per model, grouped like the manufacturer's sheet). `keySpecs` feed cards and comparisons; `specSheet` keeps every row. The planned `maxBoreLength` was dropped: the manufacturer does not publish it.
+
+**D-07 — Spec source: dwtxs.cn web spec sheet (2026-10-24).**
+The web sheet and the PDF brochure disagree for several models (e.g. DDW360/130, DDW36/15SE, DDW50/30AT). The web sheet is used; every conflict is listed in the model's `reviewNotes` for the client to validate.
+
+**D-08 — Long texts in a `pages` collection (2026-10-24).**
+Alternative: paragraphs as keys in `ui.ts`.
+Reason: About and All Terrain texts are long and formatted; Markdown per page and language is easier to edit and is validated like the other collections.
+
+**D-09 — Photos and client review (2026-10-24).**
+Photos come from dwtxs.cn (selection recorded in the photo selection sheet): one main + max 6 gallery photos per model, converted to sRGB JPEG ≤ 2400 px. Montage banners and photos with third-party dealer branding (FARCO, DWTXS.RU) are excluded. No separate content draft: the client reviews texts and specs on the Phase 2 preview site.
+
+**D-10 — URLs without trailing slash (2026-10-24).**
+`trailingSlash: 'never'` + `build.format: 'file'`: pages are generated as `maquinas/convencional.html` and served as `/maquinas/convencional`, so static hosts (Cloudflare Pages) do not add a redirect to the slash version.
+
 ## 8. Phases
 
 Each task should fit one Claude Code session.
@@ -175,12 +199,12 @@ Goal: reproducible environment and empty site deployed in preview.
 
 ### Phase 1 — Content model & data
 Goal: all content in the repo, validated.
-- [ ] Define spec keys from manufacturer data; write `content.config.ts` schemas
-- [ ] i18n setup: `ui.ts`, `routes.ts`, `utils.ts`; Astro i18n config
-- [ ] Load 15 model YAMLs (specs + pt/es texts, AI-assisted translation)
-- [ ] Load 2 accessory YAMLs; About and All Terrain texts
-- [ ] Collect, rename and place images (`src/assets/images/...`)
-- [ ] Send content draft to client for validation
+- [x] Define spec keys from manufacturer data; write `content.config.ts` schemas
+- [x] i18n setup: `ui.ts`, `routes.ts`, `utils.ts`; Astro i18n config
+- [x] Load 15 model YAMLs (specs + pt/es texts, AI-assisted translation)
+- [x] Load 2 accessory YAMLs; About and All Terrain texts
+- [x] Collect, rename and place images (`src/assets/images/...`)
+- [ ] ~~Send content draft to client for validation~~ → client reviews the Phase 2 preview (D-09)
 
 **Done when:** `astro check` passes with all 15 models + 2 accessories in both languages, and the client has the draft for review.
 
