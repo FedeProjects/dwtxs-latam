@@ -1,0 +1,104 @@
+# DDW240/70L. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW240/70L
+category: maxi-rig
+order: 1
+featured: false
+images:
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-1.jpg
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-2.jpg
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-3.jpg
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-4.jpg
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-5.jpg
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-6.jpg
+  - ../../assets/images/models/ddw240-70l/ddw240-70l-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 2400, unit: kN }
+  - { key: rotaryTorque, value: 70000, unit: N·m }
+  - { key: enginePower, value: 410, unit: kW }
+  - { key: weight, value: 39, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [17500, 2650, 3500], sep: × }, unit: mm }
+      - { key: entryAngle, value: 13, unit: ° }
+      - { key: weight, value: 39, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: dimensions, value: { list: [6000, 2500, 2200], sep: × }, unit: mm }
+      - { key: weight, value: 2, unit: t }
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: controlSystem, valueKey: plcSelfDiagnostic }
+      - { key: display, valueKey: colorScreen10x3 }
+      - { key: controls, valueKey: joysticksLevers }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 410, unit: kW }
+      - { key: ratedSpeed, value: 1900, unit: rpm }
+      - { key: fuelTank, value: 500, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 40, unit: MPa }
+      - { key: maxPressureControl, value: 35, unit: MPa }
+      - { key: hydraulicTank, value: 600, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 1.8] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 500, unit: mm }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: rodSupport, valueKey: yes }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: { list: [70000, 49000, 27000], sep: / }, unit: N·m }
+      - { key: rotarySpeed, value: { list: [40, 57, 105], sep: / }, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 2400, unit: kN }
+      - { key: carriageSpeed, value: 31, unit: m/min }
+      - { key: carriageStroke, value: 9.5, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 180000, unit: N·m }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: manualAnchoring }
+      - { key: anchorHoles, value: 4 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: singleRodLoader }
+  - section: crane
+    rows:
+      - { key: craneCapacity, value: 3.2, unit: t }
+      - { key: craneControl, valueKey: outdoors }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø140 × 9600, unit: mm }
+      - { key: pipeThread, value: 5 1/2 FH }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Tools › Back reamer Diameter: 330, 430, 530, 630, 730, 820, 920, 1050 mm.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW240/70L
+    summary: 2.400 kN de empuxo e tração e até 70.000 N·m de torque, com sala de operação separada e guindaste de 3,2 t.
+    description: A DDW240/70L abre a linha Maxi-Rig com 2.400 kN de empuxo e tração e cabeçote de três faixas que chega a 70.000 N·m. O chassi de esteiras de aço tem motor próprio para deslocamentos curtos sem reboque. A ancoragem com placa larga e viga traseira ligada por cabo de aço mantém a máquina firme no tiro máximo. O carregador de hastes com ajuste de nível e o guindaste embarcado de 3,2 t garantem um manuseio seguro das hastes de 9,6 m, e o operador trabalha em uma sala separada, climatizada, com três monitores de 10".
+  es:
+    name: Perforadora direccional DDW240/70L
+    summary: 2.400 kN de empuje y tiro y hasta 70.000 N·m de torque, con sala de operación separada y grúa de 3,2 t.
+    description: La DDW240/70L abre la línea Maxi-Rig con 2.400 kN de empuje y tiro y un cabezal de tres rangos que llega a 70.000 N·m. El chasis de orugas de acero tiene motor propio para traslados cortos sin remolque. El anclaje con placa ancha y viga trasera unida por cable de acero mantiene la máquina firme en el tiro máximo. El cargador de barras con ajuste de nivel y la grúa incorporada de 3,2 t aseguran un manejo seguro de las barras de 9,6 m, y el operador trabaja en una sala separada, climatizada, con tres monitores de 10".

@@ -1,0 +1,113 @@
+# DDW75/40AT. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW75/40AT
+category: all-terrain
+order: 4
+featured: true
+images:
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-1.jpg
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-2.jpg
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-3.jpg
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-4.jpg
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-5.jpg
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-6.jpg
+  - ../../assets/images/models/ddw75-40at/ddw75-40at-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 750, unit: kN }
+  - { key: rotaryTorque, value: 40000, unit: N·m }
+  - { key: enginePower, value: 294, unit: kW }
+  - { key: weight, value: 25, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+  - { key: mudPumpFlow, value: 950, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [11000, 3000, 2850], sep: × }, unit: mm }
+      - { key: entryAngle, value: 14, unit: ° }
+      - { key: weight, value: 25, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 294, unit: kW }
+      - { key: ratedSpeed, value: 2100, unit: rpm }
+      - { key: fuelTank, value: 580, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 42, unit: MPa }
+      - { key: maxPressureControl, value: 35, unit: MPa }
+      - { key: hydraulicTank, value: 400, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 2] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 400, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorqueOuter, value: 40000, unit: N·m }
+      - { key: rotaryTorqueInner, value: 7000, unit: N·m }
+      - { key: rotarySpeedOuter, value: 160, unit: rpm }
+      - { key: rotarySpeedInner, value: 150, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 750, unit: kN }
+      - { key: carriageSpeed, value: 40, unit: m/min }
+      - { key: carriageStroke, value: 6, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 106000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: manualAnchoring }
+      - { key: anchorHoles, value: 3 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 9 }
+  - section: crane
+    rows:
+      - { key: craneCapacity, value: 3.2, unit: t }
+      - { key: craneControl, valueKey: outdoors }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 950, unit: L/min }
+      - { key: mudPumpPressure, value: 10, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: outerRod, value: Ø114 × 4500, unit: mm }
+      - { key: innerRod, value: Ø60 × 4500, unit: mm }
+      - { key: pipeThread, value: NC46 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Engine › Rated power: 294 KW.'
+i18n:
+  pt:
+    name: Perfuratriz All Terrain DDW75/40AT
+    summary: A maior All Terrain, com 750 kN de empuxo e tração e 40.000 N·m de torque na haste externa.
+    description: A DDW75/40AT é a maior All Terrain da DWTXS. O cabeçote com hastes interna e externa e rotação de variação contínua ajusta torque e velocidade para atravessar tanto solo duro quanto rocha. Tem 750 kN de empuxo e tração, 40.000 N·m de torque na haste externa e motor Cummins de 294 kW. O alojamento de sonda específico para rocha mantém o sinal correto durante toda a perfuração, e o operador controla todas as funções com dois joysticks.
+  es:
+    name: Perforadora All Terrain DDW75/40AT
+    summary: La All Terrain más grande, con 750 kN de empuje y tiro y 40.000 N·m de torque en la barra exterior.
+    description: La DDW75/40AT es la All Terrain más grande de DWTXS. El cabezal con barras interior y exterior y rotación de variación continua ajusta torque y velocidad para atravesar tanto suelo duro como roca. Tiene 750 kN de empuje y tiro, 40.000 N·m de torque en la barra exterior y motor Cummins de 294 kW. El alojamiento de sonda específico para roca mantiene la señal correcta durante toda la perforación, y el operador controla todas las funciones con dos joysticks.

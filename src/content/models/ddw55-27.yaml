@@ -1,0 +1,106 @@
+# DDW55/27. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW55/27
+category: conventional
+order: 5
+featured: true
+images:
+  - ../../assets/images/models/ddw55-27/ddw55-27-1.jpg
+  - ../../assets/images/models/ddw55-27/ddw55-27-2.jpg
+  - ../../assets/images/models/ddw55-27/ddw55-27-3.jpg
+  - ../../assets/images/models/ddw55-27/ddw55-27-4.jpg
+  - ../../assets/images/models/ddw55-27/ddw55-27-5.jpg
+  - ../../assets/images/models/ddw55-27/ddw55-27-6.jpg
+  - ../../assets/images/models/ddw55-27/ddw55-27-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 550, unit: kN }
+  - { key: rotaryTorque, value: 27000, unit: N·m }
+  - { key: enginePower, value: 194, unit: kW }
+  - { key: weight, value: 17.5, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+  - { key: mudPumpFlow, value: 800, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [9550, 2560, 2700], sep: × }, unit: mm }
+      - { key: entryAngle, value: 15.5, unit: ° }
+      - { key: weight, value: 17.5, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 194, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 220, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 35, unit: MPa }
+      - { key: maxPressureControl, value: 21, unit: MPa }
+      - { key: hydraulicTank, value: 500, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 2.5] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 400, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 27000, unit: N·m }
+      - { key: rotarySpeed, value: 136, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 550, unit: kN }
+      - { key: carriageSpeed, value: 52, unit: m/min }
+      - { key: carriageStroke, value: 5.8, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 75000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 24 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 800, unit: L/min }
+      - { key: mudPumpPressure, value: 8, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø102 × 4500, unit: mm }
+      - { key: pipeThread, value: NC38 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'DDW55/27: la ficha no indica unidad para la velocidad de rotación (136); se asumió rpm.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW55/27
+    summary: 550 kN de empuxo e tração e 27.000 N·m de torque, um dos modelos mais vendidos da DWTXS.
+    description: A DDW55/27 é um dos modelos mais vendidos da DWTXS. Tem 550 kN de empuxo e tração, 27.000 N·m de torque e motor Cummins de 194 kW, com curso de carro de 5,8 m para hastes de 4,5 m. As morsas abertas ficam inclinadas para o operador, que vê a união das hastes ao montar e desmontar a coluna. O carregador automático agiliza a troca de hastes e a vazão da bomba de lama embarcada (até 800 L/min) se ajusta a cada condição de perfuração.
+  es:
+    name: Perforadora direccional DDW55/27
+    summary: 550 kN de empuje y tiro y 27.000 N·m de torque, uno de los modelos más vendidos de DWTXS.
+    description: La DDW55/27 es uno de los modelos más vendidos de DWTXS. Tiene 550 kN de empuje y tiro, 27.000 N·m de torque y motor Cummins de 194 kW, con un recorrido de carro de 5,8 m para barras de 4,5 m. Las morsas abiertas están inclinadas hacia el operador, que ve la unión de las barras al armar y desarmar la columna. El cargador automático agiliza el cambio de barras y el caudal de la bomba de lodo incorporada (hasta 800 L/min) se ajusta a cada condición de perforación.

@@ -1,0 +1,105 @@
+# DDW35/15AT. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW35/15AT
+category: all-terrain
+order: 2
+featured: true
+images:
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-1.jpg
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-2.jpg
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-3.jpg
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-4.jpg
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-5.jpg
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-6.jpg
+  - ../../assets/images/models/ddw35-15at/ddw35-15at-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 350, unit: kN }
+  - { key: rotaryTorque, value: 15000, unit: N·m }
+  - { key: enginePower, value: 153, unit: kW }
+  - { key: weight, value: 10.5, unit: t }
+  - { key: maxBackreamer, value: 730, unit: mm }
+  - { key: mudPumpFlow, value: 400, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [7000, 2300, 2600], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [15, 20] }, unit: ° }
+      - { key: weight, value: 10.5, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: closedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 153, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 240, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 30, unit: MPa }
+      - { key: maxPressureControl, value: 21, unit: MPa }
+      - { key: hydraulicTank, value: 530, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 3.5] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 350, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorqueOuter, value: 15000, unit: N·m }
+      - { key: rotaryTorqueInner, value: 2700, unit: N·m }
+      - { key: rotarySpeedOuter, value: 220, unit: rpm }
+      - { key: rotarySpeedInner, value: 230, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 350, unit: kN }
+      - { key: carriageSpeed, value: 38, unit: m/min }
+      - { key: carriageStroke, value: 3.5, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 40000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 32 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 400, unit: L/min }
+      - { key: mudPumpPressure, value: 10, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: outerRod, value: Ø89 × 3000, unit: mm }
+      - { key: innerRod, value: Ø50 × 3000, unit: mm }
+      - { key: pipeThread, value: NC31 }
+  - section: tools
+    rows:
+      - { key: backreamerDiameters, value: { list: [330, 430, 530, 630, 730], sep: ',' }, unit: mm }
+reviewNotes:
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Pipe loader › Rod box capacity: 32; Tools › Back reamer: 330, 430, 530, 630, 730 mm.'
+i18n:
+  pt:
+    name: Perfuratriz All Terrain DDW35/15AT
+    summary: Haste dupla para rocha, com 350 kN de empuxo e tração e 15.000 N·m de torque na haste externa.
+    description: A DDW35/15AT usa o sistema de haste dupla da DWTXS para perfurar rocha e solos mistos. Tem 350 kN de empuxo e tração, 15.000 N·m de torque na haste externa e 2.700 N·m na interna, com motor Cummins de 153 kW. As hastes externas de 89 mm e internas de 50 mm entram por alimentação automática a partir de um magazine de 32 hastes. A cabine é fechada e climatizada e a bomba de lama embarcada entrega 400 L/min.
+  es:
+    name: Perforadora All Terrain DDW35/15AT
+    summary: Doble barra para roca, con 350 kN de empuje y tiro y 15.000 N·m de torque en la barra exterior.
+    description: La DDW35/15AT usa el sistema de doble barra de DWTXS para perforar roca y suelos mixtos. Tiene 350 kN de empuje y tiro, 15.000 N·m de torque en la barra exterior y 2.700 N·m en la interior, con motor Cummins de 153 kW. Las barras exteriores de 89 mm e interiores de 50 mm entran con alimentación automática desde un cargador de 32 barras. La cabina es cerrada y climatizada y la bomba de lodo incorporada entrega 400 L/min.

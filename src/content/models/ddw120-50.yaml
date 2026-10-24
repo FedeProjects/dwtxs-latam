@@ -1,0 +1,110 @@
+# DDW120/50. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW120/50
+category: conventional
+order: 7
+featured: false
+images:
+  - ../../assets/images/models/ddw120-50/ddw120-50-1.jpg
+  - ../../assets/images/models/ddw120-50/ddw120-50-2.jpg
+  - ../../assets/images/models/ddw120-50/ddw120-50-3.jpg
+  - ../../assets/images/models/ddw120-50/ddw120-50-4.jpg
+  - ../../assets/images/models/ddw120-50/ddw120-50-5.jpg
+  - ../../assets/images/models/ddw120-50/ddw120-50-6.jpg
+  - ../../assets/images/models/ddw120-50/ddw120-50-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 1200, unit: kN }
+  - { key: rotaryTorque, value: 50000, unit: N·m }
+  - { key: enginePower, value: 264, unit: kW }
+  - { key: weight, value: 25, unit: t }
+  - { key: maxBackreamer, value: 1400, unit: mm }
+  - { key: mudPumpFlow, value: 950, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [12200, 2500, 3000], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [14, 16] }, unit: ° }
+      - { key: weight, value: 25, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: plcSelfDiagnostic }
+      - { key: display, valueKey: touchScreen10 }
+      - { key: controls, valueKey: electroHydJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 264, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 540, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 38, unit: MPa }
+      - { key: maxPressureControl, value: 30, unit: MPa }
+      - { key: hydraulicTank, value: 800, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 2.5] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 450, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 50000, unit: N·m }
+      - { key: rotarySpeed, value: 100, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 1200, unit: kN }
+      - { key: carriageSpeed, value: 46, unit: m/min }
+      - { key: carriageStroke, value: 6.4, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 100000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: manualAnchoring }
+      - { key: anchorHoles, value: 3 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: singleRodLoader }
+  - section: crane
+    rows:
+      - { key: craneCapacity, value: 2, unit: t }
+      - { key: craneControl, valueKey: outdoors }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 950, unit: L/min }
+      - { key: mudPumpPressure, value: 10, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø127 × 6000, unit: mm }
+      - { key: pipeThread, value: NC50 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [430, 530, 630, 730, 820, 920, 1050, 1200, 1400], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'El folleto PDF es una imagen sin texto: los datos salen solo de la ficha técnica de la web.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW120/50
+    summary: 1.200 kN de empuxo e tração e 50.000 N·m de torque, com guindaste embarcado e controle por CLP.
+    description: 'A DDW120/50 é a maior das convencionais do catálogo: 1.200 kN de empuxo e tração, 50.000 N·m de torque e motor Cummins de 264 kW. O sistema de controle por CLP com autodiagnóstico e tela sensível ao toque de 10" mostra os dados da perfuração na cabine climatizada. Trabalha com hastes de 127 mm × 6 m, que o guindaste embarcado de 2 t e o carregador ajudam a manusear, e a bomba de lama embarcada entrega 950 L/min.'
+  es:
+    name: Perforadora direccional DDW120/50
+    summary: 1.200 kN de empuje y tiro y 50.000 N·m de torque, con grúa incorporada y control por PLC.
+    description: 'La DDW120/50 es la más grande de las convencionales del catálogo: 1.200 kN de empuje y tiro, 50.000 N·m de torque y motor Cummins de 264 kW. El sistema de control por PLC con autodiagnóstico y la pantalla táctil de 10" muestran los datos de la perforación en la cabina climatizada. Trabaja con barras de 127 mm × 6 m, que la grúa incorporada de 2 t y el cargador ayudan a manipular, y la bomba de lodo incorporada entrega 950 L/min.'

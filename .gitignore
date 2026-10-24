@@ -20,3 +20,6 @@ pnpm-debug.log*
 # macOS / editors
 .DS_Store
 .idea/
+
+# client documents and raw source material from dwtxs.cn / tradermacusa.com (not versioned)
+/assets/

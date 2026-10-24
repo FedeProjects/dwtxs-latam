@@ -1,0 +1,107 @@
+# DDW80/40. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW80/40
+category: conventional
+order: 6
+featured: false
+images:
+  - ../../assets/images/models/ddw80-40/ddw80-40-1.jpg
+  - ../../assets/images/models/ddw80-40/ddw80-40-2.jpg
+  - ../../assets/images/models/ddw80-40/ddw80-40-3.jpg
+  - ../../assets/images/models/ddw80-40/ddw80-40-4.jpg
+  - ../../assets/images/models/ddw80-40/ddw80-40-5.jpg
+  - ../../assets/images/models/ddw80-40/ddw80-40-6.jpg
+  - ../../assets/images/models/ddw80-40/ddw80-40-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 800, unit: kN }
+  - { key: rotaryTorque, value: 40000, unit: N·m }
+  - { key: enginePower, value: 264, unit: kW }
+  - { key: weight, value: 19, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+  - { key: mudPumpFlow, value: 950, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [10100, 2510, 2980], sep: × }, unit: mm }
+      - { key: entryAngle, value: 14, unit: ° }
+      - { key: weight, value: 19, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 264, unit: kW }
+      - { key: ratedSpeed, value: 2100, unit: rpm }
+      - { key: fuelTank, value: 400, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 42, unit: MPa }
+      - { key: maxPressureControl, value: 34, unit: MPa }
+      - { key: hydraulicTank, value: 450, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 2] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 400, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 40000, unit: N·m }
+      - { key: rotarySpeed, value: 150, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 800, unit: kN }
+      - { key: carriageSpeed, value: 38, unit: m/min }
+      - { key: carriageStroke, value: 5.3, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 106000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 24 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 950, unit: L/min }
+      - { key: mudPumpPressure, value: 10, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø102 × 4500, unit: mm }
+      - { key: pipeThread, value: NC38 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'DDW80/40: la ficha no indica unidad para la velocidad de rotación (150); se asumió rpm.'
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Dimensions › Machine weight: 19 ton.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW80/40
+    summary: 800 kN de empuxo e tração e 40.000 N·m de torque, com controle interativo de todos os parâmetros.
+    description: A DDW80/40 entrega 800 kN de empuxo e tração e 40.000 N·m de torque, com motor Cummins de 264 kW e sistema hidráulico de 42 MPa. No posto de operação, os comandos estão organizados de forma clara e todos os parâmetros de perfuração se controlam pelo sistema interativo. O chassi de esteiras se desloca bem em terrenos difíceis, as morsas chegam a 106.000 N·m de desaperto e a bomba de lama embarcada entrega 950 L/min.
+  es:
+    name: Perforadora direccional DDW80/40
+    summary: 800 kN de empuje y tiro y 40.000 N·m de torque, con control interactivo de todos los parámetros.
+    description: La DDW80/40 entrega 800 kN de empuje y tiro y 40.000 N·m de torque, con motor Cummins de 264 kW y sistema hidráulico de 42 MPa. En el puesto de operación, los mandos están ordenados con claridad y todos los parámetros de perforación se controlan desde el sistema interactivo. El chasis de orugas se desplaza bien en terrenos difíciles, las morsas llegan a 106.000 N·m de desenrosque y la bomba de lodo incorporada entrega 950 L/min.

@@ -1,0 +1,101 @@
+# DDW10/04. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW10/04
+category: conventional
+order: 1
+featured: false
+images:
+  - ../../assets/images/models/ddw10-04/ddw10-04-1.jpg
+  - ../../assets/images/models/ddw10-04/ddw10-04-2.jpg
+  - ../../assets/images/models/ddw10-04/ddw10-04-3.jpg
+  - ../../assets/images/models/ddw10-04/ddw10-04-4.jpg
+  - ../../assets/images/models/ddw10-04/ddw10-04-5.jpg
+  - ../../assets/images/models/ddw10-04/ddw10-04-6.jpg
+  - ../../assets/images/models/ddw10-04/ddw10-04-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 90, unit: kN }
+  - { key: rotaryTorque, value: 4000, unit: N·m }
+  - { key: enginePower, value: 64.1, unit: kW }
+  - { key: weight, value: 5, unit: t }
+  - { key: maxBackreamer, value: 730, unit: mm }
+  - { key: mudPumpFlow, value: 115, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [5600, 1700, 2400], sep: × }, unit: mm }
+      - { key: entryAngle, value: 15, unit: ° }
+      - { key: weight, value: 5, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: sunshieldCanopy }
+      - { key: consoleRotation, value: { range: [0, 45] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 64.1, unit: kW }
+      - { key: ratedSpeed, value: 2500, unit: rpm }
+      - { key: fuelTank, value: 172, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 21, unit: MPa }
+      - { key: maxPressureControl, value: 16, unit: MPa }
+      - { key: hydraulicTank, value: 200, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 3.4] }, unit: km/h }
+      - { key: track, valueKey: rubberTrack }
+      - { key: trackWidth, value: 250, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: singleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 4000, unit: N·m }
+      - { key: rotarySpeed, value: 180, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 90, unit: kN }
+      - { key: carriageSpeed, value: 36, unit: m/min }
+      - { key: carriageStroke, value: 3.55, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 6000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 44 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 115, unit: L/min }
+      - { key: mudPumpPressure, value: 6, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø50 × 3000, unit: mm }
+      - { key: pipeThread, value: D16 }
+  - section: tools
+    rows:
+      - { key: backreamerDiameters, value: { list: [330, 430, 530, 630, 730], sep: ',' }, unit: mm }
+reviewNotes: []
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW10/04
+    summary: A mais compacta da linha convencional, com 90 kN de empuxo e tração, 4.000 N·m de torque e esteiras de borracha.
+    description: A DDW10/04 é a mais compacta das perfuratrizes convencionais do catálogo. Com 5 t e 1,7 m de largura, é fácil de transportar e de posicionar em espaços reduzidos. O motor Cummins de 64,1 kW move o cabeçote por cremalheira e pinhão, com 90 kN de empuxo e tração e 4.000 N·m de torque. Todas as funções ficam reunidas nos joysticks, o magazine leva 44 hastes com alimentação automática e a bomba de lama de 115 L/min é embarcada.
+  es:
+    name: Perforadora direccional DDW10/04
+    summary: La más compacta de la línea convencional, con 90 kN de empuje y tiro, 4.000 N·m de torque y orugas de goma.
+    description: La DDW10/04 es la más compacta de las perforadoras convencionales del catálogo. Con 5 t y 1,7 m de ancho, es fácil de transportar y de posicionar en espacios reducidos. El motor Cummins de 64,1 kW mueve el cabezal por cremallera y piñón, con 90 kN de empuje y tiro y 4.000 N·m de torque. Todas las funciones se manejan desde los joysticks, el cargador lleva 44 barras con alimentación automática y la bomba de lodo de 115 L/min viene incorporada.

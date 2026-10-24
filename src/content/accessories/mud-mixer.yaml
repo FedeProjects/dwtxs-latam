@@ -1,0 +1,27 @@
+# Misturador de lama. Source: dwtxs.cn (mud system). Texts to be validated by the client.
+order: 2
+images:
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-1.jpg
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-2.jpg
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-3.jpg
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-4.jpg
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-5.jpg
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-6.jpg
+  - ../../assets/images/accessories/mud-mixer/mud-mixer-7.jpg
+reviewNotes:
+  - 'La web de DWTXS no publica datos técnicos (capacidad, potencia, dimensiones): pedir ficha al fabricante [TBD].'
+i18n:
+  pt:
+    name: Misturador de lama
+    summary: Unidade para preparar a lama de bentonita, desde modelos compactos até equipamentos para grandes perfuratrizes.
+    description: Toda perfuração direcional precisa de lama de bentonita bem preparada. Para máquinas pequenas, basta uma unidade compacta com tanque de 4 m³ e motor a gasolina. Para perfuratrizes de grande porte, a partir de cerca de 100 t de tração, é necessária uma unidade de mistura profissional, com agitadores potentes dentro do tanque. A DWTXS fornece as duas opções.
+    highlights:
+      - Unidade compacta com tanque de 4 m³ para perfuratrizes pequenas
+      - Unidade profissional com agitadores para grandes perfuratrizes
+  es:
+    name: Mezclador de lodo
+    summary: Unidad para preparar el lodo de bentonita, desde modelos compactos hasta equipos para grandes perforadoras.
+    description: Toda perforación direccional necesita lodo de bentonita bien preparado. Para máquinas chicas alcanza con una unidad compacta con tanque de 4 m³ y motor a gasolina. Para perforadoras de gran porte, a partir de unas 100 t de tiro, hace falta una unidad de mezcla profesional, con agitadores potentes dentro del tanque. DWTXS ofrece las dos opciones.
+    highlights:
+      - Unidad compacta con tanque de 4 m³ para perforadoras chicas
+      - Unidad profesional con agitadores para grandes perforadoras
