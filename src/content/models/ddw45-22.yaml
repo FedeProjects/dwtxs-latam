@@ -1,0 +1,105 @@
+# DDW45/22. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW45/22
+category: conventional
+order: 4
+featured: false
+images:
+  - ../../assets/images/models/ddw45-22/ddw45-22-1.jpg
+  - ../../assets/images/models/ddw45-22/ddw45-22-2.jpg
+  - ../../assets/images/models/ddw45-22/ddw45-22-3.jpg
+  - ../../assets/images/models/ddw45-22/ddw45-22-4.jpg
+  - ../../assets/images/models/ddw45-22/ddw45-22-5.jpg
+  - ../../assets/images/models/ddw45-22/ddw45-22-6.jpg
+  - ../../assets/images/models/ddw45-22/ddw45-22-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 450, unit: kN }
+  - { key: rotaryTorque, value: 22000, unit: N·m }
+  - { key: enginePower, value: 179, unit: kW }
+  - { key: weight, value: 14, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+  - { key: mudPumpFlow, value: 600, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [7100, 2280, 2500], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [14, 21] }, unit: ° }
+      - { key: weight, value: 14, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 179, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 540, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 38, unit: MPa }
+      - { key: maxPressureControl, value: 23, unit: MPa }
+      - { key: hydraulicTank, value: 420, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 3.2] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 350, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 22000, unit: N·m }
+      - { key: rotarySpeed, value: 190, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 450, unit: kN }
+      - { key: carriageSpeed, value: 50, unit: m/min }
+      - { key: carriageStroke, value: 3.6, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 45000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 30 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 600, unit: L/min }
+      - { key: mudPumpPressure, value: 10, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø83 × 3000, unit: mm }
+      - { key: pipeThread, value: D80 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes: []
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW45/22
+    summary: 450 kN de empuxo e tração e 22.000 N·m de torque, com cabine giratória e chassi de esteiras para terrenos difíceis.
+    description: A DDW45/22 entrega 450 kN de empuxo e tração e 22.000 N·m de torque com um motor Cummins de 179 kW. O sistema de ancoragem hidráulico dá estabilidade ao perfurar com força máxima e reduz o desgaste das roscas. O chassi de esteiras de aço com sapatas de borracha se move bem em obras com lama, e a cabine fechada gira até 90°. O carregador automático de hastes agiliza o trabalho e a bomba de lama embarcada entrega 600 L/min.
+  es:
+    name: Perforadora direccional DDW45/22
+    summary: 450 kN de empuje y tiro y 22.000 N·m de torque, con cabina giratoria y chasis de orugas para terrenos difíciles.
+    description: La DDW45/22 entrega 450 kN de empuje y tiro y 22.000 N·m de torque con un motor Cummins de 179 kW. El sistema de anclaje hidráulico da estabilidad al perforar con la fuerza máxima y reduce el desgaste de las roscas. El chasis de orugas de acero con zapatas de goma se desplaza bien en obras con barro, y la cabina cerrada gira hasta 90°. El cargador automático de barras agiliza el trabajo y la bomba de lodo incorporada entrega 600 L/min.

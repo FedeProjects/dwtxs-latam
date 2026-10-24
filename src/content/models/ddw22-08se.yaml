@@ -1,0 +1,107 @@
+# DDW22/08SE. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW22/08SE
+category: conventional
+order: 2
+featured: false
+images:
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-1.jpg
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-2.jpg
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-3.jpg
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-4.jpg
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-5.jpg
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-6.jpg
+  - ../../assets/images/models/ddw22-08se/ddw22-08se-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 200, unit: kN }
+  - { key: rotaryTorque, value: 7000, unit: N·m }
+  - { key: enginePower, value: 112, unit: kW }
+  - { key: weight, value: 8, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+  - { key: mudPumpFlow, value: 300, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [6400, 2210, 2420], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [13, 19] }, unit: ° }
+      - { key: weight, value: 8, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 112, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 160, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 40, unit: MPa }
+      - { key: maxPressureControl, value: 20, unit: MPa }
+      - { key: hydraulicTank, value: 400, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 2.7] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 320, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: { list: [7000, 4500, 2500], sep: / }, unit: N·m }
+      - { key: rotarySpeed, value: { list: [95, 125, 188], sep: / }, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 200, unit: kN }
+      - { key: carriageSpeed, value: 62, unit: m/min }
+      - { key: carriageStroke, value: 3.5, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 15000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 48 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 300, unit: L/min }
+      - { key: mudPumpPressure, value: 8, unit: MPa }
+      - { key: gearShift, valueKey: automatic }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø60 × 3048, unit: mm }
+      - { key: pipeThread, value: D24 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Dimensions/ Weight › Entry angle: 13-19°; Tools › Back reamer: 330, 430, 530, 630, 730, 820, 920, 1050 mm.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW22/08SE
+    summary: 200 kN de empuxo e tração, cabine fechada com ar-condicionado e cabeçote de três velocidades até 7.000 N·m.
+    description: A DDW22/08SE combina um porte de 8 t com 200 kN de empuxo e tração. O cabeçote rotativo tem três faixas de torque e rotação (7.000, 4.500 e 2.500 N·m), para adaptar a máquina a cada tipo de solo. O motor Cummins de 112 kW garante potência constante para o carro e a rotação, e a cabine totalmente fechada e climatizada dá conforto ao operador em jornadas longas. O magazine leva 48 hastes e a bomba de lama embarcada entrega 300 L/min.
+  es:
+    name: Perforadora direccional DDW22/08SE
+    summary: 200 kN de empuje y tiro, cabina cerrada con aire acondicionado y cabezal de tres velocidades de hasta 7.000 N·m.
+    description: La DDW22/08SE combina un porte de 8 t con 200 kN de empuje y tiro. El cabezal rotativo tiene tres rangos de torque y velocidad (7.000, 4.500 y 2.500 N·m), para adaptar la máquina a cada tipo de suelo. El motor Cummins de 112 kW asegura potencia constante para el carro y la rotación, y la cabina totalmente cerrada y climatizada da confort al operador en jornadas largas. El cargador lleva 48 barras y la bomba de lodo incorporada entrega 300 L/min.

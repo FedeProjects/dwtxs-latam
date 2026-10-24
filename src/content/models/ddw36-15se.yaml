@@ -1,0 +1,107 @@
+# DDW36/15SE. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW36/15SE
+category: conventional
+order: 3
+featured: false
+images:
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-1.jpg
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-2.jpg
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-3.jpg
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-4.jpg
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-5.jpg
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-6.jpg
+  - ../../assets/images/models/ddw36-15se/ddw36-15se-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 350, unit: kN }
+  - { key: rotaryTorque, value: 13000, unit: N·m }
+  - { key: enginePower, value: 153, unit: kW }
+  - { key: weight, value: 12, unit: t }
+  - { key: maxBackreamer, value: 1050, unit: mm }
+  - { key: mudPumpFlow, value: 600, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [7000, 2280, 2600], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [13, 19] }, unit: ° }
+      - { key: weight, value: 12, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: closedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 153, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 230, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 38, unit: MPa }
+      - { key: maxPressureControl, value: 23, unit: MPa }
+      - { key: hydraulicTank, value: 400, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 3] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 350, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: { list: [13000, 9300, 4600], sep: / }, unit: N·m }
+      - { key: rotarySpeed, value: { list: [65, 97, 194], sep: / }, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 350, unit: kN }
+      - { key: carriageSpeed, value: 40, unit: m/min }
+      - { key: carriageStroke, value: 3.5, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 60000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 40 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 600, unit: L/min }
+      - { key: mudPumpPressure, value: 8, unit: MPa }
+      - { key: gearShift, valueKey: automatic }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø76 × 3000, unit: mm }
+      - { key: pipeThread, value: NC26 }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [330, 430, 530, 630, 730, 820, 920, 1050], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Dimensions › Length/Width/Height: 7000*2280*2600 mm; Tools › Back reamer: 330, 430, 530, 630, 730, 820, 920, 1050 mm.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW36/15SE
+    summary: 350 kN de empuxo e tração e até 13.000 N·m de torque, com motor Cummins de 153 kW.
+    description: A DDW36/15SE é uma máquina de porte médio, com 12 t, 350 kN de empuxo e tração e cabeçote de três faixas que chega a 13.000 N·m. O motor Cummins de 153 kW e o sistema hidráulico de 38 MPa sustentam o trabalho contínuo, e as morsas aplicam até 60.000 N·m de torque de desaperto. A cabine é fechada e climatizada, o magazine leva 40 hastes de 76 mm e a bomba de lama embarcada entrega 600 L/min.
+  es:
+    name: Perforadora direccional DDW36/15SE
+    summary: 350 kN de empuje y tiro y hasta 13.000 N·m de torque, con motor Cummins de 153 kW.
+    description: La DDW36/15SE es una máquina de porte medio, con 12 t, 350 kN de empuje y tiro y un cabezal de tres rangos que llega a 13.000 N·m. El motor Cummins de 153 kW y el sistema hidráulico de 38 MPa sostienen el trabajo continuo, y las morsas aplican hasta 60.000 N·m de torque de desenrosque. La cabina es cerrada y climatizada, el cargador lleva 40 barras de 76 mm y la bomba de lodo incorporada entrega 600 L/min.

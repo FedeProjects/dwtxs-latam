@@ -1,0 +1,104 @@
+# DDW20/10AT. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW20/10AT
+category: all-terrain
+order: 1
+featured: false
+images:
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-1.jpg
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-2.jpg
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-3.jpg
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-4.jpg
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-5.jpg
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-6.jpg
+  - ../../assets/images/models/ddw20-10at/ddw20-10at-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 200, unit: kN }
+  - { key: rotaryTorque, value: 7000, unit: N·m }
+  - { key: enginePower, value: 125, unit: kW }
+  - { key: weight, value: 8.5, unit: t }
+  - { key: maxBackreamer, value: 730, unit: mm }
+  - { key: mudPumpFlow, value: 400, unit: L/min }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [6670, 2260, 2530], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [13, 20] }, unit: ° }
+      - { key: weight, value: 8.5, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: cabin, valueKey: closedCabinAc }
+      - { key: consoleRotation, value: { range: [0, 90] }, unit: ° }
+      - { key: controlSystem, valueKey: electroHydraulic }
+      - { key: controls, valueKey: twoJoysticks }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 125, unit: kW }
+      - { key: ratedSpeed, value: 2200, unit: rpm }
+      - { key: fuelTank, value: 160, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 40, unit: MPa }
+      - { key: maxPressureControl, value: 21, unit: MPa }
+      - { key: hydraulicTank, value: 330, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 3.2] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 300, unit: mm }
+      - { key: rearStabilizer, value: 2 }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: doubleCylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorqueOuter, value: 7000, unit: N·m }
+      - { key: rotaryTorqueInner, value: 1220, unit: N·m }
+      - { key: rotarySpeedOuter, value: 188, unit: rpm }
+      - { key: rotarySpeedInner, value: 240, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 200, unit: kN }
+      - { key: carriageSpeed, value: 60, unit: m/min }
+      - { key: carriageStroke, value: 3.45, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: clampJaw }
+      - { key: breakoutTorque, value: 15000, unit: N·m }
+      - { key: threadGreasing, valueKey: automatic }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: hydraulicDoubleAnchoring }
+      - { key: anchorHoles, value: 2 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: automaticPipeFeeding }
+      - { key: rodBoxCapacity, value: 40 }
+  - section: mudPump
+    rows:
+      - { key: mudPumpType, valueKey: onBoard }
+      - { key: mudPumpFlow, value: 400, unit: L/min }
+      - { key: mudPumpPressure, value: 10, unit: MPa }
+  - section: drillPipe
+    rows:
+      - { key: outerRod, value: Ø60 × 3000, unit: mm }
+      - { key: innerRod, value: Ø25 × 3000, unit: mm }
+      - { key: pipeThread, value: AT30 }
+  - section: tools
+    rows:
+      - { key: backreamerDiameters, value: { list: [330, 430, 530, 630, 730], sep: ',' }, unit: mm }
+reviewNotes: []
+i18n:
+  pt:
+    name: Perfuratriz All Terrain DDW20/10AT
+    summary: Haste dupla para rocha, com 200 kN de empuxo e tração e 7.000 N·m de torque na haste externa.
+    description: A DDW20/10AT é a All Terrain mais compacta da DWTXS. O sistema de haste dupla, com haste externa de 60 mm e interna de 25 mm, permite perfurar rocha e solos mistos com a mesma máquina. Tem 200 kN de empuxo e tração, 7.000 N·m de torque na haste externa e motor Cummins de 125 kW. O magazine, reforçado para o peso das hastes duplas, leva 40 hastes com alimentação automática, e a bomba de lama embarcada de 400 L/min permite perfurações mais longas.
+  es:
+    name: Perforadora All Terrain DDW20/10AT
+    summary: Doble barra para roca, con 200 kN de empuje y tiro y 7.000 N·m de torque en la barra exterior.
+    description: La DDW20/10AT es la All Terrain más compacta de DWTXS. El sistema de doble barra, con barra exterior de 60 mm e interior de 25 mm, permite perforar roca y suelos mixtos con la misma máquina. Tiene 200 kN de empuje y tiro, 7.000 N·m de torque en la barra exterior y motor Cummins de 125 kW. El cargador, reforzado para el peso de las barras dobles, lleva 40 barras con alimentación automática, y la bomba de lodo incorporada de 400 L/min permite perforaciones más largas.

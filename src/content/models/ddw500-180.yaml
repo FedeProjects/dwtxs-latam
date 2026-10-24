@@ -1,0 +1,118 @@
+# DDW500/180. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW500/180
+category: maxi-rig
+order: 3
+featured: false
+images:
+  - ../../assets/images/models/ddw500-180/ddw500-180-1.jpg
+  - ../../assets/images/models/ddw500-180/ddw500-180-2.jpg
+  - ../../assets/images/models/ddw500-180/ddw500-180-3.jpg
+  - ../../assets/images/models/ddw500-180/ddw500-180-4.jpg
+  - ../../assets/images/models/ddw500-180/ddw500-180-5.jpg
+  - ../../assets/images/models/ddw500-180/ddw500-180-6.jpg
+  - ../../assets/images/models/ddw500-180/ddw500-180-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 5000, unit: kN }
+  - { key: rotaryTorque, value: 180000, unit: N·m }
+  - { key: enginePower, value: 820, unit: kW }
+  - { key: weight, value: 52, unit: t }
+  - { key: maxBackreamer, value: 1450, unit: mm }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [18300, 3000, 3500], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [8, 12] }, unit: ° }
+      - { key: weight, value: 52, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: dimensions, value: { list: [6000, 2500, 2200], sep: × }, unit: mm }
+      - { key: weight, value: 2, unit: t }
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: controlSystem, valueKey: plcSelfDiagnostic }
+      - { key: display, valueKey: colorScreen10x3 }
+      - { key: controls, valueKey: joysticksLevers }
+  - section: powerPack
+    rows:
+      - { key: dimensions, value: { list: [6000, 2200, 2800], sep: × }, unit: mm }
+      - { key: weight, value: 6, unit: t }
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 2 × 410 = 820, unit: kW }
+      - { key: ratedSpeed, value: 1900, unit: rpm }
+      - { key: fuelTank, value: 1000, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 35, unit: MPa }
+      - { key: maxPressureControl, value: 25, unit: MPa }
+      - { key: hydraulicTank, value: 670, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 2] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 550, unit: mm }
+      - { key: rearStabilizer, valueKey: vertical }
+  - section: mast
+    rows:
+      - { key: fluidChannel, valueKey: yes }
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: rodSupport, valueKey: yes }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: cylinder }
+      - { key: mastStand, valueKey: yes }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 180000, unit: N·m }
+      - { key: rotarySpeed, value: 90, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+      - { key: rotaryShaft, value: 6 5/8 FH }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 5000, unit: kN }
+      - { key: carriageSpeed, value: 36, unit: m/min }
+      - { key: carriageStroke, value: 12, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: tripleJaw }
+      - { key: slidingOnMast, valueKey: yes }
+      - { key: breakoutTorque, value: 360000, unit: N·m }
+      - { key: clampRange, value: { range: [27, 254] }, unit: mm }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: manualAnchoring }
+      - { key: anchorHoles, value: 4 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: singleRodLoader }
+  - section: crane
+    rows:
+      - { key: craneCapacity, value: 5, unit: t }
+      - { key: craneControl, valueKey: outdoors }
+  - section: lighting
+    rows:
+      - { key: lights, valueKey: roomWrenchRotary }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø168 × 9600, unit: mm }
+      - { key: pipeThread, value: 6 5/8 FH }
+  - section: pilotBit
+    rows:
+      - { key: beaconHousing, valueKey: wirelessWireline }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [530, 630, 730, 820, 920, 1050, 1250, 1450], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Drilling rig › Length/Width/Height: 18300*3000*3500 mm; Hydraulic system › Max pressure (rotary & carriage): 35 Mpa; Hydraulic system › Max pressure (control sys.): 25 Mpa; Hydraulic system › Hydraulic tank capacity: 670 L; Stake down › Hole nos.: 4.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW500/180
+    summary: 5.000 kN de empuxo e tração e 180.000 N·m de torque, para os maiores projetos de perfuração direcional.
+    description: 'A DDW500/180 foi feita para obras de grande porte: 5.000 kN de empuxo e tração e 180.000 N·m de torque, com dois motores Cummins de 410 kW. A sala de operação e a unidade de potência ficam separadas da máquina, o que dá ao operador espaço para controlar e fazer a manutenção do equipamento. As morsas triplas deslizam no mastro e aplicam até 360.000 N·m de desaperto. O guindaste embarcado de 5 t, o carregador de hastes e a passarela de manutenção completam o conjunto.'
+  es:
+    name: Perforadora direccional DDW500/180
+    summary: 5.000 kN de empuje y tiro y 180.000 N·m de torque, para los proyectos de perforación direccional más grandes.
+    description: 'La DDW500/180 está hecha para obras de gran porte: 5.000 kN de empuje y tiro y 180.000 N·m de torque, con dos motores Cummins de 410 kW. La sala de operación y la unidad de potencia están separadas de la máquina, lo que le da al operador espacio para controlar y mantener el equipo. Las morsas triples se deslizan sobre el mástil y aplican hasta 360.000 N·m de desenrosque. La grúa incorporada de 5 t, el cargador de barras y la pasarela de mantenimiento completan el conjunto.'

@@ -1,0 +1,109 @@
+# DDW360/130. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW360/130
+category: maxi-rig
+order: 2
+featured: false
+images:
+  - ../../assets/images/models/ddw360-130/ddw360-130-1.jpg
+  - ../../assets/images/models/ddw360-130/ddw360-130-2.jpg
+  - ../../assets/images/models/ddw360-130/ddw360-130-3.jpg
+  - ../../assets/images/models/ddw360-130/ddw360-130-4.jpg
+  - ../../assets/images/models/ddw360-130/ddw360-130-5.jpg
+  - ../../assets/images/models/ddw360-130/ddw360-130-6.jpg
+  - ../../assets/images/models/ddw360-130/ddw360-130-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 3600, unit: kN }
+  - { key: rotaryTorque, value: 130000, unit: N·m }
+  - { key: enginePower, value: 528, unit: kW }
+  - { key: weight, value: 46, unit: t }
+  - { key: maxBackreamer, value: 1450, unit: mm }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [17700, 3100, 3750], sep: × }, unit: mm }
+      - { key: entryAngle, value: { range: [9, 15] }, unit: ° }
+      - { key: weight, value: 46, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: dimensions, value: { list: [6000, 2500, 2200], sep: × }, unit: mm }
+      - { key: weight, value: 2, unit: t }
+      - { key: cabin, valueKey: fullClosedCabinAc }
+      - { key: controlSystem, valueKey: plcSelfDiagnostic }
+      - { key: display, valueKey: colorScreen10x3 }
+      - { key: controls, valueKey: joysticksLevers }
+  - section: powerPack
+    rows:
+      - { key: dimensions, value: { list: [6000, 2200, 2800], sep: × }, unit: mm }
+      - { key: weight, value: 7, unit: t }
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 2 × 264 = 528, unit: kW }
+      - { key: ratedSpeed, value: 2100, unit: rpm }
+      - { key: fuelTank, value: 600, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 35, unit: MPa }
+      - { key: maxPressureControl, value: 25, unit: MPa }
+      - { key: hydraulicTank, value: 670, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 1.5] }, unit: km/h }
+      - { key: track, valueKey: steelTrackRubberPad }
+      - { key: trackWidth, value: 550, unit: mm }
+      - { key: rearStabilizer, valueKey: vertical }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: rodSupport, valueKey: yes }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: setupMode, valueKey: cylinder }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 130000, unit: N·m }
+      - { key: rotarySpeed, value: 90, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 3600, unit: kN }
+      - { key: carriageSpeed, value: 36, unit: m/min }
+      - { key: carriageStroke, value: 11, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: tripleJaw }
+      - { key: slidingOnMast, valueKey: yes }
+      - { key: breakoutTorque, value: 300000, unit: N·m }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: manualAnchoring }
+      - { key: anchorHoles, value: 4 }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: singleRodLoader }
+  - section: crane
+    rows:
+      - { key: craneCapacity, value: 3.2, unit: t }
+      - { key: craneControl, valueKey: outdoors }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø168 × 9600, unit: mm }
+      - { key: pipeThread, value: 6 5/8 FH }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [530, 630, 730, 820, 920, 1050, 1250, 1450], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - La ficha de la web y el folleto PDF (ambos de 2026-07) no coinciden en varios valores. Se usó la ficha de la web.
+  - 'Valores de la ficha web que no aparecen en el folleto PDF: Drilling rig › Entry angle: 9-15°; Power pack › Length/Width/Height: 6000*2200*2800 mm @ 7.0 ton; Power pack › Rated speed: 2100 rpm; Power pack › Fuel tank capacity: 600 L; Hydraulic system › Hydraulic tank capacity: 670 L; Carriage › Max travel distance: 11 m; Stake down › Hole nos.: 4; Tools › Back reamer: 530, 630, 730, 820, 920, 1050, 1250, 1450 mm.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW360/130
+    summary: 3.600 kN de empuxo e tração e 130.000 N·m de torque, com dois motores Cummins e unidade de potência separada.
+    description: A DDW360/130 entrega 3.600 kN de empuxo e tração e 130.000 N·m de torque. A unidade de potência separada tem dois motores Cummins de 264 kW e sistema de arrefecimento próprio, para trabalhar tanto em clima desértico quanto tropical. Da sala de operação climatizada, com joysticks e três monitores, o operador acompanha todos os dados da perfuração e o movimento da máquina. Uma passarela com guarda-corpo ao longo de todo o chassi facilita a manutenção, e as conexões rápidas tornam a montagem simples e precisa.
+  es:
+    name: Perforadora direccional DDW360/130
+    summary: 3.600 kN de empuje y tiro y 130.000 N·m de torque, con dos motores Cummins y unidad de potencia separada.
+    description: La DDW360/130 entrega 3.600 kN de empuje y tiro y 130.000 N·m de torque. La unidad de potencia separada tiene dos motores Cummins de 264 kW y sistema de refrigeración propio, para trabajar tanto en clima desértico como tropical. Desde la sala de operación climatizada, con joysticks y tres monitores, el operador sigue todos los datos de la perforación y el movimiento de la máquina. Una pasarela con baranda a lo largo de todo el chasis facilita el mantenimiento, y las conexiones rápidas hacen que el montaje sea simple y preciso.

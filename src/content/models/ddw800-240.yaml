@@ -1,0 +1,116 @@
+# DDW800/240. Source: dwtxs.cn spec sheet (see assets/sources/manifest.json). Values to be validated by the client.
+code: DDW800/240
+category: maxi-rig
+order: 4
+featured: false
+images:
+  - ../../assets/images/models/ddw800-240/ddw800-240-1.jpg
+  - ../../assets/images/models/ddw800-240/ddw800-240-2.jpg
+  - ../../assets/images/models/ddw800-240/ddw800-240-3.jpg
+  - ../../assets/images/models/ddw800-240/ddw800-240-4.jpg
+  - ../../assets/images/models/ddw800-240/ddw800-240-5.jpg
+  - ../../assets/images/models/ddw800-240/ddw800-240-6.jpg
+  - ../../assets/images/models/ddw800-240/ddw800-240-7.jpg
+keySpecs:
+  - { key: thrustPullback, value: 8000, unit: kN }
+  - { key: rotaryTorque, value: 240000, unit: N·m }
+  - { key: enginePower, value: 1860, unit: hp }
+  - { key: weight, value: 70, unit: t }
+  - { key: maxBackreamer, value: 1450, unit: mm }
+specSheet:
+  - section: dimensions
+    rows:
+      - { key: dimensions, value: { list: [20000, 3000, 3300], sep: × }, unit: mm }
+      - { key: weight, value: 70, unit: t }
+  - section: operatorStation
+    rows:
+      - { key: dimensions, value: { list: [5000, 2300, 2200], sep: × }, unit: mm }
+      - { key: weight, value: 2, unit: t }
+      - { key: cabin, valueKey: containerRoomAc }
+      - { key: controlSystem, valueKey: digitalSelfDiagnostic }
+      - { key: display, valueKey: touchScreen10x3 }
+  - section: powerPack
+    rows:
+      - { key: dimensions, value: { list: [10000, 2500, 2550], sep: × }, unit: mm }
+      - { key: weight, value: 23, unit: t }
+  - section: engine
+    rows:
+      - { key: engineMake, value: Cummins }
+      - { key: ratedPower, value: 3 × 550 + 1 × 210, unit: hp }
+      - { key: ratedSpeed, value: 1900, unit: rpm }
+      - { key: fuelTank, value: 3000, unit: L }
+  - section: hydraulics
+    rows:
+      - { key: maxPressureRotary, value: 42, unit: MPa }
+      - { key: maxPressureControl, value: 30, unit: MPa }
+      - { key: hydraulicTank, value: 2000, unit: L }
+  - section: undercarriage
+    rows:
+      - { key: structure, valueKey: boxWeldedFrame }
+      - { key: travel, valueKey: selfPropelledCrawler }
+      - { key: travelSpeed, value: { range: [0, 1] }, unit: km/h }
+      - { key: trackWidth, value: 550, unit: mm }
+      - { key: rearStabilizer, valueKey: vertical }
+  - section: mast
+    rows:
+      - { key: mastTransmission, valueKey: rackPinion }
+      - { key: rodSupport, valueKey: yes }
+      - { key: hoseCarrier, valueKey: fullLengthChain }
+      - { key: mastStand, valueKey: yes }
+      - { key: entryAngle, value: { range: [8, 12] }, unit: ° }
+  - section: rotaryDrive
+    rows:
+      - { key: rotaryTorque, value: 240000, unit: N·m }
+      - { key: rotarySpeed, value: 75, unit: rpm }
+      - { key: rotaryTransmission, valueKey: gearbox }
+  - section: carriage
+    rows:
+      - { key: thrustPullback, value: 8000, unit: kN }
+      - { key: carriageSpeed, value: 45, unit: m/min }
+      - { key: carriageStroke, value: 12, unit: m }
+  - section: wrench
+    rows:
+      - { key: wrenchType, valueKey: quadJaw }
+      - { key: slidingOnMast, valueKey: yes }
+      - { key: breakoutTorque, value: 830000, unit: N·m }
+  - section: stakeDown
+    rows:
+      - { key: anchoring, valueKey: manualAnchoring }
+      - { key: extraBeamBars, valueKey: yes }
+  - section: pipeLoader
+    rows:
+      - { key: pipeLoaderType, valueKey: singleRodLoader }
+  - section: crane
+    rows:
+      - { key: craneCapacity, value: 8, unit: t }
+      - { key: craneControl, valueKey: outsideRoom }
+  - section: lighting
+    rows:
+      - { key: lights, valueKey: roomWrenchRotary }
+  - section: drillPipe
+    rows:
+      - { key: drillPipe, value: Ø194 × 9600, unit: mm }
+      - { key: pipeThread, value: Z140 IEU }
+  - section: pilotBit
+    rows:
+      - { key: beaconHousing, valueKey: wirelessWireline }
+  - section: tools
+    rows:
+      - {
+          key: backreamerDiameters,
+          value: { list: [650, 850, 1050, 1250, 1450], sep: ',' },
+          unit: mm,
+        }
+reviewNotes:
+  - 'La foto principal muestra la placa «DDW 800/230»: confirmar que corresponde al modelo DDW800/240.'
+  - Potencia en hp según la ficha (3 × 550 + 1 × 210); confirmar si son hp o CV.
+  - 'El folleto PDF es una imagen sin texto: los datos salen solo de la ficha técnica de la web.'
+i18n:
+  pt:
+    name: Perfuratriz direcional DDW800/240
+    summary: 8.000 kN de empuxo e tração e 240.000 N·m de torque, o maior Maxi-Rig do catálogo.
+    description: 'A DDW800/240 é o maior Maxi-Rig do catálogo: 8.000 kN de empuxo e tração e 240.000 N·m de torque. A máquina de 70 t trabalha com uma unidade de potência separada, com motores Cummins, e uma sala de operação tipo contêiner com ar-condicionado e três telas sensíveis ao toque de 10". As morsas quádruplas deslizam no mastro e chegam a 830.000 N·m de desaperto, e o guindaste de 8 t ajuda a manusear as hastes de 194 mm × 9,6 m.'
+  es:
+    name: Perforadora direccional DDW800/240
+    summary: 8.000 kN de empuje y tiro y 240.000 N·m de torque, la Maxi-Rig más grande del catálogo.
+    description: 'La DDW800/240 es la Maxi-Rig más grande del catálogo: 8.000 kN de empuje y tiro y 240.000 N·m de torque. La máquina de 70 t trabaja con una unidad de potencia separada, con motores Cummins, y una sala de operación tipo contenedor con aire acondicionado y tres pantallas táctiles de 10". Las morsas cuádruples se deslizan sobre el mástil y llegan a 830.000 N·m de desenrosque, y la grúa de 8 t ayuda a manipular las barras de 194 mm × 9,6 m.'

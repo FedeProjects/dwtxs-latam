@@ -1,0 +1,29 @@
+# Reciclador de lama. Source: dwtxs.cn (mud system). Texts to be validated by the client.
+order: 1
+images:
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-1.jpg
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-2.jpg
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-3.jpg
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-4.jpg
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-5.jpg
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-6.jpg
+  - ../../assets/images/accessories/mud-recycler/mud-recycler-7.jpg
+reviewNotes:
+  - 'La web de DWTXS no publica datos técnicos (capacidad, potencia, dimensiones): pedir ficha al fabricante [TBD].'
+i18n:
+  pt:
+    name: Reciclador de lama
+    summary: Sistema que limpa a lama de perfuração que volta do furo para reutilizá-la na obra.
+    description: Durante a perfuração, a lama que volta da broca chega ao poço carregada de material escavado. O reciclador separa esse material e devolve a lama limpa ao circuito, pronta para ser usada de novo. A DWTXS fabrica recicladores com diferentes capacidades de tratamento, de acordo com o porte da perfuratriz, e também projetos sob medida a partir da experiência de obra de cada cliente.
+    highlights:
+      - Capacidade de tratamento conforme o porte da perfuratriz
+      - Reaproveitamento da lama na mesma obra
+      - Opção de projeto sob medida
+  es:
+    name: Reciclador de lodo
+    summary: Sistema que limpia el lodo de perforación que vuelve del pozo para reutilizarlo en la obra.
+    description: Durante la perforación, el lodo que vuelve de la broca llega a la fosa cargado de material excavado. El reciclador separa ese material y devuelve el lodo limpio al circuito, listo para volver a usarse. DWTXS fabrica recicladores con distintas capacidades de tratamiento, según el porte de la perforadora, y también proyectos a medida a partir de la experiencia de obra de cada cliente.
+    highlights:
+      - Capacidad de tratamiento según el porte de la perforadora
+      - Reutilización del lodo en la misma obra
+      - Opción de proyecto a medida
