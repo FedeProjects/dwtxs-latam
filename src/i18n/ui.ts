@@ -76,7 +76,7 @@ const uiPt = {
   'home.featured.lead': 'Os modelos mais procurados, com ficha técnica completa em cada página.',
   'home.featured.all': 'Ver todos os modelos',
   'home.services.title': 'Depois da venda, junto da obra',
-  'home.services.alt': 'Perfuratriz trabalhando ao entardecer com guindaste',
+  'home.services.alt': 'Técnico e clientes ao lado de uma perfuratriz DWTXS',
   'home.services.tech': 'Serviço técnico',
   'home.services.techText':
     'Técnicos especializados que identificam o problema conversando com o operador, e atendimento remoto ou em campo.',
@@ -169,7 +169,7 @@ const uiEs: Record<UiKey, string> = {
   'home.featured.lead': 'Los modelos más buscados, con ficha técnica completa en cada página.',
   'home.featured.all': 'Ver todos los modelos',
   'home.services.title': 'Después de la venta, junto a la obra',
-  'home.services.alt': 'Perforadora trabajando al atardecer con una grúa',
+  'home.services.alt': 'Técnico y clientes junto a una perforadora DWTXS',
   'home.services.tech': 'Servicio técnico',
   'home.services.techText':
     'Técnicos especializados que identifican el problema hablando con el operador, y atención remota o en campo.',
