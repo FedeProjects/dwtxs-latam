@@ -81,6 +81,28 @@
   body {
     @apply bg-concrete font-sans text-lg/[1.55] text-asphalt;
   }
+
+  /* Page scrollbar in the palette (desktop only: phones draw their own overlay bars).
+     Standard properties for Chrome, Edge and Firefox; the -webkit- pill is the Safari fallback. */
+  :root {
+    --scroll-thumb: color-mix(in srgb, var(--color-asphalt) 50%, var(--color-concrete));
+    scrollbar-color: var(--scroll-thumb) var(--color-concrete);
+  }
+  @supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+      background: var(--color-concrete);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scroll-thumb);
+      border: 3px solid var(--color-concrete);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-red);
+    }
+  }
   :focus-visible {
     outline: 3px solid var(--color-red-ink);
     outline-offset: 3px;
