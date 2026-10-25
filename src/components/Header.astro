@@ -28,7 +28,7 @@ const links = [
     'gut z-20',
     overlay
       ? 'text-on-media absolute inset-x-0 top-0'
-      : 'bg-concrete border-line sticky top-0 border-b',
+      : 'bg-chrome text-on-chrome sticky top-0 border-b border-on-chrome/10',
   ]}
 >
   <div class="mx-auto flex min-h-17 max-w-330 flex-wrap items-center gap-x-2.5 gap-y-3 md:gap-x-7">
@@ -58,7 +58,7 @@ const links = [
     </nav>
 
     <div class="max-md:ml-auto" data-intro={overlay ? '' : undefined}>
-      <LanguageSwitcher lang={lang} alternates={alternates} overlay={overlay} />
+      <LanguageSwitcher lang={lang} alternates={alternates} />
     </div>
 
     <ThemeToggle lang={lang} />

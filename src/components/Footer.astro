@@ -30,14 +30,14 @@ const columns = [
 ];
 ---
 
-<footer class="gut">
+<footer class="gut bg-chrome text-on-chrome border-on-chrome/10 border-t">
   <div class="mx-auto max-w-330">
     <div class="grid grid-cols-2 gap-8 pt-14 pb-8 md:grid-cols-[minmax(0,4fr)_repeat(3,minmax(0,2fr))]">
       <div class="col-span-2 md:col-span-1">
         <a href={homePath(lang)} class="text-[30px] font-black tracking-[-0.02em] no-underline">
           {t('site.name')}
         </a>
-        <p class="text-muted mt-3 max-w-[32ch] text-base">{t('footer.tagline')}</p>
+        <p class="text-on-chrome/70 mt-3 max-w-[32ch] text-base">{t('footer.tagline')}</p>
       </div>
       {columns.map(({ title, links }) => (
         <div>
@@ -65,7 +65,7 @@ const columns = [
         </ul>
       </div>
     </div>
-    <div class="border-line text-muted flex flex-wrap justify-between gap-3 border-t pt-5 pb-10 text-sm">
+    <div class="border-on-chrome/15 text-on-chrome/70 flex flex-wrap justify-between gap-3 border-t pt-5 pb-10 text-sm">
       <span>{t('footer.legal')}</span>
       <span>{t('footer.preview')}</span>
     </div>

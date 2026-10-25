@@ -1,11 +1,14 @@
 @import 'tailwindcss';
 
-/* Direction "Obra" (PROJECT_SPEC D-11): concrete ground, asphalt ink, machine red for actions,
-   jobsite sky as one field per page. Layout lives in Tailwind utilities; this file keeps the
-   tokens, base styles and the few components that utilities express badly (motion, overlays).
-   Theme (D-13): the color tokens below are the light values; the dark block redefines them, so
-   utilities like `bg-concrete` follow the theme with no `dark:` class. `on-media` colors are
-   fixed: text over photos and video stays light in both themes. */
+/* Palette "Acero" (PROJECT_SPEC D-14, proposal over D-11 "Obra"): sand ground, blue-graphite ink,
+   machine red for actions, and a dark steel "chassis" (header, footer, enquiry band) that carries the
+   white logo in both themes. Layout lives in Tailwind utilities; this file keeps the tokens, base
+   styles and the few components that utilities express badly (motion, overlays).
+   Theme (D-13): the tokens below are the light values; the dark blocks redefine them, so utilities
+   like `bg-concrete` follow the theme with no `dark:` class. Dark is not an inversion: the ground
+   turns from sand to deep steel, cards rise above it, the chassis gets darker and red gets brighter.
+   `on-media` / `on-chrome` stay light in both themes. Token names (concrete = ground, asphalt = ink)
+   are kept from D-11. */
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
     &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
@@ -18,18 +21,20 @@
 }
 
 @theme {
-  --color-concrete: #ebe9e4;
-  --color-asphalt: #232220;
-  --color-muted: #5a5853;
-  --color-red: #b3121b;
-  --color-red-dark: #8f0e16;
-  --color-sky: #c9d6de;
-  --color-paper: #fbfaf8;
-  --color-line: #d6d3cc;
-  --color-red-ink: #b3121b;
+  --color-concrete: #e6e1d6;
+  --color-asphalt: #1b2026;
+  --color-muted: #585d64;
+  --color-red: #c1121f;
+  --color-red-dark: #96101a;
+  --color-sky: #cdd8df;
+  --color-paper: #f7f4ee;
+  --color-line: #d3cdc0;
+  --color-red-ink: #b0111c;
+  --color-chrome: #1b2026;
+  --color-on-chrome: #f4f2ee;
   --color-whatsapp: #1f8f4e;
   --color-on-media: #fbfaf8;
-  --color-on-media-ink: #232220;
+  --color-on-media-ink: #1b2026;
 
   --font-sans: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
 
@@ -45,24 +50,30 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-concrete: #181716;
-    --color-asphalt: #ebe9e4;
-    --color-muted: #a8a49c;
-    --color-sky: #1e2a31;
-    --color-paper: #232220;
-    --color-line: #3a3835;
-    --color-red-ink: #ff7a7a;
+    --color-concrete: #151a1f;
+    --color-asphalt: #e8e6e1;
+    --color-muted: #9ba3ab;
+    --color-red: #d61f2a;
+    --color-red-dark: #b3121b;
+    --color-sky: #1f2c36;
+    --color-paper: #1f262d;
+    --color-line: #2e363f;
+    --color-red-ink: #ff8086;
+    --color-chrome: #0d1013;
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --color-concrete: #181716;
-  --color-asphalt: #ebe9e4;
-  --color-muted: #a8a49c;
-  --color-sky: #1e2a31;
-  --color-paper: #232220;
-  --color-line: #3a3835;
-  --color-red-ink: #ff7a7a;
+  --color-concrete: #151a1f;
+  --color-asphalt: #e8e6e1;
+  --color-muted: #9ba3ab;
+  --color-red: #d61f2a;
+  --color-red-dark: #b3121b;
+  --color-sky: #1f2c36;
+  --color-paper: #1f262d;
+  --color-line: #2e363f;
+  --color-red-ink: #ff8086;
+  --color-chrome: #0d1013;
   color-scheme: dark;
 }
 

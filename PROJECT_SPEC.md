@@ -198,6 +198,11 @@ The font is self-hosted with Astro's built-in Fonts API (Google provider, downlo
 Alternatives: light only (the approved prototypes); `dark:` classes on every component.
 Chosen: both themes, following the system preference by default, plus a toggle in the header that stores the pick in `localStorage` (a tiny inline script in `<head>` applies it before the first paint, so there is no flash). Without JS the theme follows the system. The D-11 color tokens are redefined for dark in `global.css`, so components use the same utilities (`bg-concrete`, `text-asphalt`…) in both themes; text over photos and video uses the fixed `on-media` tokens, and small red text uses `red-ink` (lighter in dark for ≥ 4.5:1 contrast). A `dark:` Tailwind variant matching the same rules exists for the rare case a component needs it.
 
+**D-14 — Palette "Acero" (2026-10-25, proposal: to validate with the client).**
+Alternative: keep the D-11 "Obra" palette (tag `palette-obra`, branch `feat/phase-2-layout`).
+Reason: the logo is assumed to be "DWTXS LATAM" in white, which needs a dark surface wherever it appears; with "Obra" the solid header and the footer were light in light mode. Dark mode in "Obra" was also close to a colour swap.
+Chosen (if approved): sand ground `#e6e1d6`, blue-graphite ink `#1b2026`, cards `#f7f4ee`, red `#c1121f` for actions, and a dark steel chassis `#1b2026` (header, footer, enquiry band) that carries the white logo in both themes. Dark: deep steel ground `#151a1f`, raised cards `#1f262d`, darker chassis `#0d1013`, brighter red `#d61f2a`. Revisit when the client provides the real logo and colours.
+
 ## 8. Phases
 
 Each task should fit one Claude Code session.
