@@ -1,0 +1,60 @@
+---
+import { Font } from 'astro:assets';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import { locales, type Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Equivalent page in every language, for the language switcher. */
+  alternates: Record<Lang, string>;
+  /** Transparent header over a full-bleed hero (Home). */
+  overlayHeader?: boolean;
+  /** Model code to prefill in the WhatsApp message. */
+  model?: string;
+}
+
+const { lang, title, description, alternates, overlayHeader = false, model } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<html lang={locales[lang]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Preview only: remove before launch (PROJECT_SPEC D-05). -->
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <Font cssVariable="--font-schibsted" preload={[{ weight: 900 }, { weight: 400 }]} />
+    <!-- Motion gate: hidden start states apply only when JS runs (D-12). -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body class="relative">
+    <a
+      href="#main"
+      class="bg-asphalt text-paper sr-only z-50 rounded-full px-4 py-2 font-bold focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+    >
+      {t('nav.skip')}
+    </a>
+    <Header lang={lang} alternates={alternates} overlay={overlayHeader} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <WhatsAppButton lang={lang} model={model} />
+    <script>
+      import '../scripts/motion';
+    </script>
+  </body>
+</html>

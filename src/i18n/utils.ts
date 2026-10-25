@@ -1,7 +1,7 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Category } from '../content/specs';
 import { categorySegments, routes, type Page } from './routes';
-import { catalog, defaultLang, langs, ui, type Lang } from './ui';
+import { catalog, defaultLang, langs, locales, ui, type Lang } from './ui';
 
 export function isLang(value: string | undefined): value is Lang {
   return langs.includes(value as Lang);
@@ -41,4 +41,22 @@ export function modelPath(lang: Lang, category: Category, slug: string): string 
     lang,
     `${routes[lang].machines}/${categorySegments[lang][category]}/${slug}`,
   );
+}
+
+/** Replaces `{name}` placeholders in a translated string. */
+export function fill(text: string, vars: Record<string, string | number>): string {
+  return text.replace(/\{(\w+)\}/g, (match, name: string) =>
+    name in vars ? String(vars[name]) : match,
+  );
+}
+
+export function formatNumber(lang: Lang, value: number): string {
+  return new Intl.NumberFormat(locales[lang]).format(value);
+}
+
+/** `12000, "N·m"` → "12.000 N·m". Degrees go without a space: "13–19°". */
+export function formatQuantity(lang: Lang, value: number | string, unit?: string): string {
+  const text = typeof value === 'number' ? formatNumber(lang, value) : value;
+  if (!unit) return text;
+  return unit === '°' ? `${text}${unit}` : `${text} ${unit}`;
 }

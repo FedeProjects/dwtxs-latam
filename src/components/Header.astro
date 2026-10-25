@@ -1,0 +1,84 @@
+---
+import type { Lang } from '../i18n/ui';
+import { homePath, pagePath, useTranslations } from '../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  lang: Lang;
+  alternates: Record<Lang, string>;
+  /** Transparent, light header laid over the Home hero video. */
+  overlay?: boolean;
+}
+
+const { lang, alternates, overlay = false } = Astro.props;
+const t = useTranslations(lang);
+const path = Astro.url.pathname;
+
+const links = [
+  { href: `${homePath(lang)}#maquinas`, label: t('nav.machines') },
+  { href: pagePath(lang, 'accessories'), label: t('nav.accessories') },
+  { href: pagePath(lang, 'about'), label: t('nav.about') },
+  { href: pagePath(lang, 'contact'), label: t('nav.contact') },
+];
+---
+
+<header
+  class:list={[
+    'gut z-20',
+    overlay
+      ? 'text-paper absolute inset-x-0 top-0'
+      : 'bg-concrete border-line sticky top-0 border-b',
+  ]}
+>
+  <div class="mx-auto flex min-h-17 max-w-330 flex-wrap items-center gap-x-3 gap-y-3 md:gap-x-7">
+    <a
+      href={homePath(lang)}
+      class="text-xl font-black md:text-[22px] tracking-[-0.02em] no-underline"
+      data-intro={overlay ? '' : undefined}
+    >
+      {t('site.name')}
+    </a>
+
+    <nav
+      id="site-nav"
+      aria-label={t('nav.label')}
+      class="flex flex-wrap gap-x-5.5 gap-y-1 font-medium max-md:order-3 max-md:w-full max-md:pb-2.5 md:ml-auto [.js_&]:max-md:hidden [.js_&]:max-md:flex-col [.js_&]:max-md:gap-3 [.js_&]:max-md:py-4 [.js_&]:max-md:text-xl [.js_&]:max-md:data-open:flex"
+      data-intro={overlay ? '' : undefined}
+    >
+      {links.map(({ href, label }) => (
+        <a
+          href={href}
+          aria-current={href === path ? 'page' : undefined}
+          class="hover:decoration-current aria-[current=page]:decoration-red underline decoration-transparent decoration-2 underline-offset-[6px] transition-[text-decoration-color,text-underline-offset] duration-300 hover:underline-offset-[3px]"
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="max-md:ml-auto" data-intro={overlay ? '' : undefined}>
+      <LanguageSwitcher lang={lang} alternates={alternates} overlay={overlay} />
+    </div>
+
+    <button
+      type="button"
+      class="hidden rounded-full px-3 py-1.5 font-bold ring-2 ring-current md:hidden! [.js_&]:inline-flex"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-menu-toggle
+    >
+      {t('nav.menu')}
+    </button>
+  </div>
+</header>
+
+<script>
+  // Mobile menu: the nav collapses behind a toggle only when JavaScript runs (html.js).
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const nav = document.getElementById('site-nav');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    nav?.toggleAttribute('data-open', open);
+  });
+</script>

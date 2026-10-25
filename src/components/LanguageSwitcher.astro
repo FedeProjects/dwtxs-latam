@@ -1,0 +1,32 @@
+---
+import { langs, type Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** URL of the equivalent page in every language, so the switch keeps the reader in place. */
+  alternates: Record<Lang, string>;
+  /** Light text over the hero video. */
+  overlay?: boolean;
+}
+
+const { lang, alternates, overlay = false } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav aria-label={t('lang.label')} class="flex gap-1.5 text-[15px] font-bold">
+  {langs.map((code) => (
+    <a
+      href={alternates[code]}
+      lang={code}
+      hreflang={code}
+      aria-current={code === lang ? 'true' : undefined}
+      class:list={[
+        'rounded-full px-2 py-1 uppercase no-underline',
+        code === lang && (overlay ? 'bg-paper text-asphalt' : 'bg-asphalt text-paper'),
+      ]}
+    >
+      {code}
+    </a>
+  ))}
+</nav>

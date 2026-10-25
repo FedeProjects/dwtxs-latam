@@ -1,0 +1,352 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import companyPhoto from '../assets/images/general/about-8.jpg';
+import servicePhoto from '../assets/images/general/home-4.jpg';
+import { CATEGORIES, type Category } from '../content/specs';
+import { routes } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import {
+  categoryPath,
+  fill,
+  formatNumber,
+  pagePath,
+  useCatalogLabels,
+  useTranslations,
+} from '../i18n/utils';
+import ContactForm from './ContactForm.astro';
+import ModelCard from './ModelCard.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { categories } = useCatalogLabels(lang);
+const contactId = routes[lang].contact;
+
+const models = (await getCollection('models')).sort(
+  (a, b) =>
+    CATEGORIES.indexOf(a.data.category) - CATEGORIES.indexOf(b.data.category) ||
+    a.data.order - b.data.order,
+);
+const featured = models.filter((m) => m.data.featured);
+const accessories = (await getCollection('accessories')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+/** Thrust/pullback in kN, used for the hero figure and the range of each line. */
+const thrust = (category?: Category) =>
+  models
+    .filter((m) => !category || m.data.category === category)
+    .flatMap((m) => m.data.keySpecs.filter((s) => s.key === 'thrustPullback'))
+    .map((s) => Number(s.value));
+const range = (values: number[]) => [Math.min(...values), Math.max(...values)];
+const [minAll, maxAll] = range(thrust());
+
+// Line panels: one representative photo per category.
+const lineModel: Record<Category, string> = {
+  conventional: 'ddw36-15se',
+  'maxi-rig': 'ddw360-130',
+  'all-terrain': 'ddw35-15at',
+};
+const lineText: Record<Category, string> = {
+  conventional: t('home.lines.conventional'),
+  'maxi-rig': t('home.lines.maxiRig'),
+  'all-terrain': t('home.lines.allTerrain'),
+};
+const lines = await Promise.all(
+  CATEGORIES.map(async (category) => {
+    const model = await getEntry('models', lineModel[category]);
+    if (!model) throw new Error(`Missing line photo model: ${lineModel[category]}`);
+    const [min, max] = range(thrust(category));
+    return {
+      category,
+      href: categoryPath(lang, category),
+      image: model.data.images[0],
+      alt: `${t('common.machineAlt')} ${model.data.code}`,
+      range: `${formatNumber(lang, min)} – ${formatNumber(lang, max)} kN`,
+    };
+  }),
+);
+
+const figures = [
+  { to: 600, suffix: '+', label: t('home.figs.clients') },
+  { to: 50, suffix: '+', label: t('home.figs.years') },
+  { to: models.length, suffix: '', label: t('home.figs.models') },
+  { text: '24/7', label: t('home.figs.support') },
+];
+
+const services = [
+  { title: t('home.services.tech'), text: t('home.services.techText') },
+  { title: t('home.services.delivery'), text: t('home.services.deliveryText') },
+  { title: t('home.services.parts'), text: t('home.services.partsText') },
+];
+---
+
+<!-- Hero over the ambient video (D-12: decorative, never captioned as a real job) -->
+<section class="hero shade-hero text-paper relative grid min-h-[min(92vh,860px)] items-end overflow-clip bg-[#555]">
+  <video
+    class="hero-video absolute inset-0 size-full object-cover object-[72%_50%]"
+    src="/video/rig.mp4"
+    poster="/video/rig.jpg"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true"
+  ></video>
+  <div class="hero-copy gut relative z-1 w-full pt-32 pb-[clamp(40px,7vw,88px)]">
+    <div class="mx-auto max-w-330">
+      <h1 class="max-w-[11ch] text-[clamp(48px,8vw,124px)]" data-split>
+        {t('home.hero.title')}
+      </h1>
+      <p class="mt-6 mb-7 max-w-[44ch] text-[clamp(18px,1.6vw,22px)]" data-intro style="--d:560ms">
+        {fill(t('home.hero.lead'), {
+          count: models.length,
+          min: formatNumber(lang, minAll),
+          max: formatNumber(lang, maxAll),
+        })}
+      </p>
+      <div class="flex flex-wrap gap-2.5" data-intro style="--d:680ms">
+        <a class="btn" href="#maquinas">
+          {t('home.hero.machines')}
+        </a>
+        <a class="btn btn-ghost-light" href={`#${contactId}`}>
+          {t('home.hero.quote')}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lines: three large panels -->
+<section class="section gut" id="maquinas" aria-labelledby="h-lines">
+  <div class="mx-auto max-w-330">
+    <div class="mb-9 grid items-end gap-x-16 gap-y-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+      <h2 class="h2" id="h-lines" data-split>
+        {t('home.lines.title')}
+      </h2>
+      <p class="max-w-[46ch]" data-rise>
+        {t('home.lines.lead')}
+      </p>
+    </div>
+    <div class="lines grid gap-2 md:grid-cols-3">
+      {lines.map((line, i) => (
+        <a
+          href={line.href}
+          class="line shade-bottom text-paper relative isolate grid min-h-105 content-end no-underline md:min-h-140"
+          data-shutter
+          style={`--d:${i * 140}ms`}
+        >
+          <div class="absolute inset-0 -z-1" data-pan>
+            <Image
+              src={line.image}
+              alt={line.alt}
+              widths={[640, 960, 1300]}
+              sizes="(max-width: 767px) 100vw, 33vw"
+              class="size-full object-cover"
+            />
+          </div>
+          <div class="relative z-1 grid gap-2.5 p-7">
+            <h3 class="text-[clamp(34px,3.4vw,52px)]">{categories[line.category]}</h3>
+            <span class="text-[22px] font-black text-[#ffb3b3]">{line.range}</span>
+            <p class="max-w-[34ch]">{lineText[line.category]}</p>
+            <span class="more">{t('common.discover')}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Company and figures -->
+<section class="section gut" aria-labelledby="h-company">
+  <div class="mx-auto grid max-w-330 items-center gap-x-16 gap-y-10 md:grid-cols-2">
+    <div>
+      <h2 class="h2" id="h-company" data-split>
+        {t('home.company.title')}
+      </h2>
+      <p class="mt-4.5 max-w-[52ch]" data-rise>
+        {t('home.company.text')}
+      </p>
+      <div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-7">
+        {figures.map((fig, i) => (
+          <div class="border-asphalt border-t-3 pt-3.5" data-rise style={`--d:${i * 100}ms`}>
+            <b class="block text-[clamp(44px,5vw,72px)] leading-none font-black tracking-[-0.03em]">
+              {fig.to !== undefined ? (
+                <>
+                  <span data-count data-to={fig.to}>
+                    {fig.to}
+                  </span>
+                  {fig.suffix}
+                </>
+              ) : (
+                fig.text
+              )}
+            </b>
+            <span class="text-muted">{fig.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="aspect-4/3" data-pan data-shutter>
+      <Image
+        src={companyPhoto}
+        alt={t('home.company.alt')}
+        widths={[640, 960, 1300]}
+        sizes="(max-width: 767px) 100vw, 50vw"
+        class="size-full object-cover"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Featured models -->
+<section class="section gut" aria-labelledby="h-feat">
+  <div class="mx-auto max-w-330">
+    <div class="mb-9 grid items-end gap-x-16 gap-y-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+      <h2 class="h2" id="h-feat" data-split>
+        {t('home.featured.title')}
+      </h2>
+      <p class="max-w-[46ch]" data-rise>
+        {t('home.featured.lead')}
+      </p>
+    </div>
+    <div class="cards grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {featured.map((model, i) => (
+        <ModelCard lang={lang} model={model} delay={i * 90} />
+      ))}
+    </div>
+    <a class="btn btn-ghost mt-7" href={categoryPath(lang, 'conventional')} data-rise>
+      {t('home.featured.all')}
+    </a>
+  </div>
+</section>
+
+<!-- After-sales services -->
+<section class="section gut" id="servicos" aria-labelledby="h-svc">
+  <div class="mx-auto grid max-w-330 items-start gap-x-16 gap-y-10 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+    <div class="aspect-16/10 md:aspect-4/5" data-pan data-shutter>
+      <Image
+        src={servicePhoto}
+        alt={t('home.services.alt')}
+        widths={[640, 960, 1300]}
+        sizes="(max-width: 767px) 100vw, 42vw"
+        class="size-full object-cover"
+      />
+    </div>
+    <div>
+      <h2 class="h2" id="h-svc" data-split>
+        {t('home.services.title')}
+      </h2>
+      <ul class="mt-8 grid gap-7">
+        {services.map((s, i) => (
+          <li class="bar-item relative pl-6" data-rise style={`--d:${i * 120}ms`}>
+            <h3 class="mb-1.5 text-[28px]">{s.title}</h3>
+            <p class="max-w-[52ch]">{s.text}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Mud system (accessories collection) -->
+<section class="section gut" aria-labelledby="h-mud">
+  <div class="mx-auto max-w-330">
+    <div class="mb-9 grid items-end gap-x-16 gap-y-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+      <h2 class="h2" id="h-mud" data-split>
+        {t('home.mud.title')}
+      </h2>
+      <p class="max-w-[46ch]" data-rise>
+        {t('home.mud.lead')}
+      </p>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      {accessories.map((acc, i) => (
+        <a
+          href={`${pagePath(lang, 'accessories')}#${acc.id}`}
+          class="bg-paper grid min-h-70 no-underline sm:grid-cols-2"
+          data-rise
+          style={`--d:${i * 120}ms`}
+        >
+          <div class="aspect-16/10 sm:aspect-auto" data-pan>
+            <Image
+              src={acc.data.images[0]}
+              alt={acc.data.i18n[lang].name}
+              widths={[480, 720, 960]}
+              sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 25vw"
+              class="size-full object-cover"
+            />
+          </div>
+          <div class="grid content-center gap-2.5 p-6">
+            <h3 class="text-[30px]">{acc.data.i18n[lang].name}</h3>
+            <p class="text-muted text-base">{acc.data.i18n[lang].summary}</p>
+            <span class="text-red font-bold">{t('common.learnMore')}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Trenchless band over the drone video (decorative) -->
+<section
+  class="gut text-paper relative mt-[clamp(72px,9vw,140px)] grid min-h-[78vh] items-center overflow-clip py-24 after:absolute after:inset-0 after:bg-[rgb(20_18_16/0.5)]"
+  aria-labelledby="h-trench"
+>
+  <video
+    class="band-video absolute inset-0 size-full object-cover"
+    src="/video/drone.mp4"
+    poster="/video/drone.jpg"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-hidden="true"
+  ></video>
+  <div class="relative z-1 mx-auto w-full max-w-330">
+    <h2 class="max-w-[16ch] text-[clamp(40px,5.6vw,88px)]" id="h-trench" data-split>
+      {t('home.trench.title')}
+    </h2>
+    <p class="mt-5 mb-7 max-w-[46ch] text-xl" data-rise>
+      {t('home.trench.text')}
+    </p>
+    <a class="btn btn-ghost-light" href={`#${contactId}`} data-rise style="--d:150ms">
+      {t('home.hero.quote')}
+    </a>
+  </div>
+</section>
+
+<!-- Enquiry: the one sky field of the page -->
+<section class="bg-sky gut py-[clamp(72px,9vw,140px)]" id={contactId} aria-labelledby="h-enq">
+  <div class="mx-auto grid max-w-330 gap-x-16 gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+    <div>
+      <h2 class="h2" id="h-enq" data-split>
+        {t('home.enquiry.title')}
+      </h2>
+      <p class="mt-4.5 max-w-[36ch]" data-rise>
+        {t('home.enquiry.lead')}
+      </p>
+      <dl class="mt-7 grid gap-3.5" data-rise style="--d:100ms">
+        <div>
+          <dt class="text-muted text-sm">{t('contact.whatsapp')}</dt>
+          <dd class="mt-0.5 font-bold">{t('common.tbd')}</dd>
+        </div>
+        <div>
+          <dt class="text-muted text-sm">{t('contact.email')}</dt>
+          <dd class="mt-0.5 font-bold">{t('common.tbd')}</dd>
+        </div>
+        <div>
+          <dt class="text-muted text-sm">{t('contact.address')}</dt>
+          <dd class="mt-0.5 font-bold">{t('contact.addressValue')}</dd>
+        </div>
+      </dl>
+    </div>
+    <ContactForm lang={lang} />
+  </div>
+</section>

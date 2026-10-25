@@ -188,6 +188,7 @@ Alternatives: "Chapa" (machine nameplate, industrial) and "Corporativo" (classic
 Chosen: documentary jobsite look. Tokens: concrete `#ebe9e4` (ground), asphalt `#232220` (ink), machine red `#b3121b` (actions), jobsite sky `#c9d6de` (one field per page), white `#fbfaf8` (cards); type **Schibsted Grotesk** 400/500/700/900; pill buttons and chips; square photos. Motion: headings rise word by word from a mask, blocks rise once when they enter, pictures open like shutters, figures count up, red bars draw, hover zoom that follows the pointer, scroll-linked hero drift; everything off with `prefers-reduced-motion` and hover effects only for fine pointers.
 The approved prototypes are the reference for Phase 2: `docs/prototypes/` (Home structured like tradermacusa.com, category grid, model page), see its README.
 Logo: "DWTXS LATAM" wordmark until the client provides one [TBD].
+The font is self-hosted with Astro's built-in Fonts API (Google provider, downloaded at build time): no third-party request at runtime and no extra dependency.
 
 **D-12 — Client JS and video exceptions (2026-10-25).**
 - One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up and hover pan, plus the interactive bits of the prototypes (category tabs/sort, gallery, spec-sheet filter). Content is visible without JS (`html.js` gate).
@@ -223,10 +224,10 @@ Goal: all content in the repo, validated.
 ### Phase 2 — Layout & pages
 Goal: every page navigable in both languages.
 - [x] Visual direction and prototypes (D-11, `docs/prototypes/`)
-- [ ] Design tokens in Tailwind v4 `@theme` from D-11
-- [ ] `BaseLayout`, `Header` (nav + mobile menu), `Footer`, `LanguageSwitcher`
-- [ ] `WhatsAppButton` (floating, localized message, model prefill)
-- [ ] Home
+- [x] Design tokens in Tailwind v4 `@theme` from D-11
+- [x] `BaseLayout`, `Header` (nav + mobile menu), `Footer`, `LanguageSwitcher`
+- [x] `WhatsAppButton` (floating, localized message, model prefill)
+- [x] Home
 - [ ] Category pages (3) with `ModelCard` grid; All Terrain explainer
 - [ ] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
 - [ ] Accessories, About, Contact pages (form UI only)
@@ -234,7 +235,7 @@ Goal: every page navigable in both languages.
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** build the **Home only** in pt and es following `docs/prototypes/home.src.html`: tokens, `BaseLayout`, `Header` (transparent over the hero video, solid elsewhere, mobile menu), `Footer` (columns), `WhatsAppButton`, `LanguageSwitcher`, the Home sections and the motion script (D-12); every string in `ui.ts` (pt + es); images through `astro:assets`; videos from `public/video/`; `noindex`. Then PR to `main` and connect the repo to Vercel. Category and model pages come next, following their prototypes.
+**Next step (start here in a new session):** after the Home PR is merged and Vercel is connected, build the **category pages** (3) following `docs/prototypes/category.src.html`: reuse `ModelCard`, line tabs and sort (D-12 script), All Terrain explainer from the `pages` collection. Then the model page (`model.src.html`). Nav and footer already link to every route of §6.2; until those pages exist they return 404 on the preview.
 
 ### Phase 3 — Contact form
 Goal: leads reach the client's inbox.
