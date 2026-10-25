@@ -5,3 +5,4 @@ pnpm-lock.yaml
 CLAUDE.md
 PROJECT_SPEC.md
 .devcontainer/
+docs/prototypes/

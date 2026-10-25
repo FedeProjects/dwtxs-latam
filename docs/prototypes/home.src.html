@@ -1,0 +1,318 @@
+<title>DWTXS LATAM Obra</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&display=swap">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{css:base}}
+/* Home, direction B, structured like the client's own site (tradermacusa.com): lines, figures, company, featured models,
+   services, mud system, trenchless band, enquiry form. */
+section { padding-block: clamp(72px, 9vw, 140px) 0; }
+.h2 { font-size: clamp(40px, 5.4vw, 80px); }
+.split2 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px 64px; align-items: end; margin-bottom: 36px; }
+.split2 p { margin: 0; max-width: 46ch; }
+
+/* Hero over video, transparent bar */
+.hero { position: relative; min-height: min(92vh, 860px); display: grid; align-items: end; color: var(--white); background: #555; overflow: clip; }
+.hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 72% 50%; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(20,18,16,.62) 0%, rgba(20,18,16,0) 22%), linear-gradient(to right, rgba(20,18,16,.84) 0%, rgba(20,18,16,.62) 40%, rgba(20,18,16,.12) 72%, rgba(20,18,16,0) 100%); }
+.hero .bar { position: absolute; inset: 0 0 auto; background: transparent; border: 0; color: var(--white); }
+.hero .lang a[aria-current] { background: var(--white); color: var(--asphalt); }
+.hero .copy { position: relative; z-index: 1; padding-block: 0 clamp(40px, 7vw, 88px); }
+.hero h1 { font-size: clamp(48px, 8vw, 124px); max-width: 11ch; }
+.hero p { font-size: clamp(18px, 1.6vw, 22px); max-width: 44ch; margin: 24px 0 28px; }
+.hero .acts { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero .btn.ghost { color: var(--white); box-shadow: inset 0 0 0 2px var(--white); }
+.hero .btn.ghost:hover { background: var(--white); color: var(--asphalt); }
+
+/* Lines: three large panels */
+.lines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.line { position: relative; display: grid; align-content: end; min-height: 560px; color: var(--white); text-decoration: none; isolation: isolate; }
+.line .pic { position: absolute; inset: 0; z-index: -1; }
+.line .pic img { width: 100%; height: 100%; object-fit: cover; }
+.line::before { content: ""; position: absolute; inset: 0; z-index: 0; background: linear-gradient(to top, rgba(20,18,16,.86) 0%, rgba(20,18,16,.35) 50%, rgba(20,18,16,0) 75%); pointer-events: none; }
+.line .t { position: relative; z-index: 1; padding: 28px; display: grid; gap: 10px; }
+.line h3 { font-size: clamp(34px, 3.4vw, 52px); }
+.line .r { font-weight: 900; font-size: 22px; color: #ffb3b3; }
+.line p { margin: 0; max-width: 34ch; }
+.line .more { font-weight: 700; display: inline-flex; gap: 8px; align-items: center; }
+.line .more::after { content: ""; width: 26px; height: 2px; background: currentColor; transition: width 400ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .lines:hover .line:not(:hover) { filter: saturate(.6); }
+  .line { transition: filter 400ms ease; }
+  .line:hover .more::after { width: 48px; }
+}
+
+/* Figures + company */
+.company { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 40px 64px; align-items: center; }
+.figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; margin-top: 32px; }
+.figs div { border-top: 3px solid var(--asphalt); padding-top: 14px; }
+.figs b { display: block; font-size: clamp(44px, 5vw, 72px); font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+.figs span { color: var(--muted); }
+.company .txt p { margin: 18px 0 0; max-width: 52ch; }
+.company .pic { aspect-ratio: 4 / 3; }
+.company .pic img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Featured models (card component shared with the category page) */
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.card { display: grid; grid-template-rows: auto 1fr; background: var(--white); text-decoration: none; }
+.card .pic { aspect-ratio: 4 / 3; background: #cfcac1; }
+.card .pic img { width: 100%; height: 100%; object-fit: cover; }
+.card .body { padding: 18px 18px 22px; display: grid; gap: 12px; align-content: start; }
+.card h3 { font-size: 30px; position: relative; justify-self: start; padding-bottom: 6px; }
+.card h3::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 450ms var(--ease-out); }
+.card .cat { font-size: 14px; font-weight: 700; color: var(--red); }
+.card dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+.card dt { font-size: 13px; color: var(--muted); }
+.card dd { margin: 2px 0 0; font-weight: 900; font-size: 20px; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card { transition: transform 500ms var(--ease-out), opacity 400ms ease; }
+  .cards:hover .card:not(:hover) { opacity: .72; }
+  .card:hover { transform: translateY(-8px); }
+  .card:hover h3::after { transform: scaleX(1); }
+}
+.all { margin-top: 28px; }
+
+/* Services */
+.services { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px 64px; align-items: start; }
+.services .pic { aspect-ratio: 4 / 5; }
+.services .pic img { width: 100%; height: 100%; object-fit: cover; }
+.svc { list-style: none; margin: 32px 0 0; padding: 0; display: grid; gap: 28px; }
+.svc li { position: relative; padding-left: 24px; }
+.svc li::before { content: ""; position: absolute; left: 0; top: .15em; bottom: .15em; width: 4px; background: var(--red); transform-origin: top; }
+.svc h3 { font-size: 28px; margin-bottom: 6px; }
+.svc p { margin: 0; max-width: 52ch; }
+@media (prefers-reduced-motion: no-preference) { .js .svc li::before { transform: scaleY(0); transition: transform 700ms var(--ease-expo); transition-delay: calc(var(--d, 0ms) + 150ms); } .js .svc li.is-in::before { transform: none; } }
+
+/* Mud system */
+.mud { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.mud a { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); background: var(--white); text-decoration: none; min-height: 280px; }
+.mud .pic img { width: 100%; height: 100%; object-fit: cover; }
+.mud .t { padding: 24px; display: grid; gap: 10px; align-content: center; }
+.mud h3 { font-size: 30px; }
+.mud p { margin: 0; font-size: 16px; color: var(--muted); }
+.mud .more { font-weight: 700; color: var(--red); }
+
+/* Trenchless band with the drone video */
+.trench { position: relative; margin-top: clamp(72px, 9vw, 140px); min-height: 78vh; display: grid; align-items: center; color: var(--white); overflow: clip; }
+.trench video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.trench::after { content: ""; position: absolute; inset: 0; background: rgba(20,18,16,.5); }
+.trench .wrap { position: relative; z-index: 1; width: 100%; }
+.trench h2 { font-size: clamp(40px, 5.6vw, 88px); max-width: 16ch; }
+.trench p { max-width: 46ch; font-size: 20px; margin: 20px 0 28px; }
+.trench .btn.ghost { color: var(--white); box-shadow: inset 0 0 0 2px var(--white); }
+.trench .btn.ghost:hover { background: var(--white); color: var(--asphalt); }
+
+/* Enquiry form */
+.enquiry { padding-block: clamp(72px, 9vw, 140px); }
+.enquiry .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 64px; }
+.enquiry .side p { max-width: 36ch; }
+.enquiry dl { margin: 28px 0 0; display: grid; gap: 14px; }
+.enquiry dt { font-size: 14px; color: var(--muted); }
+.enquiry dd { margin: 2px 0 0; font-weight: 700; }
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+label { display: grid; gap: 6px; font-size: 15px; font-weight: 500; }
+input, select, textarea { font: 400 17px/1.3 var(--face); padding: 12px 14px; border-radius: 12px; border: 2px solid transparent; background: var(--white); color: var(--asphalt); transition: border-color 200ms ease; }
+input:focus, select:focus, textarea:focus { border-color: var(--asphalt); outline: none; }
+.full { grid-column: 1 / -1; }
+form .btn { justify-self: start; }
+
+/* Footer in columns */
+.foot { padding-block: 56px 32px; display: grid; grid-template-columns: minmax(0, 4fr) repeat(3, minmax(0, 2fr)); gap: 32px; }
+.foot .mark { font-size: 30px; }
+.foot h3 { font-size: 16px; letter-spacing: 0; margin-bottom: 12px; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 16px; }
+.foot a { text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
+.legal { border-top: 1px solid var(--line); padding-block: 20px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: var(--muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .hero video { animation: settle 1800ms var(--ease-soft) both; }
+  .js .hero h1 .w > span { transform: translateY(105%); animation: up 900ms var(--ease-expo) forwards; animation-delay: calc(120ms + var(--i) * 70ms); }
+  .js .hero .copy p, .js .hero .acts, .js .hero .bar .wrap > * { opacity: 0; animation: rise 600ms var(--ease-out) forwards; }
+  .js .hero .copy p { animation-delay: 560ms; } .js .hero .acts { animation-delay: 680ms; } .js .hero .bar .wrap > * { animation-delay: 80ms; }
+  @supports (animation-timeline: view()) {
+    .hero { view-timeline-name: --hero; }
+    .hero video { animation: settle 1800ms var(--ease-soft) both, drift linear both; animation-timeline: auto, --hero; animation-range: normal, exit 0% exit 100%; }
+    .hero .copy .wrap { animation: recede linear both; animation-timeline: --hero; animation-range: exit 0% exit 80%; }
+    .trench video { animation: drift2 linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+  }
+}
+@keyframes up { to { transform: none; } }
+@keyframes settle { from { transform: scale(1.08); } to { transform: scale(1); } }
+@keyframes drift { from { transform: translateY(0) scale(1); } to { transform: translateY(12%) scale(1.06); } }
+@keyframes drift2 { from { transform: scale(1.12) translateY(-4%); } to { transform: scale(1.12) translateY(4%); } }
+@keyframes recede { to { opacity: 0; transform: translateY(-40px); } }
+
+@media (max-width: 1000px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mud { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  .split2, .company, .services, .enquiry .wrap { grid-template-columns: 1fr; }
+  .lines { grid-template-columns: 1fr; }
+  .line { min-height: 420px; }
+  .cards { grid-template-columns: 1fr; }
+  .mud a { grid-template-columns: 1fr; }
+  .mud .pic { aspect-ratio: 16 / 10; }
+  .services .pic { aspect-ratio: 16 / 10; }
+  form { grid-template-columns: 1fr; }
+  .foot { grid-template-columns: 1fr 1fr; }
+  .foot > div:first-child { grid-column: 1 / -1; }
+}
+</style>
+
+<div class="hero">
+  <video src="video/rig.mp4" poster="video/rig.jpg" autoplay muted loop playsinline preload="auto" aria-label="Perfuratriz direcional trabalhando em uma obra"></video>
+  <header class="bar gut">
+    <div class="wrap">
+      <a class="mark" href="#">DWTXS LATAM</a>
+      <nav aria-label="Principal"><a href="#linhas">Máquinas</a><a href="#lama">Acessórios</a><a href="#empresa">Sobre nós</a><a href="#contato">Contato</a></nav>
+      <div class="lang" aria-label="Idioma"><a href="#" aria-current="true">PT</a><a href="#" lang="es">ES</a></div>
+    </div>
+  </header>
+  <div class="copy gut">
+    <div class="wrap">
+      <h1 id="hero-title">Perfuratrizes direcionais DWTXS</h1>
+      <p>Quinze modelos de 90 a 8.000 kN para instalar fibra, gás, água e energia sem abrir valas. No Brasil, pela DW Máquinas.</p>
+      <div class="acts"><a class="btn" href="#linhas">Ver as máquinas</a><a class="btn ghost" href="#contato">Pedir cotação</a></div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <section class="gut" id="linhas" aria-labelledby="h-lines">
+    <div class="wrap">
+      <div class="split2"><h2 class="h2" id="h-lines" data-split>Uma linha para cada obra</h2><p data-rise>Da perfuratriz compacta para obra urbana às Maxi-Rig para grandes travessias, e as All Terrain de haste dupla para rocha.</p></div>
+      <div class="lines">
+        <a class="line" href="#" data-shutter style="--d:0ms"><div class="pic" data-pan><img src="{{home:line_conventional}}" alt="Perfuratriz convencional DDW36/15SE"></div><div class="t"><h3>Convencional</h3><span class="r">90 – 1.200 kN</span><p>Sete modelos para terra, argila e areia, das obras urbanas às travessias médias.</p><span class="more">Descobrir</span></div></a>
+        <a class="line" href="#" data-shutter style="--d:140ms"><div class="pic" data-pan><img src="{{home:line_maxi}}" alt="Maxi-Rig DDW360/130"></div><div class="t"><h3>Maxi-Rig</h3><span class="r">2.400 – 8.000 kN</span><p>Quatro modelos para oleodutos, gasodutos e grandes travessias.</p><span class="more">Descobrir</span></div></a>
+        <a class="line" href="#" data-shutter style="--d:280ms"><div class="pic" data-pan><img src="{{home:line_at}}" alt="Perfuratriz All Terrain DDW35/15AT"></div><div class="t"><h3>All Terrain</h3><span class="r">200 – 750 kN</span><p>Quatro modelos de haste dupla para perfurar rocha e solo misto.</p><span class="more">Descobrir</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="gut" id="empresa" aria-labelledby="h-company">
+    <div class="wrap company">
+      <div class="txt">
+        <h2 class="h2" id="h-company" data-split>Quem está por trás</h2>
+        <p data-rise>A DW Máquinas distribui no Brasil as perfuratrizes da DWTXS, fabricante com mais de 20 anos de experiência em máquinas e ferramentas de perfuração direcional. Faz parte da Trader MAC, que fornece equipamentos para trabalhos subterrâneos em toda a América Latina.</p>
+        <div class="figs num">
+          <div data-rise><b><span class="count" data-to="600">600</span>+</b><span>clientes da Trader MAC na América Latina</span></div>
+          <div data-rise style="--d:100ms"><b><span class="count" data-to="50">50</span>+</b><span>anos em equipamentos para trabalhos subterrâneos</span></div>
+          <div data-rise style="--d:200ms"><b><span class="count" data-to="15">15</span></b><span>modelos de perfuratrizes DWTXS</span></div>
+          <div data-rise style="--d:300ms"><b>24/7</b><span>suporte remoto ou em campo</span></div>
+        </div>
+      </div>
+      <div class="pic" data-pan data-shutter><img src="{{home:company}}" alt="Equipe ao lado de uma Maxi-Rig em frente à fábrica da DWTXS"></div>
+    </div>
+  </section>
+
+  <section class="gut" aria-labelledby="h-feat">
+    <div class="wrap">
+      <div class="split2"><h2 class="h2" id="h-feat" data-split>Modelos em destaque</h2><p data-rise>Os modelos mais procurados, com ficha técnica completa em cada página.</p></div>
+      <div class="cards" id="cards"></div>
+      <a class="btn ghost all" href="#" data-rise>Ver todos os modelos</a>
+    </div>
+  </section>
+
+  <section class="gut" aria-labelledby="h-svc">
+    <div class="wrap services">
+      <div class="pic" data-pan data-shutter><img src="{{home:service}}" alt="Perfuratriz trabalhando ao entardecer com guindaste"></div>
+      <div>
+        <h2 class="h2" id="h-svc" data-split>Depois da venda, junto da obra</h2>
+        <ul class="svc">
+          <li data-rise><h3>Serviço técnico</h3><p>Técnicos especializados que identificam o problema conversando com o operador, e atendimento remoto ou em campo.</p></li>
+          <li data-rise style="--d:120ms"><h3>Entrega técnica</h3><p>Para quem ainda não opera esse tipo de equipamento, recomendamos a entrega técnica no local, com capacitação dos operadores.</p></li>
+          <li data-rise style="--d:240ms"><h3>Peças e ferramentas</h3><p>Peças de reposição e ferramentas de perfuração para manter a máquina trabalhando. [a confirmar]</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="gut" id="lama" aria-labelledby="h-mud">
+    <div class="wrap">
+      <div class="split2"><h2 class="h2" id="h-mud" data-split>Sistema de lama</h2><p data-rise>A lama de bentonita sustenta o furo. Preparar e reciclar bem é parte do rendimento da perfuração.</p></div>
+      <div class="mud">
+        <a href="#" data-rise><div class="pic" data-pan><img src="{{home:recycler}}" alt="Reciclador de lama DWTXS"></div><div class="t"><h3>Reciclador de lama</h3><p>Limpa a lama que volta do furo e a devolve ao circuito, com capacidade conforme o porte da perfuratriz.</p><span class="more">Saiba mais</span></div></a>
+        <a href="#" data-rise style="--d:120ms"><div class="pic" data-pan><img src="{{home:mixer}}" alt="Misturador de lama DWTXS"></div><div class="t"><h3>Misturador de lama</h3><p>Prepara a lama de bentonita, de unidades compactas a equipamentos para grandes perfuratrizes.</p><span class="more">Saiba mais</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="trench gut" aria-labelledby="h-trench" style="padding-block:96px">
+    <video src="video/drone.mp4" poster="video/drone.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Vista aérea de um pátio com perfuratrizes, sistema de lama e operários"></video>
+    <div class="wrap">
+      <h2 id="h-trench" data-split>Infraestrutura subterrânea sem abrir valas</h2>
+      <p data-rise>A perfuração direcional instala tubos e cabos por baixo de ruas, rios e estradas, sem interromper o trânsito nem quebrar o pavimento.</p>
+      <a class="btn ghost" href="#" data-rise style="--d:150ms">Como funciona</a>
+    </div>
+  </section>
+
+  <section class="enquiry band gut" id="contato" aria-labelledby="h-enq" style="margin-top:0">
+    <div class="wrap">
+      <div class="side">
+        <h2 class="h2" id="h-enq" data-split>Envie sua consulta</h2>
+        <p data-rise>Conte a obra, o terreno e o diâmetro do tubo. Respondemos com a máquina indicada e a cotação.</p>
+        <dl data-rise style="--d:100ms"><div><dt>WhatsApp</dt><dd>[a confirmar]</dd></div><div><dt>E-mail</dt><dd>[a confirmar]</dd></div><div><dt>Endereço</dt><dd>DW Máquinas, Brasil [a confirmar]</dd></div></dl>
+      </div>
+      <form data-rise onsubmit="event.preventDefault()">
+        <label>Nome<input id="f-name" autocomplete="name"></label>
+        <label>Empresa<input id="f-company" autocomplete="organization"></label>
+        <label>E-mail<input id="f-email" type="email" autocomplete="email"></label>
+        <label>Telefone<input id="f-phone" type="tel" autocomplete="tel"></label>
+        <label class="full">Motivo da consulta<select id="f-reason"><option>Máquina</option><option>Acessórios</option><option>Outro</option></select></label>
+        <label class="full">Mensagem<textarea id="f-msg" rows="4"></textarea></label>
+        <button class="btn full" type="submit">Enviar consulta</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="gut">
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="mark" href="#">DWTXS LATAM</a><p style="max-width:32ch;color:var(--muted);font-size:16px">Perfuratrizes direcionais DWTXS no Brasil, pela DW Máquinas.</p></div>
+      <div><h3>Máquinas</h3><ul><li><a href="#">Convencional</a></li><li><a href="#">Maxi-Rig</a></li><li><a href="#">All Terrain</a></li><li><a href="#">Acessórios</a></li></ul></div>
+      <div><h3>Empresa</h3><ul><li><a href="#">Sobre nós</a></li><li><a href="#">Serviço técnico</a></li><li><a href="#contato">Contato</a></li></ul></div>
+      <div><h3>Contato</h3><ul><li>WhatsApp [a confirmar]</li><li>E-mail [a confirmar]</li></ul></div>
+    </div>
+    <div class="legal"><span>DW Máquinas, distribuidora DWTXS no Brasil.</span><span>Home, proposta B. Conteúdo em validação.</span></div>
+  </div>
+</footer>
+
+<a class="wa" href="#" aria-label="Falar no WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.3 19.4L3 29l6.8-1.8A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.5-5.7-1.6l-.4-.2-4 1 1.1-3.9-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8.9 3.8.8a3.3 3.3 0 0 0 2.2-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.6-.4Z"/></svg></a>
+
+<script>{{js:base}}</script>
+<script>
+(() => {
+  const DATA = {{data}};
+  const CARD = {{img:cards}};
+  const reduce = window.Obra.reduce;
+  if (reduce) document.querySelectorAll('video[autoplay]').forEach((v) => { v.removeAttribute('autoplay'); v.pause(); });
+
+  // Hero title: masked words on load
+  const h = document.getElementById('hero-title'); const text = h.textContent.trim();
+  h.setAttribute('aria-label', text);
+  h.innerHTML = text.split(/\s+/).map((w, i) => `<span class="w" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`).join(' ');
+
+  // Featured models from the content collection
+  const KEYS = ['thrustPullback', 'rotaryTorque', 'enginePower', 'weight'];
+  const feat = DATA.models.filter((m) => m.featured);
+  document.getElementById('cards').innerHTML = feat.map((m, i) => {
+    const specs = KEYS.map((k) => m.keySpecs.find((x) => x.key === k)).filter(Boolean).map((k) => `<div><dt>${k.label}</dt><dd class="num">${k.text}</dd></div>`).join('');
+    return `<a class="card" href="#" data-rise style="--d:${i * 90}ms"><div class="pic" data-pan><img src="${CARD[m.slug]}" alt="Perfuratriz ${m.code}" loading="lazy"></div><div class="body"><span class="cat">${DATA.labels.categories[m.cat]}</span><h3>${m.code}</h3><dl>${specs}</dl></div></a>`;
+  }).join('');
+
+  // Count-up figures when they enter
+  const countUp = (el) => {
+    if (reduce || el.dataset.done) return; el.dataset.done = '1';
+    const to = +el.dataset.to, t0 = performance.now();
+    const tick = (t) => { const k = Math.min(1, (t - t0) / 1300); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); };
+    el.textContent = '0'; requestAnimationFrame(tick);
+  };
+  const cio = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } }, { threshold: 0.5 });
+  document.querySelectorAll('.count').forEach((c) => cio.observe(c));
+
+  window.Obra.watch();
+  window.Obra.pan();
+})();
+</script>

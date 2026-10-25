@@ -1,0 +1,195 @@
+<title>DWTXS LATAM Linhas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&display=swap">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{css:base}}
+/* Category page: line tabs, big title, sortable grid of model cards, All Terrain explainer. */
+.head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px 64px; align-items: end; padding-block: 40px 36px; }
+.head h1 { font-size: clamp(48px, 7.4vw, 112px); }
+.head .lede { margin: 0; max-width: 44ch; }
+.head .range { display: block; font-size: 26px; font-weight: 900; color: var(--red); margin-bottom: 10px; }
+.tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 24px; padding-block: 8px 28px; border-top: 2px solid var(--asphalt); padding-top: 22px; }
+.tools .sort { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-weight: 500; }
+.tools .sort .chip { font-size: 15px; padding: 9px 14px; }
+
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 28px; }
+.grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid.two .card h2 { font-size: 44px; }
+.card.wide { grid-column: 1 / -1; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); grid-template-rows: auto; }
+.card.wide .pic { aspect-ratio: auto; min-height: 100%; }
+.card.wide .body { padding: 32px; align-content: center; }
+.card.wide dl { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.card { display: grid; grid-template-rows: auto 1fr; background: var(--white); text-decoration: none; transition: transform 500ms var(--ease-out); }
+.card .pic { position: relative; aspect-ratio: 4 / 3; background: #cfcac1; }
+.card .pic img { width: 100%; height: 100%; object-fit: cover; }
+.card .tag { position: absolute; left: 12px; top: 12px; background: var(--red); color: #fff; font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 999px; }
+.card .body { padding: 22px 22px 24px; display: grid; gap: 14px; align-content: start; }
+.card h2 { font-size: 36px; position: relative; justify-self: start; padding-bottom: 6px; }
+.card h2::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 450ms var(--ease-out); }
+.card p { margin: 0; font-size: 16px; color: var(--muted); }
+.card dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+.card dt { font-size: 13px; color: var(--muted); }
+.card dd { margin: 2px 0 0; font-weight: 900; font-size: 22px; letter-spacing: -.01em; }
+.card .go { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.card .go .btn { padding: 12px 18px; font-size: 15px; }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .grid:hover .card:not(:hover) { opacity: .72; }
+  .card { transition: transform 500ms var(--ease-out), opacity 400ms ease; }
+  .card:hover { transform: translateY(-8px); }
+  .card:hover h2::after { transform: scaleX(1); }
+}
+
+/* All Terrain explainer */
+.explain { margin-top: clamp(72px, 9vw, 140px); padding-block: clamp(56px, 7vw, 104px); }
+.explain .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 64px; }
+.explain h2 { font-size: clamp(40px, 5vw, 72px); }
+.explain .txt { display: grid; gap: 16px; max-width: 62ch; }
+.explain .txt p { margin: 0; }
+.explain ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 14px; }
+.explain li { position: relative; padding-left: 22px; }
+.explain li::before { content: ""; position: absolute; left: 0; top: .2em; bottom: .2em; width: 4px; background: var(--red); }
+.explain .pic { margin-top: 24px; aspect-ratio: 16 / 9; }
+.explain .pic img { width: 100%; height: 100%; object-fit: cover; }
+
+.cta { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 24px; padding-block: clamp(72px, 9vw, 140px) 40px; }
+.cta h2 { font-size: clamp(44px, 6.4vw, 100px); max-width: 13ch; }
+
+/* Swap animation when the line or the order changes */
+@media (prefers-reduced-motion: no-preference) {
+  .grid.swap .card { animation: rise 600ms var(--ease-out) both; animation-delay: calc(var(--i) * 60ms); }
+  .grid.swap .card .pic img { animation: wipe 800ms var(--ease-in-out) both; animation-delay: calc(var(--i) * 60ms); }
+}
+
+@media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .card.wide { grid-column: auto; grid-template-columns: 1fr; } .card.wide .pic { aspect-ratio: 4 / 3; } .card.wide dl { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) {
+  .head, .explain .wrap { grid-template-columns: 1fr; }
+  .grid, .grid.two { grid-template-columns: 1fr; gap: 24px; }
+  .card h2 { font-size: 32px; }
+}
+</style>
+
+<header class="bar gut">
+  <div class="wrap">
+    <a class="mark" href="#">DWTXS LATAM</a>
+    <nav aria-label="Principal"><a href="#" aria-current="page">Máquinas</a><a href="#">Acessórios</a><a href="#">Sobre nós</a><a href="#contato">Contato</a></nav>
+    <div class="lang" aria-label="Idioma"><a href="#" aria-current="true">PT</a><a href="#" lang="es">ES</a></div>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Você está em"><ol><li><a href="#">Início</a></li><li><a href="#">Máquinas</a></li><li id="crumb-line" aria-current="page">Convencional</li></ol></nav>
+
+    <div class="chips" role="tablist" aria-label="Linhas" style="margin-top:28px">
+      <button class="chip" role="tab" type="button" data-line="conventional" aria-selected="true">Convencional</button>
+      <button class="chip" role="tab" type="button" data-line="all-terrain" aria-selected="false">All Terrain</button>
+      <button class="chip" role="tab" type="button" data-line="maxi-rig" aria-selected="false">Maxi-Rig</button>
+    </div>
+
+    <div class="head">
+      <h1 id="title" data-split>Perfuratrizes convencionais</h1>
+      <p class="lede" data-rise><span class="range num" id="range"></span><span id="lede"></span></p>
+    </div>
+
+    <div class="tools">
+      <span id="count" class="num" style="font-weight:700"></span>
+      <div class="sort" role="group" aria-label="Ordenar por"><span>Ordenar por</span>
+        <button class="chip" type="button" data-sort="order" aria-pressed="true">Linha</button>
+        <button class="chip" type="button" data-sort="thrustPullback" aria-pressed="false">Força de tiro</button>
+        <button class="chip" type="button" data-sort="rotaryTorque" aria-pressed="false">Torque</button>
+        <button class="chip" type="button" data-sort="weight" aria-pressed="false">Peso</button>
+      </div>
+    </div>
+
+    <div class="grid" id="grid" aria-live="polite"></div>
+  </div>
+</main>
+
+<section class="explain band gut" id="explain" hidden aria-labelledby="h-at">
+  <div class="wrap">
+    <h2 id="h-at" data-split>O que é a tecnologia All Terrain?</h2>
+    <div class="txt" id="at-txt" data-rise></div>
+  </div>
+</section>
+
+<div class="gut">
+  <div class="wrap">
+    <div class="cta" id="contato">
+      <h2 data-split>Não sabe qual modelo escolher?</h2>
+      <a class="btn" href="#" data-rise style="--d:250ms">Falar com um especialista</a>
+    </div>
+    <footer><span><b>DWTXS LATAM</b> · DW Máquinas</span><span>Grade de modelos, proposta B. Conteúdo em validação.</span></footer>
+  </div>
+</div>
+
+<a class="wa" href="#" aria-label="Falar no WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.3 19.4L3 29l6.8-1.8A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.5-5.7-1.6l-.4-.2-4 1 1.1-3.9-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8.9 3.8.8a3.3 3.3 0 0 0 2.2-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.6-.4Z"/></svg></a>
+
+<script>{{js:base}}</script>
+<script>
+(() => {
+  const DATA = {{data}};
+  const IMG = {{img:cards}};
+  const { nf } = window.Obra;
+  const LINE = {
+    conventional: { title: 'Perfuratrizes convencionais', lede: 'Para terra, argila e areia: das obras urbanas com pouco espaço às travessias de médio porte.' },
+    'all-terrain': { title: 'Perfuratrizes All Terrain', lede: 'Haste dupla para perfurar rocha e solo misto com a mesma máquina.' },
+    'maxi-rig': { title: 'Perfuratrizes Maxi-Rig', lede: 'Para oleodutos, gasodutos e grandes travessias, com sala de operação separada e guindaste.' },
+  };
+  const KEYS = ['thrustPullback', 'rotaryTorque', 'enginePower', 'weight'];
+  let line = 'conventional', sort = 'order';
+  const ks = (m, k) => m.keySpecs.find((x) => x.key === k);
+  const grid = document.getElementById('grid');
+
+  function card(m, i) {
+    const a = document.createElement('article');
+    a.className = 'card'; a.style.setProperty('--i', i);
+    const specs = KEYS.map((k) => ks(m, k)).filter(Boolean).map((k) => `<div><dt>${k.label}</dt><dd class="num">${k.text}</dd></div>`).join('');
+    a.innerHTML = `<div class="pic" data-pan><img src="${IMG[m.slug]}" alt="Perfuratriz ${m.code}" loading="lazy">${m.featured ? '<span class="tag">Destaque</span>' : ''}</div>
+      <div class="body"><h2>${m.code}</h2><p>${m.summary}</p><dl>${specs}</dl>
+      <div class="go"><a class="btn" href="#">Ver ficha</a><a class="btn ghost" href="#contato">Pedir cotação</a></div></div>`;
+    return a;
+  }
+
+  function render(animate) {
+    const list = DATA.models.filter((m) => m.cat === line);
+    if (sort !== 'order') list.sort((a, b) => ks(b, sort).value - ks(a, sort).value);
+    grid.replaceChildren(...list.map(card));
+    grid.classList.toggle('two', list.length % 3 !== 0 && list.length % 2 === 0);
+    if (list.length % 3 === 1 && list.length > 3) grid.lastElementChild.classList.add('wide');
+    const t = list.map((m) => ks(m, 'thrustPullback').value);
+    document.getElementById('range').textContent = `${nf.format(Math.min(...t))} – ${nf.format(Math.max(...t))} kN`;
+    document.getElementById('lede').textContent = LINE[line].lede;
+    document.getElementById('count').textContent = `${list.length} modelos`;
+    document.getElementById('crumb-line').textContent = DATA.labels.categories[line];
+    document.getElementById('explain').hidden = line !== 'all-terrain';
+    if (animate) { grid.classList.remove('swap'); void grid.offsetWidth; grid.classList.add('swap'); }
+    window.Obra.pan(grid);
+  }
+
+  document.querySelectorAll('[data-line]').forEach((b) => b.addEventListener('click', () => {
+    line = b.dataset.line;
+    document.querySelectorAll('[data-line]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    const h = document.getElementById('title'); h.removeAttribute('aria-label'); h.classList.remove('is-in'); h.textContent = LINE[line].title;
+    render(true); window.Obra.watch();
+  }));
+  document.querySelectorAll('[data-sort]').forEach((b) => b.addEventListener('click', () => {
+    sort = b.dataset.sort;
+    document.querySelectorAll('[data-sort]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    render(true);
+  }));
+
+  // All Terrain text from the Markdown page (headings, bold, lists, paragraphs)
+  const md = DATA.allTerrain.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  document.getElementById('at-txt').innerHTML = md.split(/\n\n+/).map((blk) => {
+    if (blk.startsWith('## ')) return `<h3 style="font-size:28px;margin-top:12px">${blk.slice(3)}</h3>`;
+    if (blk.startsWith('- ')) return `<ul>${blk.split('\n').map((l) => `<li>${l.slice(2)}</li>`).join('')}</ul>`;
+    return `<p>${blk}</p>`;
+  }).join('');
+
+  render(false);
+  window.Obra.watch();
+})();
+</script>

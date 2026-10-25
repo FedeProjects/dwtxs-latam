@@ -23,3 +23,10 @@ pnpm-debug.log*
 
 # client documents and raw source material from dwtxs.cn / tradermacusa.com (not versioned)
 /assets/
+
+# prototype build outputs (regenerate with docs/prototypes/build-data.mjs + build.py)
+docs/prototypes/*.json
+docs/prototypes/home.html
+docs/prototypes/category.html
+docs/prototypes/model.html
+docs/prototypes/video/
