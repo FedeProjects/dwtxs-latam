@@ -1,0 +1,257 @@
+<title>DWTXS LATAM Ficha DDW55/27</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&display=swap">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+{{css:base}}
+/* Model page: gallery + key specs, description, full spec sheet with a sticky index and a filter, related models, contact with the model prefilled. */
+.top { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px 56px; padding-block: 28px 0; align-items: start; }
+.top > * { min-width: 0; }
+.gallery .main { position: relative; aspect-ratio: 4 / 3; background: #cfcac1; }
+.gallery .main img { width: 100%; height: 100%; object-fit: cover; }
+.gallery .nav { position: absolute; right: 12px; bottom: 12px; display: flex; gap: 8px; z-index: 2; }
+.gallery .nav button { width: 46px; height: 46px; border-radius: 50%; border: 0; background: var(--white); color: var(--asphalt); font: 900 22px/1 var(--face); cursor: pointer; transition: transform 140ms var(--ease-out), background-color 180ms ease; }
+.gallery .nav button:hover { background: var(--asphalt); color: var(--white); }
+.gallery .nav button:active { transform: scale(.92); }
+.gallery .counter { position: absolute; left: 12px; bottom: 12px; z-index: 2; background: var(--asphalt); color: var(--white); font-size: 14px; font-weight: 700; padding: 6px 10px; border-radius: 999px; }
+.thumbs { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.thumbs button { padding: 0; border: 0; background: none; cursor: pointer; aspect-ratio: 1; overflow: hidden; position: relative; }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms var(--ease-soft), opacity 200ms ease; opacity: .62; }
+.thumbs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 400ms var(--ease-out); }
+.thumbs button[aria-current="true"] img, .thumbs button:hover img { opacity: 1; }
+.thumbs button[aria-current="true"]::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .thumbs button:hover img { transform: scale(1.12); } }
+.main.swap img { animation: wipe 700ms var(--ease-in-out) both; }
+
+.intro .line { display: inline-block; margin-bottom: 18px; }
+.intro h1 { font-size: clamp(56px, 7vw, 108px); }
+.intro .name { font-size: 22px; font-weight: 500; margin: 10px 0 0; }
+.intro .sum { margin: 20px 0 0; max-width: 42ch; }
+.keys { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 28px 0 0; border-top: 2px solid var(--asphalt); }
+.keys div { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.keys div:nth-child(odd) { padding-right: 16px; }
+.keys dt { font-size: 14px; color: var(--muted); }
+.keys dd { margin: 4px 0 0; font-size: clamp(26px, 2.4vw, 34px); font-weight: 900; letter-spacing: -.02em; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+.desc { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 64px; padding-block: clamp(72px, 9vw, 140px) 0; }
+.desc h2 { font-size: clamp(36px, 4.4vw, 64px); }
+.desc p { margin: 0; font-size: 20px; max-width: 60ch; }
+
+/* Spec sheet */
+.sheet { padding-block: clamp(72px, 9vw, 140px) 0; }
+.sheet .head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 32px; padding-bottom: 24px; border-bottom: 2px solid var(--asphalt); }
+.sheet h2 { font-size: clamp(40px, 5.4vw, 80px); }
+.find { display: grid; gap: 6px; font-size: 14px; font-weight: 500; }
+.find input { font: 500 17px/1 var(--face); padding: 13px 18px; border-radius: 999px; border: 2px solid var(--asphalt); background: var(--white); color: var(--asphalt); width: min(340px, 80vw); }
+.sheet .cols { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; padding-top: 32px; align-items: start; }
+.toc { position: sticky; top: 96px; display: grid; gap: 2px; font-size: 16px; font-weight: 500; }
+.toc a { text-decoration: none; padding: 6px 0 6px 14px; border-left: 3px solid var(--line); color: var(--muted); transition: color 200ms ease, border-color 200ms ease, padding 300ms var(--ease-out); }
+.toc a.on { color: var(--asphalt); border-left-color: var(--red); padding-left: 20px; font-weight: 700; }
+.toc a:hover { color: var(--asphalt); }
+.sec { scroll-margin-top: 96px; padding-bottom: 36px; }
+.sec h3 { font-size: 26px; margin-bottom: 8px; }
+.sec table { width: 100%; border-collapse: collapse; }
+.sec th, .sec td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 17px; }
+.sec th { font-weight: 400; color: var(--muted); width: 50%; padding-right: 20px; }
+.sec td { font-weight: 700; }
+.sec tr { transition: background-color 200ms ease; }
+@media (hover: hover) and (pointer: fine) { .sec tbody tr:hover { background: var(--white); } .sec tbody tr:hover th { color: var(--asphalt); } }
+.sec mark { background: #f3d36b; color: inherit; padding: 0 2px; }
+.note { font-size: 15px; color: var(--muted); margin: 8px 0 0; }
+.empty { display: none; font-weight: 700; padding: 24px 0; }
+
+/* Related */
+.related { padding-block: clamp(72px, 9vw, 140px) 0; }
+.related h2 { font-size: clamp(36px, 4.4vw, 64px); margin-bottom: 28px; }
+.rel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.rel a { text-decoration: none; background: var(--white); display: grid; }
+.rel .pic { aspect-ratio: 16 / 10; }
+.rel .pic img { width: 100%; height: 100%; object-fit: cover; }
+.rel .b { padding: 16px 18px 20px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.rel h3 { font-size: 26px; }
+.rel span { font-weight: 700; color: var(--red); }
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) { .rel a { transition: transform 500ms var(--ease-out); } .rel a:hover { transform: translateY(-6px); } }
+
+/* Contact with the model prefilled */
+.contact { margin-top: clamp(72px, 9vw, 140px); padding-block: clamp(56px, 7vw, 104px); }
+.contact .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 64px; }
+.contact h2 { font-size: clamp(40px, 5vw, 72px); }
+.contact p { max-width: 36ch; }
+form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+label { display: grid; gap: 6px; font-size: 15px; font-weight: 500; }
+input, select, textarea { font: 400 17px/1.3 var(--face); padding: 12px 14px; border-radius: 12px; border: 2px solid transparent; background: var(--white); color: var(--asphalt); transition: border-color 200ms ease; }
+input:focus, select:focus, textarea:focus { border-color: var(--asphalt); outline: none; }
+.full { grid-column: 1 / -1; }
+.model-chip { display: inline-flex; align-items: center; gap: 10px; background: var(--asphalt); color: var(--white); font-weight: 700; padding: 10px 16px; border-radius: 999px; justify-self: start; }
+form .btn { justify-self: start; }
+
+@media (max-width: 900px) {
+  .top, .desc, .contact .wrap { grid-template-columns: 1fr; }
+  .sheet .cols { grid-template-columns: 1fr; }
+  .toc { position: static; display: flex; flex-wrap: wrap; gap: 6px; }
+  .toc a { border: 2px solid var(--asphalt); border-radius: 999px; padding: 6px 12px; font-size: 14px; }
+  .toc a.on { padding-left: 12px; background: var(--asphalt); color: var(--white); }
+  .rel { grid-template-columns: 1fr; }
+  form { grid-template-columns: 1fr; }
+  .thumbs { display: flex; overflow-x: auto; scrollbar-width: none; }
+  .thumbs button { flex: 0 0 64px; }
+  .keys dd { font-size: 24px; }
+}
+</style>
+
+<header class="bar gut">
+  <div class="wrap">
+    <a class="mark" href="#">DWTXS LATAM</a>
+    <nav aria-label="Principal"><a href="#" aria-current="page">Máquinas</a><a href="#">Acessórios</a><a href="#">Sobre nós</a><a href="#contato">Contato</a></nav>
+    <div class="lang" aria-label="Idioma"><a href="#" aria-current="true">PT</a><a href="#" lang="es">ES</a></div>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Você está em"><ol><li><a href="#">Início</a></li><li><a href="#">Máquinas</a></li><li><a href="#" id="crumb-line"></a></li><li aria-current="page" id="crumb-code"></li></ol></nav>
+
+    <div class="top">
+      <div class="gallery" data-rise>
+        <div class="main" id="main" data-pan>
+          <img id="main-img" alt="">
+          <span class="counter num" id="counter"></span>
+          <div class="nav"><button type="button" id="prev" aria-label="Foto anterior">‹</button><button type="button" id="next" aria-label="Próxima foto">›</button></div>
+        </div>
+        <div class="thumbs" id="thumbs" role="group" aria-label="Fotos do modelo"></div>
+      </div>
+      <div class="intro">
+        <a class="chip line" id="line" href="#"></a>
+        <h1 id="code" data-split></h1>
+        <p class="name" id="name" data-rise></p>
+        <p class="sum" id="sum" data-rise style="--d:100ms"></p>
+        <dl class="keys num" id="keys"></dl>
+        <div class="actions" data-rise style="--d:200ms"><a class="btn" href="#contato" id="quote"></a><a class="btn ghost" href="#">WhatsApp</a></div>
+      </div>
+    </div>
+
+    <section class="desc" aria-labelledby="h-desc">
+      <h2 id="h-desc" data-split>Sobre a máquina</h2>
+      <p id="desc" data-rise></p>
+    </section>
+
+    <section class="sheet" id="ficha" aria-labelledby="h-sheet">
+      <div class="head">
+        <h2 id="h-sheet" data-split>Ficha técnica</h2>
+        <label class="find" for="find">Buscar na ficha<input id="find" type="search" placeholder="Ex.: torque, bomba, motor" autocomplete="off"></label>
+      </div>
+      <div class="cols">
+        <nav class="toc" id="toc" aria-label="Seções da ficha"></nav>
+        <div>
+          <div id="sections"></div>
+          <p class="empty" id="empty">Nenhum dado com esse termo. Tente outra palavra.</p>
+          <p class="note" id="note"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="related" aria-labelledby="h-rel">
+      <h2 id="h-rel" data-split>Outros modelos da linha</h2>
+      <div class="rel" id="rel"></div>
+    </section>
+  </div>
+</main>
+
+<section class="contact band gut" id="contato" aria-labelledby="h-contact">
+  <div class="wrap">
+    <div>
+      <h2 id="h-contact" data-split>Pedir cotação</h2>
+      <p data-rise>Conte a obra e o terreno. Respondemos com a cotação e as condições para este modelo.</p>
+    </div>
+    <form data-rise onsubmit="event.preventDefault()">
+      <span class="model-chip full" id="model-chip"></span>
+      <input type="hidden" name="model" id="f-model">
+      <label>Nome<input id="f-name" autocomplete="name"></label>
+      <label>Empresa<input id="f-company" autocomplete="organization"></label>
+      <label>E-mail<input id="f-email" type="email" autocomplete="email"></label>
+      <label>Telefone<input id="f-phone" type="tel" autocomplete="tel"></label>
+      <label class="full">Assunto<select id="f-reason"><option>Máquina</option><option>Acessórios</option><option>Outro</option></select></label>
+      <label class="full">Mensagem<textarea id="f-msg" rows="4"></textarea></label>
+      <button class="btn full" type="submit">Enviar pedido</button>
+    </form>
+  </div>
+</section>
+
+<div class="gut"><div class="wrap"><footer><span><b>DWTXS LATAM</b> · DW Máquinas</span><span>Ficha de modelo, proposta B. Dados do fabricante em validação.</span></footer></div></div>
+
+<a class="wa" href="#" aria-label="Falar no WhatsApp sobre este modelo"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.3 19.4L3 29l6.8-1.8A13 13 0 1 0 16 3Zm0 23.6c-2 0-4-.5-5.7-1.6l-.4-.2-4 1 1.1-3.9-.3-.4A10.6 10.6 0 1 1 16 26.6Zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8.9 3.8.8a3.3 3.3 0 0 0 2.2-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.6-.4Z"/></svg></a>
+
+<script>{{js:base}}</script>
+<script>
+(() => {
+  const DATA = {{data}};
+  const GAL = {{img:gallery}};
+  const THUMB = {{img:thumbs}};
+  const CARD = {{img:cards}};
+  const m = DATA.models.find((x) => x.slug === DATA.detail);
+  const $ = (id) => document.getElementById(id);
+  const cat = DATA.labels.categories[m.cat];
+
+  $('crumb-line').textContent = cat; $('crumb-code').textContent = m.code; $('line').textContent = cat;
+  $('code').textContent = m.code; $('name').textContent = m.name; $('sum').textContent = m.summary; $('desc').textContent = m.description;
+  $('quote').textContent = `Pedir cotação do ${m.code}`; $('model-chip').textContent = `Modelo: ${m.code}`; $('f-model').value = m.code;
+  $('keys').innerHTML = m.keySpecs.map((k) => `<div><dt>${k.label}</dt><dd>${k.text}</dd></div>`).join('');
+  $('note').textContent = DATA.labels.specNote;
+
+  // Gallery
+  let cur = 0;
+  const main = $('main'), img = $('main-img');
+  function photo(i, animate) {
+    cur = (i + GAL.length) % GAL.length;
+    img.src = GAL[cur]; img.alt = `${m.code}, foto ${cur + 1} de ${GAL.length}`;
+    $('counter').textContent = `${cur + 1} / ${GAL.length}`;
+    document.querySelectorAll('#thumbs button').forEach((b, n) => b.setAttribute('aria-current', String(n === cur)));
+    if (animate) { main.classList.remove('swap'); void main.offsetWidth; main.classList.add('swap'); }
+  }
+  $('thumbs').innerHTML = THUMB.map((t, n) => `<button type="button" aria-label="Foto ${n + 1}"><img src="${t}" alt=""></button>`).join('');
+  document.querySelectorAll('#thumbs button').forEach((b, n) => b.addEventListener('click', () => photo(n, true)));
+  $('prev').addEventListener('click', () => photo(cur - 1, true));
+  $('next').addEventListener('click', () => photo(cur + 1, true));
+  main.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') photo(cur - 1, true); if (e.key === 'ArrowRight') photo(cur + 1, true); });
+  photo(0, false);
+
+  // Spec sheet
+  const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  $('sections').innerHTML = m.sheet.map((s) => `<div class="sec" id="s-${slug(s.section)}"><h3>${s.section}</h3><table class="num"><tbody>${s.rows.map((r) => `<tr><th scope="row">${r.label}</th><td>${r.text}</td></tr>`).join('')}</tbody></table></div>`).join('');
+  $('toc').innerHTML = m.sheet.map((s) => `<a href="#s-${slug(s.section)}">${s.section}</a>`).join('');
+  const links = [...document.querySelectorAll('#toc a')];
+  const tio = new IntersectionObserver((es) => {
+    for (const e of es) if (e.isIntersecting) links.forEach((a) => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('.sec').forEach((s) => tio.observe(s));
+
+  // Filter the sheet as you type
+  const rows = [...document.querySelectorAll('.sec tbody tr')].map((tr) => ({ tr, th: tr.querySelector('th'), td: tr.querySelector('td'), raw: [tr.querySelector('th').textContent, tr.querySelector('td').textContent] }));
+  const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  $('find').addEventListener('input', (e) => {
+    const q = e.target.value.trim();
+    const fold = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    let shown = 0;
+    for (const r of rows) {
+      const hit = !q || fold(r.raw.join(' ')).includes(fold(q));
+      r.tr.hidden = !hit; if (hit) shown++;
+      const re = q ? new RegExp(`(${esc(q)})`, 'ig') : null;
+      r.th.innerHTML = re ? r.raw[0].replace(re, '<mark>$1</mark>') : r.raw[0];
+      r.td.innerHTML = re ? r.raw[1].replace(re, '<mark>$1</mark>') : r.raw[1];
+    }
+    document.querySelectorAll('.sec').forEach((s) => { s.hidden = ![...s.querySelectorAll('tbody tr')].some((tr) => !tr.hidden); });
+    $('empty').style.display = shown ? 'none' : 'block';
+  });
+
+  // Related: nearest models of the same line by thrust
+  const thrust = (x) => x.keySpecs.find((k) => k.key === 'thrustPullback').value;
+  const rel = DATA.models.filter((x) => x.cat === m.cat && x.slug !== m.slug).sort((a, b) => Math.abs(thrust(a) - thrust(m)) - Math.abs(thrust(b) - thrust(m))).slice(0, 3);
+  $('rel').innerHTML = rel.map((x, i) => `<a href="#" data-rise style="--d:${i * 90}ms"><div class="pic" data-pan><img src="${CARD[x.slug]}" alt="Perfuratriz ${x.code}" loading="lazy"></div><div class="b"><h3>${x.code}</h3><span class="num">${x.keySpecs.find((k) => k.key === 'thrustPullback').text}</span></div></a>`).join('');
+
+  window.Obra.watch();
+  window.Obra.pan();
+})();
+</script>

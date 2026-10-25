@@ -1,0 +1,59 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<!-- Light/dark switch (D-13). Hidden without JS: the theme then follows the system. -->
+<button
+  type="button"
+  class="hidden size-10 place-items-center rounded-full ring-2 ring-current [.js_&]:grid"
+  aria-label={t('theme.dark')}
+  aria-pressed="false"
+  data-theme-toggle
+>
+  <svg viewBox="0 0 24 24" aria-hidden="true" class="size-5 dark:hidden">
+    <path fill="currentColor" d="M21 14.5A9 9 0 0 1 9.5 3a9 9 0 1 0 11.5 11.5Z"></path>
+  </svg>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    class="hidden size-5 dark:block"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+  >
+    <circle cx="12" cy="12" r="4.5"></circle>
+    <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+  </svg>
+</button>
+
+<script>
+  // The stored pick wins over the system preference; the head script applies it before paint.
+  const root = document.documentElement;
+  const systemDark = matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => (root.dataset.theme ?? (systemDark.matches ? 'dark' : 'light')) === 'dark';
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+    const sync = () => button.setAttribute('aria-pressed', String(isDark()));
+    sync();
+    systemDark.addEventListener('change', sync);
+    button.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        // Storage blocked (private mode): the pick lasts for this page only.
+      }
+      sync();
+    });
+  });
+</script>

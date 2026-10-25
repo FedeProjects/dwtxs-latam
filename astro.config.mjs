@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -20,6 +20,19 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
+  // Schibsted Grotesk (D-11), downloaded at build time and served from our own domain.
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Schibsted Grotesk',
+      cssVariable: '--font-schibsted',
+      weights: [400, 500, 700, 900],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['Helvetica Neue', 'Arial', 'sans-serif'],
+    },
+  ],
 
   vite: {
     plugins: [tailwindcss()],

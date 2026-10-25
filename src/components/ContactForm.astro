@@ -1,0 +1,59 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Model code sent with the enquiry when the form sits on a model page. */
+  model?: string;
+}
+
+// UI only for now: the endpoint, honeypot and Turnstile are wired in Phase 3 (PROJECT_SPEC D-04).
+const { lang, model } = Astro.props;
+const t = useTranslations(lang);
+const field =
+  'bg-paper text-asphalt focus:border-asphalt w-full min-w-0 rounded-xl border-2 border-transparent px-3.5 py-3 text-[17px]/[1.3] transition-colors outline-none';
+const label = 'grid min-w-0 gap-1.5 text-[15px] font-medium';
+---
+
+<form class="grid gap-3.5 md:grid-cols-2" data-rise data-contact-form>
+  {model && <input type="hidden" name="model" value={model} />}
+  <label class={label}>
+    {t('form.name')}
+    <input class={field} name="name" autocomplete="name" required />
+  </label>
+  <label class={label}>
+    {t('form.company')}
+    <input class={field} name="company" autocomplete="organization" />
+  </label>
+  <label class={label}>
+    {t('form.email')}
+    <input class={field} name="email" type="email" autocomplete="email" required />
+  </label>
+  <label class={label}>
+    {t('form.phone')}
+    <input class={field} name="phone" type="tel" autocomplete="tel" />
+  </label>
+  <label class:list={[label, 'md:col-span-2']}>
+    {t('form.reason')}
+    <select class={field} name="reason">
+      <option value="machine">{t('form.reasonMachine')}</option>
+      <option value="accessories">{t('form.reasonAccessories')}</option>
+      <option value="other">{t('form.reasonOther')}</option>
+    </select>
+  </label>
+  <label class:list={[label, 'md:col-span-2']}>
+    {t('form.message')}
+    <textarea class={field} name="message" rows="4" required></textarea>
+  </label>
+  <button class="btn justify-self-start md:col-span-2" type="submit">
+    {t('form.submit')}
+  </button>
+</form>
+
+<script>
+  // Until Phase 3 connects the form endpoint, keep submissions on the page.
+  document
+    .querySelectorAll<HTMLFormElement>('[data-contact-form]')
+    .forEach((form) => form.addEventListener('submit', (e) => e.preventDefault()));
+</script>

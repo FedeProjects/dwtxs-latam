@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import type { KeySpec } from '../content/specs';
+import type { Lang } from '../i18n/ui';
+import { formatQuantity, modelPath, useCatalogLabels, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  model: CollectionEntry<'models'>;
+  /** Stagger for the reveal animation, in ms. */
+  delay?: number;
+}
+
+/** Key specs shown on every card, in this order (the category grid reuses this card). */
+const CARD_SPECS: KeySpec[] = ['thrustPullback', 'rotaryTorque', 'enginePower', 'weight'];
+
+const { lang, model, delay = 0 } = Astro.props;
+const t = useTranslations(lang);
+const labels = useCatalogLabels(lang);
+const { code, category, images, keySpecs } = model.data;
+const specs = CARD_SPECS.flatMap((key) => keySpecs.filter((s) => s.key === key));
+---
+
+<a
+  href={modelPath(lang, category, model.id)}
+  class="card bg-paper grid grid-rows-[auto_1fr] no-underline"
+  data-rise
+  style={`--d:${delay}ms`}
+>
+  <div class="aspect-4/3 bg-line" data-pan>
+    <Image
+      src={images[0]}
+      alt={`${t('common.machineAlt')} ${code}`}
+      widths={[480, 720, 960]}
+      sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 25vw"
+      class="size-full object-cover"
+    />
+  </div>
+  <div class="grid content-start gap-3 px-4.5 pt-4.5 pb-5.5">
+    <span class="text-red-ink text-sm font-bold">{labels.categories[category]}</span>
+    <h3 class="card-title relative justify-self-start pb-1.5 text-[30px]">{code}</h3>
+    <dl class="border-line grid grid-cols-2 gap-x-3.5 gap-y-2.5 border-t pt-3">
+      {specs.map((s) => (
+        <div>
+          <dt class="text-muted text-[13px]">{labels.keySpecs[s.key]}</dt>
+          <dd class="mt-0.5 text-xl font-black">{formatQuantity(lang, s.value, s.unit)}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</a>

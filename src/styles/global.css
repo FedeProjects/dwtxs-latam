@@ -1,1 +1,396 @@
 @import 'tailwindcss';
+
+/* Palette "Acero" (PROJECT_SPEC D-14, proposal over D-11 "Obra"): sand ground, blue-graphite ink,
+   machine red for actions, and a dark steel "chassis" (header, footer, enquiry band) that carries the
+   white logo in both themes. Layout lives in Tailwind utilities; this file keeps the tokens, base
+   styles and the few components that utilities express badly (motion, overlays).
+   Theme (D-13): the tokens below are the light values; the dark blocks redefine them, so utilities
+   like `bg-concrete` follow the theme with no `dark:` class. Dark is not an inversion: the ground
+   turns from sand to deep steel, cards rise above it, the chassis gets darker and red gets brighter.
+   `on-media` / `on-chrome` stay light in both themes. Token names (concrete = ground, asphalt = ink)
+   are kept from D-11. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+}
+
+@theme {
+  --color-concrete: #e6e1d6;
+  --color-asphalt: #1b2026;
+  --color-muted: #585d64;
+  --color-red: #c1121f;
+  --color-red-dark: #96101a;
+  --color-sky: #cdd8df;
+  --color-paper: #f7f4ee;
+  --color-line: #d3cdc0;
+  --color-red-ink: #b0111c;
+  --color-chrome: #1b2026;
+  --color-on-chrome: #f4f2ee;
+  --color-whatsapp: #1f8f4e;
+  --color-on-media: #fbfaf8;
+  --color-on-media-ink: #1b2026;
+
+  --font-sans: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Dark values: follow the system unless the reader picked light, or apply an explicit dark pick. */
+:root {
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-concrete: #151a1f;
+    --color-asphalt: #e8e6e1;
+    --color-muted: #9ba3ab;
+    --color-red: #d61f2a;
+    --color-red-dark: #b3121b;
+    --color-sky: #1f2c36;
+    --color-paper: #1f262d;
+    --color-line: #2e363f;
+    --color-red-ink: #ff8086;
+    --color-chrome: #0d1013;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --color-concrete: #151a1f;
+  --color-asphalt: #e8e6e1;
+  --color-muted: #9ba3ab;
+  --color-red: #d61f2a;
+  --color-red-dark: #b3121b;
+  --color-sky: #1f2c36;
+  --color-paper: #1f262d;
+  --color-line: #2e363f;
+  --color-red-ink: #ff8086;
+  --color-chrome: #0d1013;
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply bg-concrete font-sans text-lg/[1.55] text-asphalt;
+  }
+
+  /* Page scrollbar in the palette (desktop only: phones draw their own overlay bars).
+     Standard properties for Chrome, Edge and Firefox; the -webkit- pill is the Safari fallback. */
+  :root {
+    --scroll-thumb: color-mix(in srgb, var(--color-asphalt) 50%, var(--color-concrete));
+    scrollbar-color: var(--scroll-thumb) var(--color-concrete);
+  }
+  @supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+      background: var(--color-concrete);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scroll-thumb);
+      border: 3px solid var(--color-concrete);
+      border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-red);
+    }
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-red-ink);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply leading-[0.98] font-black tracking-[-0.025em] text-balance;
+  }
+}
+
+@layer components {
+  /* Side gutters that respect the notch */
+  .gut {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .section {
+    padding-top: clamp(72px, 9vw, 140px);
+  }
+  .h2 {
+    font-size: clamp(40px, 5.4vw, 80px);
+  }
+
+  /* Pill buttons */
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-red px-6 py-[15px] text-[17px]/none font-bold text-white no-underline;
+    transition:
+      background-color 180ms ease,
+      transform 140ms var(--ease-out);
+  }
+  .btn:hover {
+    @apply bg-red-dark;
+  }
+  .btn:active {
+    transform: scale(0.96);
+  }
+  .btn-ghost {
+    @apply bg-transparent text-asphalt;
+    box-shadow: inset 0 0 0 2px currentColor;
+  }
+  .btn-ghost:hover {
+    @apply bg-asphalt text-paper;
+  }
+  .btn-ghost-light {
+    @apply bg-transparent text-on-media;
+    box-shadow: inset 0 0 0 2px currentColor;
+  }
+  .btn-ghost-light:hover {
+    @apply bg-on-media text-on-media-ink;
+  }
+
+  /* "Discover" link with a red bar that grows */
+  .more {
+    @apply inline-flex items-center gap-2 font-bold;
+  }
+  .more::after {
+    content: '';
+    width: 26px;
+    height: 2px;
+    background: currentColor;
+    transition: width 400ms var(--ease-out);
+  }
+
+  /* Bottom gradient over line photos, darker side over the hero video */
+  .shade-bottom::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgb(20 18 16 / 0.86) 0%,
+      rgb(20 18 16 / 0.35) 50%,
+      rgb(20 18 16 / 0) 75%
+    );
+  }
+  .shade-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgb(20 18 16 / 0.62) 0%, rgb(20 18 16 / 0) 22%),
+      linear-gradient(
+        to right,
+        rgb(20 18 16 / 0.84) 0%,
+        rgb(20 18 16 / 0.62) 40%,
+        rgb(20 18 16 / 0.12) 72%,
+        rgb(20 18 16 / 0) 100%
+      );
+  }
+
+  /* Red bar beside each service, drawn when the item enters */
+  .bar-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15em;
+    bottom: 0.15em;
+    width: 4px;
+    background: var(--color-red);
+    transform-origin: top;
+  }
+
+  /* Words that rise from a mask (built by src/scripts/motion.ts) */
+  .w {
+    display: inline-block;
+    overflow: clip;
+    vertical-align: top;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+  .w > span {
+    display: inline-block;
+  }
+
+  /* Hover pan: zoom and follow the pointer */
+  [data-pan] {
+    overflow: hidden;
+    --mx: 0;
+    --my: 0;
+    --z: 1;
+  }
+}
+
+/* Hover effects only for fine pointers, and only when motion is welcome */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-pan] img {
+    transform: scale(var(--z)) translate(calc(var(--mx) * -3.5%), calc(var(--my) * -3.5%));
+    transition: transform 700ms var(--ease-soft);
+  }
+  [data-pan]:hover {
+    --z: 1.14;
+  }
+  [data-pan].moving img {
+    transition: transform 220ms var(--ease-out);
+  }
+
+  .lines .line {
+    transition: filter 400ms ease;
+  }
+  .lines:hover .line:not(:hover) {
+    filter: saturate(0.6);
+  }
+  .line:hover .more::after {
+    width: 48px;
+  }
+
+  .cards .card {
+    transition:
+      transform 500ms var(--ease-out),
+      opacity 400ms ease;
+  }
+  .cards:hover .card:not(:hover) {
+    opacity: 0.72;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+  }
+  .card:hover .card-title::after {
+    transform: scaleX(1);
+  }
+}
+
+.card-title::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: var(--color-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 450ms var(--ease-out);
+}
+
+/* Reveal once on enter. Gated by html.js so content stays visible without JavaScript (D-12). */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-split] .w > span {
+    transform: translateY(105%);
+    transition: transform 900ms var(--ease-expo);
+    transition-delay: calc(80ms + var(--i) * 60ms);
+  }
+  .js [data-split].is-in .w > span {
+    transform: none;
+  }
+  .js [data-rise] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 900ms var(--ease-out);
+    transition-delay: var(--d, 0ms);
+  }
+  .js [data-rise].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .js [data-shutter] {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1100ms var(--ease-in-out);
+    transition-delay: var(--d, 0ms);
+  }
+  .js [data-shutter].is-in {
+    clip-path: inset(0);
+  }
+  .js .bar-item::before {
+    transform: scaleY(0);
+    transition: transform 700ms var(--ease-expo);
+    transition-delay: calc(var(--d, 0ms) + 150ms);
+  }
+  .js .bar-item.is-in::before {
+    transform: none;
+  }
+
+  /* Hero: video settles, copy and header fade in on load */
+  .js .hero-video {
+    animation: settle 1800ms var(--ease-soft) both;
+  }
+  .js [data-intro] {
+    opacity: 0;
+    animation: rise 600ms var(--ease-out) forwards;
+    animation-delay: var(--d, 80ms);
+  }
+
+  /* Scroll-linked drift where the browser supports scroll-driven animations */
+  @supports (animation-timeline: view()) {
+    .hero {
+      view-timeline-name: --hero;
+    }
+    .js .hero-video {
+      animation:
+        settle 1800ms var(--ease-soft) both,
+        drift linear both;
+      animation-timeline: auto, --hero;
+      animation-range:
+        normal,
+        exit 0% exit 100%;
+    }
+    .hero-copy {
+      animation: recede linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 80%;
+    }
+    .band-video {
+      animation: drift-band linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes drift {
+  from {
+    transform: translateY(0) scale(1);
+  }
+  to {
+    transform: translateY(12%) scale(1.06);
+  }
+}
+@keyframes drift-band {
+  from {
+    transform: scale(1.12) translateY(-4%);
+  }
+  to {
+    transform: scale(1.12) translateY(4%);
+  }
+}
+@keyframes recede {
+  to {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+}

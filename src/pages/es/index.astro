@@ -1,0 +1,18 @@
+---
+import Home from '../../components/Home.astro';
+import { homePath, useTranslations } from '../../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const lang = 'es';
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title={t('home.title')}
+  description={t('home.description')}
+  alternates={{ pt: homePath('pt'), es: homePath('es') }}
+  overlayHeader
+>
+  <Home lang={lang} />
+</BaseLayout>
