@@ -1,6 +1,6 @@
 # PROJECT_SPEC — DWTXS LATAM website
 
-> Living document. Update it when a decision changes. Last update: 2026-10-24.
+> Living document. Update it when a decision changes. Last update: 2026-10-25.
 
 ## 1. Overview
 
@@ -52,7 +52,7 @@ Source: client document "Web DWTXS LATAM".
 
 ## 5. Non-functional requirements
 
-- **Performance:** Lighthouse ≥ 95 in all categories (mobile). Zero client JS except form handling, mobile menu and language switch.
+- **Performance:** Lighthouse ≥ 95 in all categories (mobile). Zero client JS except form handling, mobile menu, language switch and the small motion script of D-12.
 - **SEO:** per-page title/description, `hreflang` pt-BR/es + `x-default`, canonical URLs, `sitemap.xml`, `robots.txt`, Open Graph images, JSON-LD (`Organization`, `Product` per model, `BreadcrumbList`).
 - **Accessibility:** WCAG 2.2 AA: semantic HTML, keyboard navigation, visible focus, alt text in both languages, contrast ≥ 4.5:1.
 - **Responsive:** mobile-first; check at 375px, 768px and 1440px.
@@ -78,7 +78,7 @@ Source: client document "Web DWTXS LATAM".
 | Runtime | Node LTS inside the Dev Container |
 | Quality | ESLint + Prettier + `astro check` |
 | CI | GitHub Actions: install, check, lint, build on every PR |
-| Hosting | Cloudflare Pages (recommended) or client's current hosting [TBD] |
+| Hosting | Vercel (preview on Hobby now, Pro before going public) (D-05) |
 
 ### 6.2 Routes
 
@@ -111,7 +111,8 @@ src/
     utils.ts         # getLangFromUrl, t(), localizePath()
   layouts/BaseLayout.astro
   pages/             # pt at root, es/ mirrors it
-public/              # favicon, robots.txt, og defaults
+public/              # favicon, robots.txt, og defaults, video/ (D-12)
+docs/prototypes/     # approved HTML prototypes, Phase 2 visual reference (D-11)
 ```
 
 ### 6.4 Content model
@@ -162,7 +163,8 @@ Alternatives: Cloudflare Pages Function + email API (Resend); PHP on the client'
 Reason: hosting-agnostic and zero maintenance. Revisit if the free tier limits are exceeded or the client requires data to stay on their infrastructure.
 
 **D-05 — Static output, hosting-agnostic.**
-Reason: the client may migrate the site into Trader MAC USA. Static files deploy to Cloudflare Pages, any CDN or shared hosting. Note: Vercel Hobby plan is non-commercial, so it is not used.
+Reason: the client may migrate the site into Trader MAC USA. Static files deploy to Cloudflare Pages, any CDN or shared hosting.
+Update 2026-10-25: hosting is **Vercel**, where the developer already has an account. Previews run on the Hobby plan; Hobby is non-commercial, so the project moves to **Pro before the site is public or shared widely**. `main` deploys to the production `*.vercel.app` URL used as the client demo; every PR gets its own preview URL. The site keeps `noindex` until launch.
 
 **D-06 — Specs as key specs + full spec sheet (2026-10-24).**
 Alternative: only 6–10 numeric key specs.
@@ -181,19 +183,29 @@ Photos come from dwtxs.cn (selection recorded in the photo selection sheet): one
 **D-10 — URLs without trailing slash (2026-10-24).**
 `trailingSlash: 'never'` + `build.format: 'file'`: pages are generated as `maquinas/convencional.html` and served as `/maquinas/convencional`, so static hosts (Cloudflare Pages) do not add a redirect to the slash version.
 
+**D-11 — Visual direction "Obra" (2026-10-25).**
+Alternatives: "Chapa" (machine nameplate, industrial) and "Corporativo" (classic distributor); three more versions made with the taste-skill design skill were rejected by the developer.
+Chosen: documentary jobsite look. Tokens: concrete `#ebe9e4` (ground), asphalt `#232220` (ink), machine red `#b3121b` (actions), jobsite sky `#c9d6de` (one field per page), white `#fbfaf8` (cards); type **Schibsted Grotesk** 400/500/700/900; pill buttons and chips; square photos. Motion: headings rise word by word from a mask, blocks rise once when they enter, pictures open like shutters, figures count up, red bars draw, hover zoom that follows the pointer, scroll-linked hero drift; everything off with `prefers-reduced-motion` and hover effects only for fine pointers.
+The approved prototypes are the reference for Phase 2: `docs/prototypes/` (Home structured like tradermacusa.com, category grid, model page), see its README.
+Logo: "DWTXS LATAM" wordmark until the client provides one [TBD].
+
+**D-12 — Client JS and video exceptions (2026-10-25).**
+- One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up and hover pan, plus the interactive bits of the prototypes (category tabs/sort, gallery, spec-sheet filter). Content is visible without JS (`html.js` gate).
+- Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
+
 ## 8. Phases
 
 Each task should fit one Claude Code session.
 
 ### Phase 0 — Setup
 Goal: reproducible environment and empty site deployed in preview.
-- [ ] Create GitHub repo `dwtxs-latam` (private), `main` protected
-- [ ] `.devcontainer/` with Node LTS + pnpm, VS Code extensions (Astro, Tailwind, ESLint, Prettier)
-- [ ] Scaffold Astro (minimal template), TypeScript strict, Tailwind v4
-- [ ] ESLint + Prettier + `astro check`; scripts `dev`, `build`, `check`, `lint`, `format`
-- [ ] GitHub Actions CI (check + lint + build)
-- [ ] `.env.example`, `README.md`, `CLAUDE.md`, this spec
-- [ ] Connect to Cloudflare Pages: preview deploy per PR
+- [x] Create GitHub repo `dwtxs-latam` (private), `main` protected
+- [x] `.devcontainer/` with Node LTS + pnpm, VS Code extensions (Astro, Tailwind, ESLint, Prettier)
+- [x] Scaffold Astro (minimal template), TypeScript strict, Tailwind v4
+- [x] ESLint + Prettier + `astro check`; scripts `dev`, `build`, `check`, `lint`, `format`
+- [x] GitHub Actions CI (check + lint + build)
+- [x] `.env.example`, `README.md`, `CLAUDE.md`, this spec
+- [ ] Connect to ~~Cloudflare Pages~~ Vercel: production on `main`, preview per PR (D-05) → done with the Home in Phase 2
 
 **Done when:** `pnpm build` passes in CI and a "hello" page is live on a preview URL.
 
@@ -210,7 +222,8 @@ Goal: all content in the repo, validated.
 
 ### Phase 2 — Layout & pages
 Goal: every page navigable in both languages.
-- [ ] Design tokens (colors, typography) from client logo/brand [TBD]
+- [x] Visual direction and prototypes (D-11, `docs/prototypes/`)
+- [ ] Design tokens in Tailwind v4 `@theme` from D-11
 - [ ] `BaseLayout`, `Header` (nav + mobile menu), `Footer`, `LanguageSwitcher`
 - [ ] `WhatsAppButton` (floating, localized message, model prefill)
 - [ ] Home
@@ -220,6 +233,8 @@ Goal: every page navigable in both languages.
 - [ ] 404 page in both languages
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
+
+**Next step (start here in a new session):** build the **Home only** in pt and es following `docs/prototypes/home.src.html`: tokens, `BaseLayout`, `Header` (transparent over the hero video, solid elsewhere, mobile menu), `Footer` (columns), `WhatsAppButton`, `LanguageSwitcher`, the Home sections and the motion script (D-12); every string in `ui.ts` (pt + es); images through `astro:assets`; videos from `public/video/`; `noindex`. Then PR to `main` and connect the repo to Vercel. Category and model pages come next, following their prototypes.
 
 ### Phase 3 — Contact form
 Goal: leads reach the client's inbox.
@@ -263,7 +278,9 @@ Goal: leads reach the client's inbox.
 - [TBD] WhatsApp business number (with country code) and default prefilled message.
 - [TBD] DW Máquinas legal data: name, CNPJ (if shown), address, phone.
 - [TBD] Where tradermacusa.com is hosted, and whether DNS for `dwtxslatam.com` can be managed by us (needed for Cloudflare Pages).
-- [TBD] Logo and brand colors for DW Máquinas / DWTXS LATAM.
+- [TBD] Logo for DW Máquinas / DWTXS LATAM (colours decided in D-11; a logo may adjust them).
+- [TBD] Years in business: tradermacusa.com says "+20 años" (home), "más de 50" (nosotros) and "desde 1966" (history). The site uses "50+".
+- [TBD] Does DW Máquinas sell DWTXS spare parts and tools in Brazil? (Home services block)
 - [TBD] Authorization to use DWTXS photos and texts.
 - [TBD] Is analytics needed (GA4 / Cloudflare Web Analytics)?
 - [TBD] Confirm default language pt-BR, and who the Spanish version targets.
