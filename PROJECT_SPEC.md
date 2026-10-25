@@ -182,6 +182,7 @@ Photos come from dwtxs.cn (selection recorded in the photo selection sheet): one
 
 **D-10 — URLs without trailing slash (2026-10-24).**
 `trailingSlash: 'never'` + `build.format: 'file'`: pages are generated as `maquinas/convencional.html` and served as `/maquinas/convencional`, so static hosts (Cloudflare Pages) do not add a redirect to the slash version.
+On Vercel this needs `vercel.json` with `cleanUrls: true` (serves `es.html` at `/es` and redirects `/es.html` to `/es`) and `trailingSlash: false`; without it every page except `/` returns 404.
 
 **D-11 — Visual direction "Obra" (2026-10-25).**
 Alternatives: "Chapa" (machine nameplate, industrial) and "Corporativo" (classic distributor); three more versions made with the taste-skill design skill were rejected by the developer.
