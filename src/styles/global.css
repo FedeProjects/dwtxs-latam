@@ -2,7 +2,21 @@
 
 /* Direction "Obra" (PROJECT_SPEC D-11): concrete ground, asphalt ink, machine red for actions,
    jobsite sky as one field per page. Layout lives in Tailwind utilities; this file keeps the
-   tokens, base styles and the few components that utilities express badly (motion, overlays). */
+   tokens, base styles and the few components that utilities express badly (motion, overlays).
+   Theme (D-13): the color tokens below are the light values; the dark block redefines them, so
+   utilities like `bg-concrete` follow the theme with no `dark:` class. `on-media` colors are
+   fixed: text over photos and video stays light in both themes. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
+      @slot;
+    }
+  }
+  &:where([data-theme='dark'], [data-theme='dark'] *) {
+    @slot;
+  }
+}
+
 @theme {
   --color-concrete: #ebe9e4;
   --color-asphalt: #232220;
@@ -12,7 +26,10 @@
   --color-sky: #c9d6de;
   --color-paper: #fbfaf8;
   --color-line: #d6d3cc;
+  --color-red-ink: #b3121b;
   --color-whatsapp: #1f8f4e;
+  --color-on-media: #fbfaf8;
+  --color-on-media-ink: #232220;
 
   --font-sans: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
 
@@ -22,15 +39,39 @@
   --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-@layer base {
-  html {
-    color-scheme: light;
+/* Dark values: follow the system unless the reader picked light, or apply an explicit dark pick. */
+:root {
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-concrete: #181716;
+    --color-asphalt: #ebe9e4;
+    --color-muted: #a8a49c;
+    --color-sky: #1e2a31;
+    --color-paper: #232220;
+    --color-line: #3a3835;
+    --color-red-ink: #ff7a7a;
+    color-scheme: dark;
   }
+}
+:root[data-theme='dark'] {
+  --color-concrete: #181716;
+  --color-asphalt: #ebe9e4;
+  --color-muted: #a8a49c;
+  --color-sky: #1e2a31;
+  --color-paper: #232220;
+  --color-line: #3a3835;
+  --color-red-ink: #ff7a7a;
+  color-scheme: dark;
+}
+
+@layer base {
   body {
     @apply bg-concrete font-sans text-lg/[1.55] text-asphalt;
   }
   :focus-visible {
-    outline: 3px solid var(--color-red);
+    outline: 3px solid var(--color-red-ink);
     outline-offset: 3px;
   }
   h1,
@@ -74,11 +115,11 @@
     @apply bg-asphalt text-paper;
   }
   .btn-ghost-light {
-    @apply bg-transparent text-paper;
+    @apply bg-transparent text-on-media;
     box-shadow: inset 0 0 0 2px currentColor;
   }
   .btn-ghost-light:hover {
-    @apply bg-paper text-asphalt;
+    @apply bg-on-media text-on-media-ink;
   }
 
   /* "Discover" link with a red bar that grows */

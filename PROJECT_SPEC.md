@@ -52,7 +52,7 @@ Source: client document "Web DWTXS LATAM".
 
 ## 5. Non-functional requirements
 
-- **Performance:** Lighthouse ≥ 95 in all categories (mobile). Zero client JS except form handling, mobile menu, language switch and the small motion script of D-12.
+- **Performance:** Lighthouse ≥ 95 in all categories (mobile). Zero client JS except form handling, mobile menu, language switch, theme toggle (D-13) and the small motion script of D-12.
 - **SEO:** per-page title/description, `hreflang` pt-BR/es + `x-default`, canonical URLs, `sitemap.xml`, `robots.txt`, Open Graph images, JSON-LD (`Organization`, `Product` per model, `BreadcrumbList`).
 - **Accessibility:** WCAG 2.2 AA: semantic HTML, keyboard navigation, visible focus, alt text in both languages, contrast ≥ 4.5:1.
 - **Responsive:** mobile-first; check at 375px, 768px and 1440px.
@@ -194,6 +194,10 @@ The font is self-hosted with Astro's built-in Fonts API (Google provider, downlo
 - One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up and hover pan, plus the interactive bits of the prototypes (category tabs/sort, gallery, spec-sheet filter). Content is visible without JS (`html.js` gate).
 - Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
 
+**D-13 — Light and dark theme (2026-10-25).**
+Alternatives: light only (the approved prototypes); `dark:` classes on every component.
+Chosen: both themes, following the system preference by default, plus a toggle in the header that stores the pick in `localStorage` (a tiny inline script in `<head>` applies it before the first paint, so there is no flash). Without JS the theme follows the system. The D-11 color tokens are redefined for dark in `global.css`, so components use the same utilities (`bg-concrete`, `text-asphalt`…) in both themes; text over photos and video uses the fixed `on-media` tokens, and small red text uses `red-ink` (lighter in dark for ≥ 4.5:1 contrast). A `dark:` Tailwind variant matching the same rules exists for the rare case a component needs it.
+
 ## 8. Phases
 
 Each task should fit one Claude Code session.
@@ -228,6 +232,7 @@ Goal: every page navigable in both languages.
 - [x] `BaseLayout`, `Header` (nav + mobile menu), `Footer`, `LanguageSwitcher`
 - [x] `WhatsAppButton` (floating, localized message, model prefill)
 - [x] Home
+- [x] Light/dark theme for every page (D-13)
 - [ ] Category pages (3) with `ModelCard` grid; All Terrain explainer
 - [ ] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
 - [ ] Accessories, About, Contact pages (form UI only)

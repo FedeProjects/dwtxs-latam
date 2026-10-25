@@ -35,9 +35,15 @@ const t = useTranslations(lang);
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <Font cssVariable="--font-schibsted" preload={[{ weight: 900 }, { weight: 400 }]} />
-    <!-- Motion gate: hidden start states apply only when JS runs (D-12). -->
+    <!-- Motion gate (D-12) and stored theme pick (D-13), applied before the first paint. -->
     <script is:inline>
       document.documentElement.classList.add('js');
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {
+        // Storage blocked: follow the system preference.
+      }
     </script>
   </head>
   <body class="relative">

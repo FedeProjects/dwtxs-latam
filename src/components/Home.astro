@@ -86,7 +86,7 @@ const services = [
 ---
 
 <!-- Hero over the ambient video (D-12: decorative, never captioned as a real job) -->
-<section class="hero shade-hero text-paper relative grid min-h-[min(92vh,860px)] items-end overflow-clip bg-[#555]">
+<section class="hero shade-hero text-on-media relative grid min-h-[min(92vh,860px)] items-end overflow-clip bg-[#555]">
   <video
     class="hero-video absolute inset-0 size-full object-cover object-[72%_50%]"
     src="/video/rig.mp4"
@@ -137,7 +137,7 @@ const services = [
       {lines.map((line, i) => (
         <a
           href={line.href}
-          class="line shade-bottom text-paper relative isolate grid min-h-105 content-end no-underline md:min-h-140"
+          class="line shade-bottom text-on-media relative isolate grid min-h-105 content-end no-underline md:min-h-140"
           data-shutter
           style={`--d:${i * 140}ms`}
         >
@@ -285,7 +285,7 @@ const services = [
           <div class="grid content-center gap-2.5 p-6">
             <h3 class="text-[30px]">{acc.data.i18n[lang].name}</h3>
             <p class="text-muted text-base">{acc.data.i18n[lang].summary}</p>
-            <span class="text-red font-bold">{t('common.learnMore')}</span>
+            <span class="text-red-ink font-bold">{t('common.learnMore')}</span>
           </div>
         </a>
       ))}
@@ -295,7 +295,7 @@ const services = [
 
 <!-- Trenchless band over the drone video (decorative) -->
 <section
-  class="gut text-paper relative mt-[clamp(72px,9vw,140px)] grid min-h-[78vh] items-center overflow-clip py-24 after:absolute after:inset-0 after:bg-[rgb(20_18_16/0.5)]"
+  class="gut text-on-media relative mt-[clamp(72px,9vw,140px)] grid min-h-[78vh] items-center overflow-clip py-24 after:absolute after:inset-0 after:bg-[rgb(20_18_16/0.5)]"
   aria-labelledby="h-trench"
 >
   <video
