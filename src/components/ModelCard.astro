@@ -24,8 +24,9 @@ const specs = CARD_SPECS.flatMap((key) => keySpecs.filter((s) => s.key === key))
 
 <a
   href={modelPath(lang, category, model.id)}
-  class="card bg-paper grid grid-rows-[auto_1fr] no-underline"
+  class="card bg-paper relative grid grid-rows-[auto_1fr] no-underline"
   data-rise
+  data-glow
   style={`--d:${delay}ms`}
 >
   <div class="aspect-4/3 bg-line" data-pan>
@@ -38,7 +39,7 @@ const specs = CARD_SPECS.flatMap((key) => keySpecs.filter((s) => s.key === key))
     />
   </div>
   <div class="grid content-start gap-3 px-4.5 pt-4.5 pb-5.5">
-    <span class="text-red-ink text-sm font-bold">{labels.categories[category]}</span>
+    <span class="text-blue-ink text-sm font-bold">{labels.categories[category]}</span>
     <h3 class="card-title relative justify-self-start pb-1.5 text-[30px]">{code}</h3>
     <dl class="border-line grid grid-cols-2 gap-x-3.5 gap-y-2.5 border-t pt-3">
       {specs.map((s) => (

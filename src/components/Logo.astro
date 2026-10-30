@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/brand/dwtxs.svg';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Rendered height in px; the width follows the logo's proportions. */
+  height: number;
+  class?: string;
+  /** Above the fold (header): load right away instead of lazily. */
+  eager?: boolean;
+}
+
+// Outlined DWTXS wordmark (D-15): white outline, so it only sits on the dark chassis or over video.
+// Traced from the client's raster logo until the official vector arrives [TBD].
+const { lang, height, class: className, eager = false } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<Image
+  src={logo}
+  alt={t('brand.logo')}
+  height={height}
+  loading={eager ? 'eager' : 'lazy'}
+  class:list={['w-auto', className]}
+/>

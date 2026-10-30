@@ -186,23 +186,33 @@ On Vercel this needs `vercel.json` with `cleanUrls: true` (serves `es.html` at `
 
 **D-11 — Visual direction "Obra" (2026-10-25).**
 Alternatives: "Chapa" (machine nameplate, industrial) and "Corporativo" (classic distributor); three more versions made with the taste-skill design skill were rejected by the developer.
-Chosen: documentary jobsite look. Tokens (colours replaced by D-14 "Acero"; layout, type and motion still apply): concrete `#ebe9e4` (ground), asphalt `#232220` (ink), machine red `#b3121b` (actions), jobsite sky `#c9d6de` (one field per page), white `#fbfaf8` (cards); type **Schibsted Grotesk** 400/500/700/900; pill buttons and chips; square photos. Motion: headings rise word by word from a mask, blocks rise once when they enter, pictures open like shutters, figures count up, red bars draw, hover zoom that follows the pointer, scroll-linked hero drift; everything off with `prefers-reduced-motion` and hover effects only for fine pointers.
+Chosen: documentary jobsite look. Tokens (colours replaced by D-14 and then D-15; layout, type and motion still apply): concrete `#ebe9e4` (ground), asphalt `#232220` (ink), machine red `#b3121b` (actions), jobsite sky `#c9d6de` (one field per page), white `#fbfaf8` (cards); type **Schibsted Grotesk** 400/500/700/900; pill buttons and chips; square photos. Motion: headings rise word by word from a mask, blocks rise once when they enter, pictures open like shutters, figures count up, red bars draw, hover zoom that follows the pointer, scroll-linked hero drift; everything off with `prefers-reduced-motion` and hover effects only for fine pointers.
 The approved prototypes are the reference for Phase 2: `docs/prototypes/` (Home structured like tradermacusa.com, category grid, model page), see its README.
-Logo: "DWTXS LATAM" wordmark until the client provides one [TBD].
+Logo: replaced by the DWTXS logo (D-15).
 The font is self-hosted with Astro's built-in Fonts API (Google provider, downloaded at build time): no third-party request at runtime and no extra dependency.
 
 **D-12 — Client JS and video exceptions (2026-10-25).**
-- One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up and hover pan, plus the interactive bits of the prototypes (category tabs/sort, gallery, spec-sheet filter). Content is visible without JS (`html.js` gate).
+- One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up, hover pan and the card edge light (D-15 v4), plus the interactive bits of the prototypes (category tabs/sort, gallery, spec-sheet filter). Content is visible without JS (`html.js` gate).
+- Scroll-driven animations: put `animation-timeline` / `animation-range` in a separate rule with a different selector from the `animation` shorthand. Lightning CSS (Tailwind's minifier) otherwise folds them into one invalid shorthand and the browser drops the animation; it also rewrites `animation-range: entry exit` wrongly, so use `cover`. SVG paths cannot be view-timeline subjects: name the timeline on the `<svg>`.
 - Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
 
 **D-13 — Light and dark theme (2026-10-25).**
 Alternatives: light only (the approved prototypes); `dark:` classes on every component.
 Chosen: both themes, following the system preference by default, plus a toggle in the header that stores the pick in `localStorage` (a tiny inline script in `<head>` applies it before the first paint, so there is no flash). Without JS the theme follows the system. The D-11 color tokens are redefined for dark in `global.css`, so components use the same utilities (`bg-concrete`, `text-asphalt`…) in both themes; text over photos and video uses the fixed `on-media` tokens, and small red text uses `red-ink` (lighter in dark for ≥ 4.5:1 contrast). A `dark:` Tailwind variant matching the same rules exists for the rare case a component needs it.
 
-**D-14 — Palette "Acero" (2026-10-25).**
+**D-14 — Palette "Acero" (2026-10-25, replaced by D-15).**
 Alternative: keep the D-11 "Obra" palette (git tag `palette-obra` to roll back).
 Reason: the logo is assumed to be "DWTXS LATAM" in white, which needs a dark surface wherever it appears; with "Obra" the solid header and the footer were light in light mode. Dark mode in "Obra" was also close to a colour swap.
 Chosen by the developer for the client demo: sand ground `#e6e1d6`, blue-graphite ink `#1b2026`, cards `#f7f4ee`, red `#c1121f` for actions, and a dark steel chassis `#1b2026` (header, footer, enquiry band) that carries the white logo in both themes. Dark: deep steel ground `#151a1f`, raised cards `#1f262d`, darker chassis `#0d1013`, brighter red `#d61f2a`. Revisit when the client provides the real logo and colours.
+
+**D-15 — Client logo and palette "DWTXS" (2026-10-30).**
+The client sent the DWTXS logo (no vector) and seven brand colours without roles: `#E71C05`, `#235EE4` (logo red and blue), `#EC4937`, `#4F7EE9` (the logo's gloss tints), `#777777`, `#343030` (logo background), `#FFFFFF`. The client wants the plain "DWTXS" logo, without "LATAM".
+- Logo: the red/blue version, without the Chinese name and the English slogan. It is a 3-layer SVG traced from the 3052 px JPEG (`src/assets/images/brand/`): outlined version for dark surfaces (header over video, chassis), no-outline version for light ones. Flat colours, gloss dropped. Ask the client or DWTXS for the official vector and replace it [TBD]. Favicon still pending.
+- Roles: red `#E71C05` = actions (white text 4.6:1, darker `#c01703` on hover); blue `#235EE4` = information (category labels, figure rules, service markers); charcoal `#343030` = chassis and light-mode ink; `#777777` and the gloss tints are not used for text (below 4.5:1). Derived: light ground `#f3f2f0`, white cards, muted text `#625d5c`; dark ground `#1c1919`, charcoal cards, chassis `#121010`, light tints for small red/blue text (`#ff8a7a`, `#93b0ff`).
+- Surfaces (2026-10-30, second pass): the brand colours are used as surfaces, not only accents. The company section sits on a blue band, the enquiry section on a red band (the main action in the action colour; submit button turns charcoal), and a red|blue split rule taken from the logo marks every `.h2`, the top edge of the header and the top of the footer. Selection is blue. In dark mode the bands turn deep (`#1d4fc2`, `#b81604`, white text ~7:1) over a near-black ground `#161414`.
+- Title accents (2026-10-30, chosen over v3): the last word of the light-ground section titles takes a brand colour, alternating red and blue (`Accent` component; red `#e71c05` / blue `#235ee4`, tints `#ff6b57` / `#7f9fff` in dark, all >= 3:1 for large text). The v3 extras (charcoal lines band, tinted hero) were dropped.
+- Brand motion (2026-10-30, kept from the v4 "Perfuração" trial): a fixed split rule fills with scroll progress (red, then blue); line panels take their machines' colour on hover (red, Maxi-Rig blue); model cards get a red-to-blue edge light that follows the pointer; the mud system cards draw the red|blue split rule along their bottom edge on hover or keyboard focus, and their "learn more" link grows a line like the line panels (a mud-tank fill was tried and dropped as too loud). Dropped after review: the model code ticker, the bore profile over the drone video and that band's zoom drift (the band stays a plain video, as in v2a). Tag `palette-dwtxs-v4` keeps the full trial.
+Rollback: git tags `palette-dwtxs-v4` (full v4 trial), `palette-dwtxs-v2a` (bands + title accents, no motion extras), `palette-dwtxs-v3` (charcoal lines band, tinted hero), `palette-dwtxs-v2` (bands, no accents), `palette-dwtxs-v1` (accents only), `palette-acero` and `palette-obra`.
 
 ## 8. Phases
 
@@ -290,7 +300,7 @@ Goal: leads reach the client's inbox.
 - [TBD] WhatsApp business number (with country code) and default prefilled message.
 - [TBD] DW Máquinas legal data: name, CNPJ (if shown), address, phone.
 - [TBD] Where tradermacusa.com is hosted, and whether DNS for `dwtxslatam.com` can be managed by us (needed for Cloudflare Pages).
-- [TBD] Logo for DW Máquinas / DWTXS LATAM (colours decided in D-11; a logo may adjust them).
+- [TBD] Official DWTXS logo as vector (SVG/AI/EPS) and a square icon for the favicon (D-15 uses a traced SVG).
 - [TBD] Years in business: tradermacusa.com says "+20 años" (home), "más de 50" (nosotros) and "desde 1966" (history). The site uses "50+".
 - [TBD] Does DW Máquinas sell DWTXS spare parts and tools in Brazil? (Home services block)
 - [TBD] Authorization to use DWTXS photos and texts.

@@ -1,0 +1,15 @@
+---
+interface Props {
+  text: string;
+  /** Brand colour for the last word: DW red or TXS blue (D-15). */
+  tone: 'red' | 'blue';
+}
+
+// Renders a title with its last word in a brand colour. Used inside headings; the motion script
+// keeps the colour when it splits the heading into masked words.
+const { text, tone } = Astro.props;
+const words = text.trim().split(/\s+/);
+const last = words.pop();
+---
+
+{words.join(' ')} <span class={`accent-${tone}`}>{last}</span>

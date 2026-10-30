@@ -1,14 +1,16 @@
 @import 'tailwindcss';
 
-/* Palette "Acero" (PROJECT_SPEC D-14, proposal over D-11 "Obra"): sand ground, blue-graphite ink,
-   machine red for actions, and a dark steel "chassis" (header, footer, enquiry band) that carries the
-   white logo in both themes. Layout lives in Tailwind utilities; this file keeps the tokens, base
-   styles and the few components that utilities express badly (motion, overlays).
+/* Palette "DWTXS" (PROJECT_SPEC D-15): the client's brand colours, taken from the DWTXS logo.
+   Red and blue are surfaces, not only accents: a blue band (company), a red band (enquiry, the
+   main action) and a red|blue "split rule" taken from the logo (DW red, TXS blue) that marks section
+   titles, the header and the footer. Red = what you click, blue = what informs, charcoal = the
+   chassis that carries the outlined logo. Neutrals are derived so text keeps >= 4.5:1. Layout lives in Tailwind utilities; this file
+   keeps the tokens, base styles and the few components that utilities express badly.
    Theme (D-13): the tokens below are the light values; the dark blocks redefine them, so utilities
    like `bg-concrete` follow the theme with no `dark:` class. Dark is not an inversion: the ground
-   turns from sand to deep steel, cards rise above it, the chassis gets darker and red gets brighter.
-   `on-media` / `on-chrome` stay light in both themes. Token names (concrete = ground, asphalt = ink)
-   are kept from D-11. */
+   drops to near black, cards take the brand charcoal, the bands turn to deep red and blue (white
+   text ~7:1) and small red or blue text gets lighter tints. `on-media` / `on-chrome` stay light in both themes.
+   Token names from D-11 are kept: concrete = ground, asphalt = ink, paper = cards. */
 @custom-variant dark {
   @media (prefers-color-scheme: dark) {
     &:where(:root:not([data-theme='light']), :root:not([data-theme='light']) *) {
@@ -21,20 +23,26 @@
 }
 
 @theme {
-  --color-concrete: #e6e1d6;
-  --color-asphalt: #1b2026;
-  --color-muted: #585d64;
-  --color-red: #c1121f;
-  --color-red-dark: #96101a;
-  --color-sky: #cdd8df;
-  --color-paper: #f7f4ee;
-  --color-line: #d3cdc0;
-  --color-red-ink: #b0111c;
-  --color-chrome: #1b2026;
-  --color-on-chrome: #f4f2ee;
+  --color-concrete: #f3f2f0;
+  --color-asphalt: #343030;
+  --color-muted: #625d5c;
+  --color-red: #e71c05;
+  --color-red-dark: #c01703;
+  --color-red-ink: #c41804;
+  --color-blue: #235ee4;
+  --color-blue-ink: #235ee4;
+  --color-sky: #e3e9f8;
+  --color-paper: #ffffff;
+  --color-line: #dedad6;
+  --color-chrome: #343030;
+  --color-on-chrome: #ffffff;
+  --color-field-blue: #235ee4;
+  --color-field-red: #e71c05;
+  --color-red-display: #e71c05;
+  --color-blue-display: #235ee4;
   --color-whatsapp: #1f8f4e;
-  --color-on-media: #fbfaf8;
-  --color-on-media-ink: #1b2026;
+  --color-on-media: #ffffff;
+  --color-on-media-ink: #343030;
 
   --font-sans: var(--font-schibsted), 'Helvetica Neue', Arial, sans-serif;
 
@@ -50,30 +58,36 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --color-concrete: #151a1f;
-    --color-asphalt: #e8e6e1;
-    --color-muted: #9ba3ab;
-    --color-red: #d61f2a;
-    --color-red-dark: #b3121b;
-    --color-sky: #1f2c36;
-    --color-paper: #1f262d;
-    --color-line: #2e363f;
-    --color-red-ink: #ff8086;
-    --color-chrome: #0d1013;
+    --color-concrete: #161414;
+    --color-asphalt: #f2f0ee;
+    --color-muted: #b8b2b0;
+    --color-red-ink: #ff8a7a;
+    --color-blue-ink: #93b0ff;
+    --color-sky: #1e2536;
+    --color-paper: #343030;
+    --color-line: #4a4545;
+    --color-chrome: #0f0d0d;
+    --color-field-blue: #1d4fc2;
+    --color-field-red: #b81604;
+    --color-red-display: #ff6b57;
+    --color-blue-display: #7f9fff;
     color-scheme: dark;
   }
 }
 :root[data-theme='dark'] {
-  --color-concrete: #151a1f;
-  --color-asphalt: #e8e6e1;
-  --color-muted: #9ba3ab;
-  --color-red: #d61f2a;
-  --color-red-dark: #b3121b;
-  --color-sky: #1f2c36;
-  --color-paper: #1f262d;
-  --color-line: #2e363f;
-  --color-red-ink: #ff8086;
-  --color-chrome: #0d1013;
+  --color-concrete: #161414;
+  --color-asphalt: #f2f0ee;
+  --color-muted: #b8b2b0;
+  --color-red-ink: #ff8a7a;
+  --color-blue-ink: #93b0ff;
+  --color-sky: #1e2536;
+  --color-paper: #343030;
+  --color-line: #4a4545;
+  --color-chrome: #0f0d0d;
+  --color-field-blue: #1d4fc2;
+  --color-field-red: #b81604;
+  --color-red-display: #ff6b57;
+  --color-blue-display: #7f9fff;
   color-scheme: dark;
 }
 
@@ -104,8 +118,12 @@
     }
   }
   :focus-visible {
-    outline: 3px solid var(--color-red-ink);
+    outline: 3px solid var(--focus, var(--color-red-ink));
     outline-offset: 3px;
+  }
+  ::selection {
+    background: var(--color-blue);
+    color: #fff;
   }
   h1,
   h2,
@@ -127,6 +145,47 @@
     font-size: clamp(40px, 5.4vw, 80px);
   }
 
+  /* Split rule from the logo: DW red | TXS blue. Bands swap the half that would vanish for white. */
+  .brand-rule {
+    background: linear-gradient(
+      90deg,
+      var(--mark-a, var(--color-red)) 50%,
+      var(--mark-b, var(--color-blue)) 50%
+    );
+  }
+  .h2::before {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 6px;
+    margin-bottom: 0.4em;
+    background: linear-gradient(
+      90deg,
+      var(--mark-a, var(--color-red)) 50%,
+      var(--mark-b, var(--color-blue)) 50%
+    );
+  }
+
+  /* One word of a title in a brand colour (large text: >= 3:1 on every ground) */
+  .accent-red {
+    color: var(--color-red-display);
+  }
+  .accent-blue {
+    color: var(--color-blue-display);
+  }
+
+  /* Brand bands: full-width colour fields with white text */
+  .band-blue {
+    @apply bg-field-blue text-white;
+    --mark-b: #fff;
+    --focus: #fff;
+  }
+  .band-red {
+    @apply bg-field-red text-white;
+    --mark-a: #fff;
+    --focus: #fff;
+  }
+
   /* Pill buttons */
   .btn {
     @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-red px-6 py-[15px] text-[17px]/none font-bold text-white no-underline;
@@ -139,6 +198,12 @@
   }
   .btn:active {
     transform: scale(0.96);
+  }
+  .btn-ink {
+    @apply bg-asphalt text-concrete;
+  }
+  .btn-ink:hover {
+    @apply bg-black text-white;
   }
   .btn-ghost {
     @apply bg-transparent text-asphalt;
@@ -203,7 +268,7 @@
     top: 0.15em;
     bottom: 0.15em;
     width: 4px;
-    background: var(--color-red);
+    background: var(--color-blue);
     transform-origin: top;
   }
 
@@ -272,7 +337,7 @@
   position: absolute;
   inset: auto 0 0;
   height: 3px;
-  background: var(--color-red);
+  background: linear-gradient(90deg, var(--color-red) 50%, var(--color-blue) 50%);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 450ms var(--ease-out);
@@ -341,15 +406,14 @@
         normal,
         exit 0% exit 100%;
     }
+    /* The timeline goes in a second rule with another selector: Lightning CSS (Tailwind's minifier)
+       otherwise folds animation + animation-timeline into one invalid shorthand. */
     .hero-copy {
       animation: recede linear both;
+    }
+    .hero .hero-copy {
       animation-timeline: --hero;
       animation-range: exit 0% exit 80%;
-    }
-    .band-video {
-      animation: drift-band linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
     }
   }
 }
@@ -380,17 +444,102 @@
     transform: translateY(12%) scale(1.06);
   }
 }
-@keyframes drift-band {
-  from {
-    transform: scale(1.12) translateY(-4%);
-  }
-  to {
-    transform: scale(1.12) translateY(4%);
-  }
-}
 @keyframes recede {
   to {
     opacity: 0;
     transform: translateY(-40px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   v4 "Perforação" (D-15): HDD as the visual motif, in the logo's red and blue.
+   Every effect is decorative and has a still fallback.
+   --------------------------------------------------------------------------- */
+
+/* Line panels: the photo takes its machines' colour on hover */
+.line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--wash, transparent) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 500ms ease;
+}
+
+/* Card glow ring (fine pointers only, see below) */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 2px;
+  pointer-events: none;
+  background: radial-gradient(
+    260px circle at var(--gx, 50%) var(--gy, 0%),
+    var(--color-red),
+    var(--color-blue) 45%,
+    transparent 75%
+  );
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+/* Mud system cards: the logo's split rule draws along the bottom edge on hover or focus */
+.mud-card::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-red) 50%, var(--color-blue) 50%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 600ms var(--ease-out);
+}
+.mud-card:focus-visible::after {
+  transform: none;
+}
+
+/* Scroll progress: the split rule fills as the page is read (red first, then blue) */
+.scroll-progress {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .line:hover::after {
+    opacity: 1;
+  }
+  .card:hover::before {
+    opacity: 1;
+  }
+  .mud-card:hover::after {
+    transform: none;
+  }
+  .mud-card:hover .more::after {
+    width: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      animation: progress linear both;
+    }
+    body .scroll-progress {
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+@keyframes progress {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
   }
 }
