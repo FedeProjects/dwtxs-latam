@@ -566,6 +566,84 @@
   }
 }
 
+/* Model gallery: thumbnails dim until active; the active one gets the logo's split rule */
+.thumb img {
+  opacity: 0.62;
+  transition:
+    opacity 200ms ease,
+    transform 500ms var(--ease-soft);
+}
+.thumb::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-red) 50%, var(--color-blue) 50%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms var(--ease-out);
+}
+.thumb[aria-current='true'] img {
+  opacity: 1;
+}
+.thumb[aria-current='true']::after {
+  transform: none;
+}
+
+/* Spec sheet index: sticky list with the current section marked in red, chips on small screens */
+.spec-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.spec-toc a {
+  border: 2px solid var(--color-asphalt);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.spec-toc a[aria-current] {
+  background: var(--color-asphalt);
+  color: var(--color-concrete);
+}
+@media (min-width: 1024px) {
+  .spec-toc {
+    position: sticky;
+    top: 96px;
+    display: grid;
+    gap: 2px;
+  }
+  .spec-toc a {
+    border: 0;
+    border-left: 3px solid var(--color-line);
+    border-radius: 0;
+    padding: 6px 0 6px 14px;
+    font-size: 16px;
+    color: var(--color-muted);
+    transition:
+      color 200ms ease,
+      border-color 200ms ease,
+      padding 300ms var(--ease-out);
+  }
+  .spec-toc a:hover {
+    color: var(--color-asphalt);
+  }
+  .spec-toc a[aria-current] {
+    background: none;
+    border-left-color: var(--color-red);
+    padding-left: 20px;
+    color: var(--color-asphalt);
+    font-weight: 700;
+  }
+}
+.spec-sec mark {
+  background: color-mix(in srgb, var(--color-blue) 24%, transparent);
+  color: inherit;
+  padding: 0 2px;
+}
+
 /* Category grid: with 3n+1 models the last card spans the row as a wide card */
 @media (min-width: 1024px) {
   .card-wide {
@@ -586,6 +664,18 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .thumb:hover img {
+    opacity: 1;
+  }
+  .spec-sec tbody tr:hover {
+    background: var(--color-paper);
+  }
+  .spec-sec tbody tr:hover th {
+    color: var(--color-asphalt);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .line:hover::after {
     opacity: 1;
@@ -602,6 +692,16 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* The new gallery photo opens like a shutter */
+  .gallery-stage.swap img:not([hidden]) {
+    animation: wipe 700ms var(--ease-in-out) backwards;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .thumb:hover img {
+      transform: scale(1.12);
+    }
+  }
+
   /* Cards rise again when the grid is re-sorted */
   .sorted .card {
     animation: rise 600ms var(--ease-out) backwards;
@@ -620,6 +720,14 @@
 }
 
 @keyframes progress {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes wipe {
   from {
     clip-path: inset(0 100% 0 0);
   }

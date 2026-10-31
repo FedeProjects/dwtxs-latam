@@ -1,4 +1,5 @@
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import type { CollectionEntry } from 'astro:content';
 import type { Category } from '../content/specs';
 import { categorySegments, routes, type Page } from './routes';
 import { catalog, defaultLang, langs, locales, ui, type Lang } from './ui';
@@ -59,4 +60,26 @@ export function formatQuantity(lang: Lang, value: number | string, unit?: string
   const text = typeof value === 'number' ? formatNumber(lang, value) : value;
   if (!unit) return text;
   return unit === '°' ? `${text}${unit}` : `${text} ${unit}`;
+}
+
+type SpecRow = CollectionEntry<'models'>['data']['specSheet'][number]['rows'][number];
+
+/**
+ * One spec sheet value as text: numbers per locale, ranges "13–19°", lists "7.000 / 4.500 N·m"
+ * or "330, 430, 530 mm", raw strings as they are, and `valueKey` words translated.
+ */
+export function formatSpecValue(lang: Lang, row: SpecRow): string {
+  if (row.valueKey) return catalog[lang].values[row.valueKey];
+  const value = row.value;
+  if (value === undefined) return '';
+  if (typeof value === 'number' || typeof value === 'string')
+    return formatQuantity(lang, value, row.unit);
+  let text: string;
+  if ('range' in value) {
+    text = value.range.map((n) => formatNumber(lang, n)).join('–');
+  } else {
+    const sep = value.sep === ',' ? ', ' : ` ${value.sep} `;
+    text = value.list.map((n) => formatNumber(lang, n)).join(sep);
+  }
+  return formatQuantity(lang, text, row.unit);
 }

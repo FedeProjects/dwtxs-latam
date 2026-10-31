@@ -250,13 +250,14 @@ Goal: every page navigable in both languages.
 - [x] Home
 - [x] Light/dark theme for every page (D-13)
 - [x] Category pages (3) with `ModelCard` grid; All Terrain explainer
-- [ ] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
+- [x] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
 - [ ] Accessories, About, Contact pages (form UI only)
 - [ ] 404 page in both languages
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** build the **model page** (`getStaticPaths` over the 15 models) following `docs/prototypes/model.src.html`, adapted to D-15 like the category pages: solid header, breadcrumbs, gallery, key specs, full spec sheet (`SpecsTable`) with filter, related models (`ModelCard` detailed), red enquiry band with the model prefilled in WhatsApp. Category pages (`CategoryPage.astro`) set the pattern: `Breadcrumbs`, title with split rule and `Accent` (red, Maxi-Rig blue), kN range in blue, cards from `ModelCard`, blue band for long texts, red band to close.
+**Next step (start here in a new session):** build the **Accessories, About and Contact pages** (form UI only) and the **404** in both languages, with the same pattern as the category and model pages (`Breadcrumbs`, title with split rule and `Accent`, brand bands, `ContactForm` on the red band). Work is stacked on `feat/phase-2-model` (on top of `feat/phase-2-categories`), not merged to `main` yet so production does not change before the client review; one PR from the top branch to `main`.
+Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
 Goal: leads reach the client's inbox.

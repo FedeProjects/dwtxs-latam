@@ -1,0 +1,17 @@
+---
+import { getCollection } from 'astro:content';
+import ModelPage from '../../../components/ModelPage.astro';
+import { categorySegments } from '../../../i18n/routes';
+
+export async function getStaticPaths() {
+  const models = await getCollection('models');
+  return models.map((model) => ({
+    params: { category: categorySegments.pt[model.data.category], slug: model.id },
+    props: { model },
+  }));
+}
+
+const { model } = Astro.props;
+---
+
+<ModelPage lang="pt" model={model} />
