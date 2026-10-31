@@ -14,16 +14,24 @@ if (reduce) {
 }
 
 // Wrap each word of a heading in a mask; screen readers keep the plain text through aria-label.
+// Words inside an element (the accent span) keep that element's class.
 document.querySelectorAll<HTMLElement>('[data-split]').forEach((el) => {
-  const words = (el.textContent ?? '').trim().split(/\s+/);
-  el.setAttribute('aria-label', words.join(' '));
+  const words = [...el.childNodes].flatMap((node) =>
+    (node.textContent ?? '')
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((text) => ({ text, cls: node instanceof HTMLElement ? node.className : '' })),
+  );
+  el.setAttribute('aria-label', words.map((w) => w.text).join(' '));
   el.replaceChildren(
-    ...words.flatMap((word, i) => {
+    ...words.flatMap(({ text: word, cls }, i) => {
       const mask = document.createElement('span');
       mask.className = 'w';
       mask.setAttribute('aria-hidden', 'true');
       const inner = document.createElement('span');
       inner.style.setProperty('--i', String(i));
+      if (cls) inner.className = cls;
       inner.textContent = word;
       mask.append(inner);
       return i ? [' ', mask] : [mask];
@@ -83,6 +91,15 @@ if (finePointer && !reduce) {
     el.addEventListener('pointerleave', () => {
       el.style.setProperty('--mx', '0');
       el.style.setProperty('--my', '0');
+    });
+  });
+
+  // Card glow: a red-to-blue light on the card edge that follows the pointer.
+  document.querySelectorAll<HTMLElement>('[data-glow]').forEach((el) => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--gx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--gy', `${e.clientY - r.top}px`);
     });
   });
 }

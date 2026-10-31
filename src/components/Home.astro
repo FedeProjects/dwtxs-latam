@@ -14,6 +14,7 @@ import {
   useCatalogLabels,
   useTranslations,
 } from '../i18n/utils';
+import Accent from './Accent.astro';
 import ContactForm from './ContactForm.astro';
 import ModelCard from './ModelCard.astro';
 
@@ -127,7 +128,7 @@ const services = [
   <div class="mx-auto max-w-330">
     <div class="mb-9 grid items-end gap-x-16 gap-y-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
       <h2 class="h2" id="h-lines" data-split>
-        {t('home.lines.title')}
+        <Accent text={t('home.lines.title')} tone="red" />
       </h2>
       <p class="max-w-[46ch]" data-rise>
         {t('home.lines.lead')}
@@ -139,7 +140,7 @@ const services = [
           href={line.href}
           class="line shade-bottom text-on-media relative isolate grid min-h-105 content-end no-underline md:min-h-140"
           data-shutter
-          style={`--d:${i * 140}ms`}
+          style={`--d:${i * 140}ms; --wash: ${line.category === 'maxi-rig' ? 'rgb(35 94 228 / 0.55)' : 'rgb(231 28 5 / 0.5)'}`}
         >
           <div class="absolute inset-0 -z-1" data-pan>
             <Image
@@ -152,7 +153,7 @@ const services = [
           </div>
           <div class="relative z-1 grid gap-2.5 p-7">
             <h3 class="text-[clamp(34px,3.4vw,52px)]">{categories[line.category]}</h3>
-            <span class="text-[22px] font-black text-[#ffb3b3]">{line.range}</span>
+            <span class="text-[22px] font-black text-[#b9cbff]">{line.range}</span>
             <p class="max-w-[34ch]">{lineText[line.category]}</p>
             <span class="more">{t('common.discover')}</span>
           </div>
@@ -162,8 +163,11 @@ const services = [
   </div>
 </section>
 
-<!-- Company and figures -->
-<section class="section gut" aria-labelledby="h-company">
+<!-- Company and figures on the blue band (D-15) -->
+<section
+  class="band-blue gut mt-[clamp(72px,9vw,140px)] py-[clamp(72px,9vw,140px)]"
+  aria-labelledby="h-company"
+>
   <div class="mx-auto grid max-w-330 items-center gap-x-16 gap-y-10 md:grid-cols-2">
     <div>
       <h2 class="h2" id="h-company" data-split>
@@ -174,7 +178,7 @@ const services = [
       </p>
       <div class="mt-8 grid grid-cols-2 gap-x-6 gap-y-7">
         {figures.map((fig, i) => (
-          <div class="border-asphalt border-t-3 pt-3.5" data-rise style={`--d:${i * 100}ms`}>
+          <div class="border-t-3 border-white pt-3.5" data-rise style={`--d:${i * 100}ms`}>
             <b class="block text-[clamp(44px,5vw,72px)] leading-none font-black tracking-[-0.03em]">
               {fig.to !== undefined ? (
                 <>
@@ -187,7 +191,7 @@ const services = [
                 fig.text
               )}
             </b>
-            <span class="text-muted">{fig.label}</span>
+            <span class="text-[#e9effc]">{fig.label}</span>
           </div>
         ))}
       </div>
@@ -209,7 +213,7 @@ const services = [
   <div class="mx-auto max-w-330">
     <div class="mb-9 grid items-end gap-x-16 gap-y-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
       <h2 class="h2" id="h-feat" data-split>
-        {t('home.featured.title')}
+        <Accent text={t('home.featured.title')} tone="blue" />
       </h2>
       <p class="max-w-[46ch]" data-rise>
         {t('home.featured.lead')}
@@ -240,7 +244,7 @@ const services = [
     </div>
     <div>
       <h2 class="h2" id="h-svc" data-split>
-        {t('home.services.title')}
+        <Accent text={t('home.services.title')} tone="red" />
       </h2>
       <ul class="mt-8 grid gap-7">
         {services.map((s, i) => (
@@ -259,7 +263,7 @@ const services = [
   <div class="mx-auto max-w-330">
     <div class="mb-9 grid items-end gap-x-16 gap-y-6 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
       <h2 class="h2" id="h-mud" data-split>
-        {t('home.mud.title')}
+        <Accent text={t('home.mud.title')} tone="blue" />
       </h2>
       <p class="max-w-[46ch]" data-rise>
         {t('home.mud.lead')}
@@ -269,7 +273,7 @@ const services = [
       {accessories.map((acc, i) => (
         <a
           href={`${pagePath(lang, 'accessories')}#${acc.id}`}
-          class="bg-paper grid min-h-70 no-underline sm:grid-cols-2"
+          class="mud-card bg-paper relative grid min-h-70 no-underline sm:grid-cols-2"
           data-rise
           style={`--d:${i * 120}ms`}
         >
@@ -285,7 +289,7 @@ const services = [
           <div class="grid content-center gap-2.5 p-6">
             <h3 class="text-[30px]">{acc.data.i18n[lang].name}</h3>
             <p class="text-muted text-base">{acc.data.i18n[lang].summary}</p>
-            <span class="text-red-ink font-bold">{t('common.learnMore')}</span>
+            <span class="more text-red-ink justify-self-start">{t('common.learnMore')}</span>
           </div>
         </a>
       ))}
@@ -322,12 +326,8 @@ const services = [
   </div>
 </section>
 
-<!-- Enquiry on the dark chassis, joined to the footer (D-14) -->
-<section
-  class="bg-chrome text-on-chrome gut py-[clamp(72px,9vw,140px)]"
-  id={contactId}
-  aria-labelledby="h-enq"
->
+<!-- Enquiry on the red band: the main action in the action colour (D-15) -->
+<section class="band-red gut py-[clamp(72px,9vw,140px)]" id={contactId} aria-labelledby="h-enq">
   <div class="mx-auto grid max-w-330 gap-x-16 gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
     <div>
       <h2 class="h2" id="h-enq" data-split>
@@ -338,19 +338,19 @@ const services = [
       </p>
       <dl class="mt-7 grid gap-3.5" data-rise style="--d:100ms">
         <div>
-          <dt class="text-on-chrome/70 text-sm">{t('contact.whatsapp')}</dt>
+          <dt class="text-sm">{t('contact.whatsapp')}</dt>
           <dd class="mt-0.5 font-bold">{t('common.tbd')}</dd>
         </div>
         <div>
-          <dt class="text-on-chrome/70 text-sm">{t('contact.email')}</dt>
+          <dt class="text-sm">{t('contact.email')}</dt>
           <dd class="mt-0.5 font-bold">{t('common.tbd')}</dd>
         </div>
         <div>
-          <dt class="text-on-chrome/70 text-sm">{t('contact.address')}</dt>
+          <dt class="text-sm">{t('contact.address')}</dt>
           <dd class="mt-0.5 font-bold">{t('contact.addressValue')}</dd>
         </div>
       </dl>
     </div>
-    <ContactForm lang={lang} />
+    <ContactForm lang={lang} onBand />
   </div>
 </section>

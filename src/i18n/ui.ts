@@ -32,6 +32,7 @@ export const locales: Record<Lang, string> = {
 
 const uiPt = {
   'site.name': 'DWTXS LATAM',
+  'brand.logo': 'DWTXS',
   'nav.home': 'Início',
   'nav.machines': 'Máquinas',
   'nav.accessories': 'Acessórios',
@@ -125,6 +126,7 @@ type UiKey = keyof typeof uiPt;
 
 const uiEs: Record<UiKey, string> = {
   'site.name': 'DWTXS LATAM',
+  'brand.logo': 'DWTXS',
   'nav.home': 'Inicio',
   'nav.machines': 'Máquinas',
   'nav.accessories': 'Accesorios',

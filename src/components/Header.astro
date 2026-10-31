@@ -2,6 +2,7 @@
 import type { Lang } from '../i18n/ui';
 import { homePath, pagePath, useTranslations } from '../i18n/utils';
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
@@ -31,13 +32,10 @@ const links = [
       : 'bg-chrome text-on-chrome sticky top-0 border-b border-on-chrome/10',
   ]}
 >
+  <div class="brand-rule absolute inset-x-0 top-0 h-1" aria-hidden="true"></div>
   <div class="mx-auto flex min-h-17 max-w-330 flex-wrap items-center gap-x-2.5 gap-y-3 md:gap-x-7">
-    <a
-      href={homePath(lang)}
-      class="text-lg font-black sm:text-xl md:text-[22px] tracking-[-0.02em] no-underline"
-      data-intro={overlay ? '' : undefined}
-    >
-      {t('site.name')}
+    <a href={homePath(lang)} class="shrink-0" data-intro={overlay ? '' : undefined}>
+      <Logo lang={lang} height={36} eager class="h-7.5 sm:h-8 md:h-9" />
     </a>
 
     <nav
