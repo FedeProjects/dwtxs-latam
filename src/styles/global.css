@@ -144,6 +144,10 @@
   .h2 {
     font-size: clamp(40px, 5.4vw, 80px);
   }
+  .h1 {
+    /* Capped so the longest category word ("convencionales") fits its column */
+    font-size: clamp(48px, 7.4vw, 104px);
+  }
 
   /* Split rule from the logo: DW red | TXS blue. Bands swap the half that would vanish for white. */
   .brand-rule {
@@ -153,6 +157,7 @@
       var(--mark-b, var(--color-blue)) 50%
     );
   }
+  .h1::before,
   .h2::before {
     content: '';
     display: block;
@@ -218,6 +223,53 @@
   }
   .btn-ghost-light:hover {
     @apply bg-on-media text-on-media-ink;
+  }
+
+  /* Pill chips: line tabs (links) and sort buttons. The current one is filled. */
+  .chip {
+    @apply inline-flex cursor-pointer items-center rounded-full border-2 border-asphalt bg-transparent px-4 py-2.5 text-base/none font-bold text-asphalt no-underline;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      transform 140ms var(--ease-out);
+  }
+  .chip:active {
+    transform: scale(0.95);
+  }
+  .chip[aria-current='page'],
+  .chip[aria-pressed='true'] {
+    @apply bg-asphalt text-concrete;
+  }
+
+  /* Long texts from the pages collection, on a brand band */
+  .band-prose {
+    display: grid;
+    gap: 16px;
+    max-width: 62ch;
+  }
+  .band-prose h2 {
+    font-size: 28px;
+    margin-top: 12px;
+  }
+  .band-prose ul {
+    display: grid;
+    gap: 14px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .band-prose li {
+    position: relative;
+    padding-left: 22px;
+  }
+  .band-prose li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    bottom: 0.2em;
+    width: 4px;
+    background: currentColor;
   }
 
   /* "Discover" link with a red bar that grows */
@@ -508,6 +560,32 @@
   display: none;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .chip:not([aria-current='page']):not([aria-pressed='true']):hover {
+    background: color-mix(in srgb, var(--color-asphalt) 8%, transparent);
+  }
+}
+
+/* Category grid: with 3n+1 models the last card spans the row as a wide card */
+@media (min-width: 1024px) {
+  .card-wide {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-rows: auto;
+  }
+  .card-wide > :first-child {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+  .card-wide .card-body {
+    align-content: center;
+    padding: 32px;
+  }
+  .card-wide dl {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .line:hover::after {
     opacity: 1;
@@ -524,6 +602,12 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Cards rise again when the grid is re-sorted */
+  .sorted .card {
+    animation: rise 600ms var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+
   @supports (animation-timeline: scroll()) {
     .scroll-progress {
       display: block;

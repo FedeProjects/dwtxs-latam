@@ -10,37 +10,83 @@ interface Props {
   model: CollectionEntry<'models'>;
   /** Stagger for the reveal animation, in ms. */
   delay?: number;
+  /** Category grid: summary, "featured" tag, h2 title and sort data instead of the category label. */
+  detailed?: boolean;
+  /** Spans the whole row as a wide card (last card of a 3n+1 grid). */
+  wide?: boolean;
+  /** Position in the grid, for the re-sort animation stagger. */
+  index?: number;
+  sizes?: string;
 }
 
 /** Key specs shown on every card, in this order (the category grid reuses this card). */
 const CARD_SPECS: KeySpec[] = ['thrustPullback', 'rotaryTorque', 'enginePower', 'weight'];
 
-const { lang, model, delay = 0 } = Astro.props;
+const {
+  lang,
+  model,
+  delay = 0,
+  detailed = false,
+  wide = false,
+  index = 0,
+  sizes = '(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 25vw',
+} = Astro.props;
 const t = useTranslations(lang);
 const labels = useCatalogLabels(lang);
-const { code, category, images, keySpecs } = model.data;
+const { code, category, images, keySpecs, featured, order, i18n } = model.data;
 const specs = CARD_SPECS.flatMap((key) => keySpecs.filter((s) => s.key === key));
+const Title = detailed ? 'h2' : 'h3';
+
+/** Numeric key spec for client-side sorting (data-sort-* attributes). */
+const num = (key: KeySpec) => Number(keySpecs.find((s) => s.key === key)?.value ?? 0);
+const sortData = detailed
+  ? {
+      'data-sort-order': order,
+      'data-sort-thrustpullback': num('thrustPullback'),
+      'data-sort-rotarytorque': num('rotaryTorque'),
+      'data-sort-weight': num('weight'),
+    }
+  : {};
 ---
 
 <a
   href={modelPath(lang, category, model.id)}
-  class="card bg-paper relative grid grid-rows-[auto_1fr] no-underline"
+  class:list={[
+    'card bg-paper relative grid grid-rows-[auto_1fr] no-underline',
+    wide && 'card-wide',
+  ]}
   data-rise
   data-glow
-  style={`--d:${delay}ms`}
+  style={`--d:${delay}ms; --i:${index}`}
+  {...sortData}
 >
-  <div class="aspect-4/3 bg-line" data-pan>
+  <div class="bg-line relative aspect-4/3" data-pan>
     <Image
       src={images[0]}
       alt={`${t('common.machineAlt')} ${code}`}
-      widths={[480, 720, 960]}
-      sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 25vw"
+      widths={[480, 720, 960, 1200]}
+      sizes={sizes}
       class="size-full object-cover"
     />
+    {detailed && featured && (
+      <span class="bg-blue absolute top-3 left-3 rounded-full px-2.5 py-1.5 text-[13px]/none font-bold text-white">
+        {t('model.featured')}
+      </span>
+    )}
   </div>
-  <div class="grid content-start gap-3 px-4.5 pt-4.5 pb-5.5">
-    <span class="text-blue-ink text-sm font-bold">{labels.categories[category]}</span>
-    <h3 class="card-title relative justify-self-start pb-1.5 text-[30px]">{code}</h3>
+  <div class="card-body grid content-start gap-3 px-4.5 pt-4.5 pb-5.5">
+    {!detailed && (
+      <span class="text-blue-ink text-sm font-bold">{labels.categories[category]}</span>
+    )}
+    <Title
+      class:list={[
+        'card-title relative justify-self-start pb-1.5',
+        detailed ? 'text-[34px]' : 'text-[30px]',
+      ]}
+    >
+      {code}
+    </Title>
+    {detailed && <p class="text-muted text-base">{i18n[lang].summary}</p>}
     <dl class="border-line grid grid-cols-2 gap-x-3.5 gap-y-2.5 border-t pt-3">
       {specs.map((s) => (
         <div>

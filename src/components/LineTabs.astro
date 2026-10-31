@@ -1,0 +1,27 @@
+---
+import { CATEGORIES, type Category } from '../content/specs';
+import type { Lang } from '../i18n/ui';
+import { categoryPath, useCatalogLabels, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  current: Category;
+}
+
+// The three lines as chips. Each one is a real page, so this is navigation, not a JS tab widget.
+const { lang, current } = Astro.props;
+const t = useTranslations(lang);
+const { categories } = useCatalogLabels(lang);
+---
+
+<nav aria-label={t('category.lines')} class="mt-7 flex flex-wrap gap-2">
+  {CATEGORIES.map((category) => (
+    <a
+      href={categoryPath(lang, category)}
+      class="chip"
+      aria-current={category === current ? 'page' : undefined}
+    >
+      {categories[category]}
+    </a>
+  ))}
+</nav>

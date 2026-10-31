@@ -116,6 +116,30 @@ const uiPt = {
   'footer.contact': 'Contato',
   'footer.legal': 'DW Máquinas, distribuidora DWTXS no Brasil.',
   'footer.preview': 'Versão de prévia. Conteúdo em validação.',
+  'crumbs.label': 'Você está em',
+  'category.lines': 'Linhas',
+  'category.count': '{count} modelos',
+  'category.sort': 'Ordenar por',
+  'category.sortLine': 'Linha',
+  'category.conventional.title': 'Perfuratrizes convencionais',
+  'category.conventional.lead':
+    'Para terra, argila e areia: das obras urbanas com pouco espaço às travessias de médio porte.',
+  'category.conventional.description':
+    'Perfuratrizes direcionais convencionais DWTXS, de {min} a {max} kN, para terra, argila e areia. Ficha técnica completa de cada modelo.',
+  'category.maxiRig.title': 'Perfuratrizes Maxi-Rig',
+  'category.maxiRig.lead':
+    'Para oleodutos, gasodutos e grandes travessias, com sala de operação separada e guindaste.',
+  'category.maxiRig.description':
+    'Perfuratrizes direcionais Maxi-Rig DWTXS, de {min} a {max} kN, para oleodutos, gasodutos e grandes travessias.',
+  'category.allTerrain.title': 'Perfuratrizes All Terrain',
+  'category.allTerrain.lead': 'Haste dupla para perfurar rocha e solo misto com a mesma máquina.',
+  'category.allTerrain.description':
+    'Perfuratrizes direcionais All Terrain DWTXS, de haste dupla, para perfurar rocha e solo misto. De {min} a {max} kN.',
+  'category.cta.title': 'Não sabe qual modelo escolher?',
+  'category.cta.lead': 'Conte a obra, o terreno e o diâmetro do tubo. Indicamos a máquina certa.',
+  'category.cta.contact': 'Falar com um especialista',
+  'category.cta.whatsapp': 'Escrever no WhatsApp',
+  'model.featured': 'Destaque',
   'model.keySpecs': 'Dados principais',
   'model.specSheet': 'Ficha técnica',
   'model.specNote':
@@ -210,6 +234,31 @@ const uiEs: Record<UiKey, string> = {
   'footer.contact': 'Contacto',
   'footer.legal': 'DW Máquinas, distribuidor DWTXS en Brasil.',
   'footer.preview': 'Versión de vista previa. Contenido en validación.',
+  'crumbs.label': 'Usted está en',
+  'category.lines': 'Líneas',
+  'category.count': '{count} modelos',
+  'category.sort': 'Ordenar por',
+  'category.sortLine': 'Línea',
+  'category.conventional.title': 'Perforadoras convencionales',
+  'category.conventional.lead':
+    'Para tierra, arcilla y arena: desde obras urbanas con poco espacio hasta cruces de mediano porte.',
+  'category.conventional.description':
+    'Perforadoras direccionales convencionales DWTXS, de {min} a {max} kN, para tierra, arcilla y arena. Ficha técnica completa de cada modelo.',
+  'category.maxiRig.title': 'Perforadoras Maxi-Rig',
+  'category.maxiRig.lead':
+    'Para oleoductos, gasoductos y grandes cruces, con sala de operación separada y grúa.',
+  'category.maxiRig.description':
+    'Perforadoras direccionales Maxi-Rig DWTXS, de {min} a {max} kN, para oleoductos, gasoductos y grandes cruces.',
+  'category.allTerrain.title': 'Perforadoras All Terrain',
+  'category.allTerrain.lead': 'Doble barra para perforar roca y suelo mixto con la misma máquina.',
+  'category.allTerrain.description':
+    'Perforadoras direccionales All Terrain DWTXS, de doble barra, para perforar roca y suelo mixto. De {min} a {max} kN.',
+  'category.cta.title': '¿No sabe qué modelo elegir?',
+  'category.cta.lead':
+    'Cuéntenos la obra, el terreno y el diámetro del caño. Le indicamos la máquina adecuada.',
+  'category.cta.contact': 'Hablar con un especialista',
+  'category.cta.whatsapp': 'Escribir por WhatsApp',
+  'model.featured': 'Destacado',
   'model.keySpecs': 'Datos principales',
   'model.specSheet': 'Ficha técnica',
   'model.specNote':
