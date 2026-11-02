@@ -1,6 +1,6 @@
 ---
 import type { Lang } from '../i18n/ui';
-import { useTranslations } from '../i18n/utils';
+import { fill, useTranslations } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
@@ -19,7 +19,14 @@ const label = 'grid min-w-0 gap-1.5 text-[15px] font-medium';
 ---
 
 <form class="grid gap-3.5 md:grid-cols-2" data-rise data-contact-form>
-  {model && <input type="hidden" name="model" value={model} />}
+  {model && (
+    <>
+      <input type="hidden" name="model" value={model} />
+      <span class="bg-asphalt text-concrete justify-self-start rounded-full px-4 py-2.5 font-bold md:col-span-2">
+        {fill(t('form.model'), { model })}
+      </span>
+    </>
+  )}
   <label class={label}>
     {t('form.name')}
     <input class={field} name="name" autocomplete="name" required />

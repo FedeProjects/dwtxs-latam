@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { Lang } from '../i18n/ui';
+import { fill, useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Model code, for the alt texts. */
+  code: string;
+  images: ImageMetadata[];
+}
+
+// Main photo with arrows, counter and thumbnails. Without JS only the first photo shows (D-12).
+const { lang, code, images } = Astro.props;
+const t = useTranslations(lang);
+const total = images.length;
+const photoLabel = (n: number) => fill(t('model.photo'), { n, total });
+---
+
+<div data-gallery data-rise>
+  <div
+    class="gallery-stage bg-line relative aspect-4/3 overflow-hidden"
+    role="group"
+    aria-label={t('model.photos')}
+    tabindex="0"
+    data-pan
+    data-stage
+  >
+    {images.map((image, i) => (
+      <Image
+        src={image}
+        alt={`${t('common.machineAlt')} ${code}, ${photoLabel(i + 1).toLowerCase()}`}
+        widths={[720, 1080, 1440]}
+        sizes="(max-width: 1023px) 100vw, 58vw"
+        loading={i === 0 ? 'eager' : 'lazy'}
+        class="absolute inset-0 size-full object-cover"
+        hidden={i !== 0}
+        data-photo
+      />
+    ))}
+    <span
+      class="bg-asphalt text-concrete absolute bottom-3 left-3 z-2 hidden rounded-full px-2.5 py-1.5 text-sm/none font-bold [.js_&]:block"
+      aria-hidden="true"
+      data-counter
+    >
+      1 / {total}
+    </span>
+    <div class="absolute right-3 bottom-3 z-2 hidden gap-2 [.js_&]:flex">
+      {[
+        { label: t('model.prev'), attr: 'data-prev', d: 'M15 5l-7 7 7 7' },
+        { label: t('model.next'), attr: 'data-next', d: 'M9 5l7 7-7 7' },
+      ].map(({ label, attr, d }) => (
+        <button
+          type="button"
+          class="bg-paper text-asphalt hover:bg-asphalt hover:text-concrete grid size-11.5 cursor-pointer place-items-center rounded-full transition-colors active:scale-92"
+          aria-label={label}
+          {...{ [attr]: '' }}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            class="size-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            aria-hidden="true"
+          >
+            <path d={d} stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div
+    class="mt-2 hidden grid-cols-7 gap-2 [.js_&]:grid"
+    role="group"
+    aria-label={t('model.photos')}
+  >
+    {images.map((image, i) => (
+      <button
+        type="button"
+        class="thumb relative aspect-square cursor-pointer overflow-hidden"
+        aria-label={photoLabel(i + 1)}
+        aria-current={i === 0 ? 'true' : 'false'}
+        data-thumb
+      >
+        <Image src={image} alt="" width={160} class="size-full object-cover" />
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Gallery: arrows, thumbnails and the arrow keys switch the photo; the new one opens like a shutter.
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((gallery) => {
+    const stage = gallery.querySelector<HTMLElement>('[data-stage]');
+    const photos = [...gallery.querySelectorAll<HTMLImageElement>('[data-photo]')];
+    const thumbs = [...gallery.querySelectorAll<HTMLButtonElement>('[data-thumb]')];
+    const counter = gallery.querySelector('[data-counter]');
+    if (!stage) return;
+    let current = 0;
+    const show = (index: number) => {
+      current = (index + photos.length) % photos.length;
+      photos.forEach((photo, n) => (photo.hidden = n !== current));
+      thumbs.forEach((thumb, n) => thumb.setAttribute('aria-current', String(n === current)));
+      if (counter) counter.textContent = `${current + 1} / ${photos.length}`;
+      stage.classList.remove('swap');
+      void stage.offsetWidth;
+      stage.classList.add('swap');
+    };
+    gallery.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
+    gallery.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+    thumbs.forEach((thumb, n) => thumb.addEventListener('click', () => show(n)));
+    stage.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  });
+</script>

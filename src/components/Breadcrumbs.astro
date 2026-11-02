@@ -1,0 +1,29 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  /** Trail from the home page; the last item is the current page and has no link. */
+  items: { label: string; href?: string }[];
+}
+
+const { lang, items } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<nav aria-label={t('crumbs.label')} class="text-muted pt-6 text-[15px]">
+  <ol class="flex flex-wrap gap-1.5">
+    {items.map(({ label, href }, i) => (
+      <li class:list={[i > 0 && "before:mr-1.5 before:text-current/50 before:content-['/']"]}>
+        {href ? (
+          <a href={href} class="no-underline hover:underline">
+            {label}
+          </a>
+        ) : (
+          <span aria-current="page">{label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

@@ -76,6 +76,31 @@ addEventListener(
   { passive: true },
 );
 
+// Category grid sort: reorder the cards by a key spec (largest first) or back to the line order.
+// When the grid has a wide last card (3n+1 cards in three columns), the class moves with the order.
+document.querySelectorAll<HTMLElement>('[data-sort-grid]').forEach((grid) => {
+  const buttons = document.querySelectorAll<HTMLButtonElement>(`[data-sort-for="${grid.id}"]`);
+  buttons.forEach((button) =>
+    button.addEventListener('click', () => {
+      const key = button.dataset.sortKey ?? 'order';
+      const value = (el: HTMLElement) =>
+        Number(el.dataset[`sort${key[0].toUpperCase()}${key.slice(1)}`]);
+      const cards = [...grid.children] as HTMLElement[];
+      cards.sort((a, b) => (key === 'order' ? value(a) - value(b) : value(b) - value(a)));
+      const wide = grid.hasAttribute('data-wide-last');
+      cards.forEach((card, i) => {
+        card.classList.toggle('card-wide', wide && i === cards.length - 1);
+        card.style.setProperty('--i', String(i));
+      });
+      grid.classList.remove('sorted');
+      grid.replaceChildren(...cards);
+      void grid.offsetWidth;
+      grid.classList.add('sorted');
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+    }),
+  );
+});
+
 // Hover pan: pictures zoom and follow the pointer (fine pointers only).
 if (finePointer && !reduce) {
   document.querySelectorAll<HTMLElement>('[data-pan]').forEach((el) => {

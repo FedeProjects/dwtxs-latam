@@ -192,7 +192,7 @@ Logo: replaced by the DWTXS logo (D-15).
 The font is self-hosted with Astro's built-in Fonts API (Google provider, downloaded at build time): no third-party request at runtime and no extra dependency.
 
 **D-12 — Client JS and video exceptions (2026-10-25).**
-- One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up, hover pan and the card edge light (D-15 v4), plus the interactive bits of the prototypes (category tabs/sort, gallery, spec-sheet filter). Content is visible without JS (`html.js` gate).
+- One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up, hover pan and the card edge light (D-15 v4), plus the interactive bits of the prototypes (category sort, gallery, spec-sheet filter). The prototype's line tabs became links to the three category pages (real URLs, no JS); only the sort needs the script, and without JS the cards keep the line order. Content is visible without JS (`html.js` gate).
 - Scroll-driven animations: put `animation-timeline` / `animation-range` in a separate rule with a different selector from the `animation` shorthand. Lightning CSS (Tailwind's minifier) otherwise folds them into one invalid shorthand and the browser drops the animation; it also rewrites `animation-range: entry exit` wrongly, so use `cover`. SVG paths cannot be view-timeline subjects: name the timeline on the `<svg>`.
 - Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
 
@@ -249,14 +249,15 @@ Goal: every page navigable in both languages.
 - [x] `WhatsAppButton` (floating, localized message, model prefill)
 - [x] Home
 - [x] Light/dark theme for every page (D-13)
-- [ ] Category pages (3) with `ModelCard` grid; All Terrain explainer
-- [ ] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
+- [x] Category pages (3) with `ModelCard` grid; All Terrain explainer
+- [x] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
 - [ ] Accessories, About, Contact pages (form UI only)
 - [ ] 404 page in both languages
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** after the Home PR is merged and Vercel is connected, build the **category pages** (3) following `docs/prototypes/category.src.html`: reuse `ModelCard`, line tabs and sort (D-12 script), All Terrain explainer from the `pages` collection. Then the model page (`model.src.html`). Nav and footer already link to every route of §6.2; until those pages exist they return 404 on the preview.
+**Next step (start here in a new session):** build the **Accessories, About and Contact pages** (form UI only) and the **404** in both languages, with the same pattern as the category and model pages (`Breadcrumbs`, title with split rule and `Accent`, brand bands, `ContactForm` on the red band). Work is stacked on `feat/phase-2-model` (on top of `feat/phase-2-categories`), not merged to `main` yet so production does not change before the client review; one PR from the top branch to `main`.
+Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
 Goal: leads reach the client's inbox.

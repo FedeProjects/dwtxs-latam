@@ -1,6 +1,6 @@
 ---
 import type { Lang } from '../i18n/ui';
-import { homePath, pagePath, useTranslations } from '../i18n/utils';
+import { categoryPath, homePath, pagePath, useTranslations } from '../i18n/utils';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -15,6 +15,9 @@ interface Props {
 const { lang, alternates, overlay = false } = Astro.props;
 const t = useTranslations(lang);
 const path = Astro.url.pathname;
+// Category and model pages live under the machines segment: mark "Machines" as the current section.
+const machinesPrefix = categoryPath(lang, 'conventional').replace(/\/[^/]+$/, '');
+const inMachines = path.startsWith(`${machinesPrefix}/`);
 
 const links = [
   { href: `${homePath(lang)}#maquinas`, label: t('nav.machines') },
@@ -47,8 +50,14 @@ const links = [
       {links.map(({ href, label }) => (
         <a
           href={href}
-          aria-current={href === path ? 'page' : undefined}
-          class="hover:decoration-current aria-[current=page]:decoration-red underline decoration-transparent decoration-2 underline-offset-[6px] transition-[text-decoration-color,text-underline-offset] duration-300 hover:underline-offset-[3px]"
+          aria-current={
+            href === path
+              ? 'page'
+              : inMachines && label === t('nav.machines')
+                ? 'location'
+                : undefined
+          }
+          class="hover:decoration-current aria-[current=page]:decoration-red aria-[current=location]:decoration-red underline decoration-transparent decoration-2 underline-offset-[6px] transition-[text-decoration-color,text-underline-offset] duration-300 hover:underline-offset-[3px]"
         >
           {label}
         </a>

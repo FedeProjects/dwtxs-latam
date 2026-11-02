@@ -1,0 +1,200 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { Category } from '../content/specs';
+import type { Lang } from '../i18n/ui';
+import {
+  categoryPath,
+  fill,
+  formatNumber,
+  homePath,
+  pagePath,
+  useCatalogLabels,
+  useTranslations,
+} from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { whatsappUrl } from '../site';
+import Accent from './Accent.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import LineTabs from './LineTabs.astro';
+import ModelCard from './ModelCard.astro';
+
+interface Props {
+  lang: Lang;
+  category: Category;
+}
+
+const { lang, category } = Astro.props;
+const t = useTranslations(lang);
+const labels = useCatalogLabels(lang);
+
+/** ui.ts key prefix for each line. */
+const KEYS = {
+  conventional: 'category.conventional',
+  'maxi-rig': 'category.maxiRig',
+  'all-terrain': 'category.allTerrain',
+} as const satisfies Record<Category, string>;
+const key = KEYS[category];
+
+const models = (await getCollection('models', (m) => m.data.category === category)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const thrust = models.flatMap((m) =>
+  m.data.keySpecs.filter((s) => s.key === 'thrustPullback').map((s) => Number(s.value)),
+);
+const min = formatNumber(lang, Math.min(...thrust));
+const max = formatNumber(lang, Math.max(...thrust));
+
+// Grid shape: 4 models in two columns; with 3n+1 models the last card spans the row.
+const count = models.length;
+const twoColumns = count % 3 !== 0 && count % 2 === 0;
+const wideLast = !twoColumns && count > 3 && count % 3 === 1;
+const sizes = twoColumns
+  ? '(max-width: 639px) 100vw, 50vw'
+  : '(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw';
+
+const sortKeys = [
+  { key: 'order', label: t('category.sortLine') },
+  { key: 'thrustpullback', label: labels.keySpecs.thrustPullback },
+  { key: 'rotarytorque', label: labels.keySpecs.rotaryTorque },
+  { key: 'weight', label: labels.keySpecs.weight },
+];
+
+// All Terrain explainer from the pages collection (D-08).
+const explainer =
+  category === 'all-terrain'
+    ? (
+        await getCollection('pages', (p) => p.data.page === 'all-terrain' && p.data.lang === lang)
+      )[0]
+    : undefined;
+const Explainer = explainer ? (await render(explainer)).Content : undefined;
+
+const alternates = Object.fromEntries(
+  (['pt', 'es'] as const).map((l) => [l, categoryPath(l, category)]),
+) as Record<Lang, string>;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t(`${key}.title`)} · ${t('site.name')}`}
+  description={fill(t(`${key}.description`), { min, max })}
+  alternates={alternates}
+>
+  <div class="gut">
+    <div class="mx-auto max-w-330">
+      <Breadcrumbs
+        lang={lang}
+        items={[
+          { label: t('nav.home'), href: homePath(lang) },
+          { label: t('nav.machines'), href: `${homePath(lang)}#maquinas` },
+          { label: labels.categories[category] },
+        ]}
+      />
+      <LineTabs lang={lang} current={category} />
+
+      <div class="grid items-end gap-x-16 gap-y-6 pt-10 pb-9 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)]">
+        <h1 class="h1" data-split>
+          <Accent text={t(`${key}.title`)} tone={category === 'maxi-rig' ? 'blue' : 'red'} />
+        </h1>
+        <p class="max-w-[44ch]" data-rise>
+          <span class="text-blue-ink mb-2.5 block text-[26px] font-black">
+            {min} – {max} kN
+          </span>
+          {t(`${key}.lead`)}
+        </p>
+      </div>
+
+      <div class="border-asphalt flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t-2 pt-5.5 pb-7">
+        <span class="font-bold">{fill(t('category.count'), { count })}</span>
+        <div
+          class="hidden flex-wrap items-center gap-x-3 gap-y-2 font-medium [.js_&]:flex"
+          role="group"
+          aria-label={t('category.sort')}
+        >
+          <span aria-hidden="true">{t('category.sort')}</span>
+          {sortKeys.map(({ key: sortKey, label }) => (
+            <button
+              type="button"
+              class="chip px-3.5 py-2 text-[15px]"
+              data-sort-for="models"
+              data-sort-key={sortKey}
+              aria-pressed={sortKey === 'order' ? 'true' : 'false'}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div
+        id="models"
+        class:list={[
+          'cards grid gap-x-7 gap-y-9 sm:grid-cols-2',
+          twoColumns ? 'lg:grid-cols-2' : 'lg:grid-cols-3',
+        ]}
+        data-sort-grid
+        data-wide-last={wideLast ? '' : undefined}
+      >
+        {models.map((model, i) => (
+          <ModelCard
+            lang={lang}
+            model={model}
+            detailed
+            index={i}
+            delay={(i % 3) * 90}
+            wide={wideLast && i === count - 1}
+            sizes={sizes}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {explainer && Explainer && (
+    <section
+      class="band-blue gut mt-[clamp(72px,9vw,140px)] py-[clamp(56px,7vw,104px)]"
+      aria-labelledby="h-explainer"
+    >
+      <div class="mx-auto grid max-w-330 gap-x-16 gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+        <h2 class="h2" id="h-explainer" data-split>
+          {explainer.data.title}
+        </h2>
+        <div class="band-prose" data-rise>
+          <Explainer />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Closing call to action on the red band, like the Home enquiry -->
+  <section
+    class:list={[
+      'band-red gut py-[clamp(72px,9vw,140px)]',
+      !explainer && 'mt-[clamp(72px,9vw,140px)]',
+    ]}
+    aria-labelledby="h-cta"
+  >
+    <div class="mx-auto flex max-w-330 flex-wrap items-end justify-between gap-x-12 gap-y-8">
+      <div>
+        <h2 class="h2 max-w-[13ch]" id="h-cta" data-split>
+          {t('category.cta.title')}
+        </h2>
+        <p class="mt-4.5 max-w-[40ch]" data-rise>
+          {t('category.cta.lead')}
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2.5" data-rise style="--d:150ms">
+        <a class="btn btn-ink" href={pagePath(lang, 'contact')}>
+          {t('category.cta.contact')}
+        </a>
+        <a
+          class="btn btn-ghost-light"
+          href={whatsappUrl(t('wa.message'))}
+          target="_blank"
+          rel="noopener"
+        >
+          {t('category.cta.whatsapp')}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

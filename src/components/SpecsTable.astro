@@ -1,0 +1,125 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Lang } from '../i18n/ui';
+import { formatSpecValue, useCatalogLabels, useTranslations } from '../i18n/utils';
+import Accent from './Accent.astro';
+
+interface Props {
+  lang: Lang;
+  sheet: CollectionEntry<'models'>['data']['specSheet'];
+}
+
+// Full manufacturer sheet (D-06), rendered on the server. The index and the filter are extras for JS.
+const { lang, sheet } = Astro.props;
+const t = useTranslations(lang);
+const labels = useCatalogLabels(lang);
+---
+
+<section class="section" id="ficha" aria-labelledby="h-sheet">
+  <div class="border-asphalt flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b-2 pb-6">
+    <h2 class="h2" id="h-sheet" data-split>
+      <Accent text={t('model.specSheet')} tone="blue" />
+    </h2>
+    <label class="hidden gap-1.5 text-sm font-medium [.js_&]:grid" for="spec-find">
+      {t('model.find')}
+      <input
+        id="spec-find"
+        type="search"
+        autocomplete="off"
+        placeholder={t('model.findPlaceholder')}
+        class="border-asphalt bg-paper text-asphalt w-[min(340px,80vw)] rounded-full border-2 px-4.5 py-3 text-[17px]/none font-medium"
+        data-spec-find
+      />
+    </label>
+  </div>
+
+  <div class="grid items-start gap-x-12 gap-y-6 pt-8 lg:grid-cols-[240px_minmax(0,1fr)]">
+    <nav class="spec-toc" aria-label={t('model.sections')}>
+      {sheet.map(({ section }, i) => (
+        <a href={`#s-${section}`} aria-current={i === 0 ? 'true' : undefined} data-toc>
+          {labels.sections[section]}
+        </a>
+      ))}
+    </nav>
+
+    <div>
+      {sheet.map(({ section, rows }) => (
+        <div class="spec-sec scroll-mt-24 pb-9" id={`s-${section}`} data-spec-sec>
+          <h3 class="mb-2 text-[26px]">{labels.sections[section]}</h3>
+          <table class="w-full border-collapse">
+            <tbody>
+              {rows.map((row) => (
+                <tr data-spec-row>
+                  <th
+                    scope="row"
+                    class="border-line text-muted w-1/2 border-b py-3 pr-5 text-left align-top text-[17px] font-normal"
+                  >
+                    {labels.keys[row.key]}
+                  </th>
+                  <td class="border-line border-b py-3 text-left align-top text-[17px] font-bold">
+                    {formatSpecValue(lang, row)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+      <p class="py-6 font-bold" hidden data-spec-empty>
+        {t('model.findEmpty')}
+      </p>
+      <p class="text-muted mt-2 text-[15px]">{t('model.specNote')}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Spec sheet: the index follows the section in view, and the filter hides rows as you type and marks the match.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc]')];
+  const sections = [...document.querySelectorAll<HTMLElement>('[data-spec-sec]')];
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        links.forEach((a) =>
+          a.toggleAttribute('aria-current', a.getAttribute('href') === `#${e.target.id}`),
+        );
+      }
+    },
+    { rootMargin: '-30% 0px -60% 0px' },
+  );
+  sections.forEach((s) => io.observe(s));
+
+  const fold = (s: string) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  const escapeHtml = (s: string) =>
+    s.replace(
+      /[&<>"]/g,
+      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c] ?? c,
+    );
+  // Wrap the matched part in <mark>, comparing without accents but keeping the original text.
+  const mark = (text: string, query: string) => {
+    const at = fold(text).indexOf(query);
+    if (!query || at < 0) return escapeHtml(text);
+    const end = at + query.length;
+    return `${escapeHtml(text.slice(0, at))}<mark>${escapeHtml(text.slice(at, end))}</mark>${escapeHtml(text.slice(end))}`;
+  };
+
+  const cells = [...document.querySelectorAll<HTMLTableRowElement>('[data-spec-row]')].map((tr) => {
+    const [th, td] = tr.cells;
+    return { tr, th, td, label: th.textContent ?? '', value: td.textContent ?? '' };
+  });
+  const empty = document.querySelector<HTMLElement>('[data-spec-empty]');
+  document.querySelector<HTMLInputElement>('[data-spec-find]')?.addEventListener('input', (e) => {
+    const query = fold((e.target as HTMLInputElement).value.trim());
+    let shown = 0;
+    for (const c of cells) {
+      const hit = !query || fold(`${c.label} ${c.value}`).includes(query);
+      c.tr.hidden = !hit;
+      if (hit) shown++;
+      c.th.innerHTML = mark(c.label, query);
+      c.td.innerHTML = mark(c.value, query);
+    }
+    sections.forEach((s) => (s.hidden = !s.querySelector('tr:not([hidden])')));
+    if (empty) empty.hidden = shown > 0;
+  });
+</script>

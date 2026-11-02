@@ -1,0 +1,171 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { routes } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import {
+  categoryPath,
+  fill,
+  formatQuantity,
+  homePath,
+  modelPath,
+  useCatalogLabels,
+  useTranslations,
+} from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { whatsappUrl } from '../site';
+import Accent from './Accent.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import ContactForm from './ContactForm.astro';
+import Gallery from './Gallery.astro';
+import ModelCard from './ModelCard.astro';
+import SpecsTable from './SpecsTable.astro';
+
+interface Props {
+  lang: Lang;
+  model: CollectionEntry<'models'>;
+}
+
+const { lang, model } = Astro.props;
+const t = useTranslations(lang);
+const labels = useCatalogLabels(lang);
+const { code, category, images, keySpecs, specSheet, i18n } = model.data;
+const text = i18n[lang];
+const contactId = routes[lang].contact;
+
+// Related: the three models of the same line closest in thrust/pullback.
+const thrust = (m: CollectionEntry<'models'>) =>
+  Number(m.data.keySpecs.find((s) => s.key === 'thrustPullback')?.value ?? 0);
+const related = (
+  await getCollection('models', (m) => m.data.category === category && m.id !== model.id)
+)
+  .sort((a, b) => Math.abs(thrust(a) - thrust(model)) - Math.abs(thrust(b) - thrust(model)))
+  .slice(0, 3);
+
+const alternates = Object.fromEntries(
+  (['pt', 'es'] as const).map((l) => [l, modelPath(l, category, model.id)]),
+) as Record<Lang, string>;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${text.name} · ${t('site.name')}`}
+  description={text.summary}
+  alternates={alternates}
+  model={code}
+>
+  <div class="gut">
+    <div class="mx-auto max-w-330">
+      <Breadcrumbs
+        lang={lang}
+        items={[
+          { label: t('nav.home'), href: homePath(lang) },
+          { label: t('nav.machines'), href: `${homePath(lang)}#maquinas` },
+          { label: labels.categories[category], href: categoryPath(lang, category) },
+          { label: code },
+        ]}
+      />
+
+      <!-- Gallery and key data -->
+      <div class="grid items-start gap-x-14 gap-y-8 pt-7 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+        <Gallery lang={lang} code={code} images={images} />
+        <div class="min-w-0">
+          <a href={categoryPath(lang, category)} class="chip mb-6">
+            {labels.categories[category]}
+          </a>
+          <h1 class="h1 text-[clamp(48px,5vw,72px)]" data-split>
+            {code}
+          </h1>
+          <p class="mt-2.5 text-[22px] font-medium" data-rise>
+            {text.name}
+          </p>
+          <p class="mt-5 max-w-[42ch]" data-rise style="--d:100ms">
+            {text.summary}
+          </p>
+          <dl
+            class="border-blue mt-7 grid grid-cols-2 border-t-3"
+            aria-label={t('model.keySpecs')}
+            data-rise
+            style="--d:150ms"
+          >
+            {keySpecs.map((s, i) => (
+              <div class:list={['border-line border-b py-4', i % 2 === 0 && 'pr-4']}>
+                <dt class="text-muted text-sm">{labels.keySpecs[s.key]}</dt>
+                <dd class="mt-1 text-[clamp(26px,2.4vw,34px)] leading-tight font-black tracking-[-0.02em]">
+                  {formatQuantity(lang, s.value, s.unit)}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <div class="mt-7 flex flex-wrap gap-2.5" data-rise style="--d:200ms">
+            <a class="btn" href={`#${contactId}`}>
+              {fill(t('model.quote'), { model: code })}
+            </a>
+            <a
+              class="btn btn-ghost"
+              href={whatsappUrl(fill(t('wa.messageModel'), { model: code }))}
+              target="_blank"
+              rel="noopener"
+            >
+              {t('contact.whatsapp')}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- About the machine -->
+      <section
+        class="section grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+        aria-labelledby="h-about"
+      >
+        <h2 class="h2" id="h-about" data-split>
+          <Accent text={t('model.about')} tone="red" />
+        </h2>
+        <p class="max-w-[60ch] text-xl" data-rise>
+          {text.description}
+        </p>
+      </section>
+
+      <SpecsTable lang={lang} sheet={specSheet} />
+
+      <!-- Related models of the same line -->
+      {related.length > 0 && (
+        <section class="section" aria-labelledby="h-related">
+          <h2 class="h2 mb-9" id="h-related" data-split>
+            <Accent text={t('model.related')} tone="red" />
+          </h2>
+          <div class="cards grid gap-x-7 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((m, i) => (
+              <ModelCard
+                lang={lang}
+                model={m}
+                detailed
+                index={i}
+                delay={i * 90}
+                sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+              />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
+
+  <!-- Quote request on the red band, with the model prefilled -->
+  <section
+    class="band-red gut mt-[clamp(72px,9vw,140px)] py-[clamp(72px,9vw,140px)]"
+    id={contactId}
+    aria-labelledby="h-quote"
+  >
+    <div class="mx-auto grid max-w-330 gap-x-16 gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div>
+        <h2 class="h2" id="h-quote" data-split>
+          {t('model.contact.title')}
+        </h2>
+        <p class="mt-4.5 max-w-[36ch]" data-rise>
+          {t('model.contact.lead')}
+        </p>
+      </div>
+      <ContactForm lang={lang} model={code} onBand />
+    </div>
+  </section>
+</BaseLayout>

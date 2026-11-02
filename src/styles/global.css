@@ -144,6 +144,10 @@
   .h2 {
     font-size: clamp(40px, 5.4vw, 80px);
   }
+  .h1 {
+    /* Capped so the longest category word ("convencionales") fits its column */
+    font-size: clamp(48px, 7.4vw, 104px);
+  }
 
   /* Split rule from the logo: DW red | TXS blue. Bands swap the half that would vanish for white. */
   .brand-rule {
@@ -153,6 +157,7 @@
       var(--mark-b, var(--color-blue)) 50%
     );
   }
+  .h1::before,
   .h2::before {
     content: '';
     display: block;
@@ -218,6 +223,53 @@
   }
   .btn-ghost-light:hover {
     @apply bg-on-media text-on-media-ink;
+  }
+
+  /* Pill chips: line tabs (links) and sort buttons. The current one is filled. */
+  .chip {
+    @apply inline-flex cursor-pointer items-center rounded-full border-2 border-asphalt bg-transparent px-4 py-2.5 text-base/none font-bold text-asphalt no-underline;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      transform 140ms var(--ease-out);
+  }
+  .chip:active {
+    transform: scale(0.95);
+  }
+  .chip[aria-current='page'],
+  .chip[aria-pressed='true'] {
+    @apply bg-asphalt text-concrete;
+  }
+
+  /* Long texts from the pages collection, on a brand band */
+  .band-prose {
+    display: grid;
+    gap: 16px;
+    max-width: 62ch;
+  }
+  .band-prose h2 {
+    font-size: 28px;
+    margin-top: 12px;
+  }
+  .band-prose ul {
+    display: grid;
+    gap: 14px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  .band-prose li {
+    position: relative;
+    padding-left: 22px;
+  }
+  .band-prose li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.2em;
+    bottom: 0.2em;
+    width: 4px;
+    background: currentColor;
   }
 
   /* "Discover" link with a red bar that grows */
@@ -508,6 +560,122 @@
   display: none;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .chip:not([aria-current='page']):not([aria-pressed='true']):hover {
+    background: color-mix(in srgb, var(--color-asphalt) 8%, transparent);
+  }
+}
+
+/* Model gallery: thumbnails dim until active; the active one gets the logo's split rule */
+.thumb img {
+  opacity: 0.62;
+  transition:
+    opacity 200ms ease,
+    transform 500ms var(--ease-soft);
+}
+.thumb::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-red) 50%, var(--color-blue) 50%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms var(--ease-out);
+}
+.thumb[aria-current='true'] img {
+  opacity: 1;
+}
+.thumb[aria-current='true']::after {
+  transform: none;
+}
+
+/* Spec sheet index: sticky list with the current section marked in red, chips on small screens */
+.spec-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.spec-toc a {
+  border: 2px solid var(--color-asphalt);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.spec-toc a[aria-current] {
+  background: var(--color-asphalt);
+  color: var(--color-concrete);
+}
+@media (min-width: 1024px) {
+  .spec-toc {
+    position: sticky;
+    top: 96px;
+    display: grid;
+    gap: 2px;
+  }
+  .spec-toc a {
+    border: 0;
+    border-left: 3px solid var(--color-line);
+    border-radius: 0;
+    padding: 6px 0 6px 14px;
+    font-size: 16px;
+    color: var(--color-muted);
+    transition:
+      color 200ms ease,
+      border-color 200ms ease,
+      padding 300ms var(--ease-out);
+  }
+  .spec-toc a:hover {
+    color: var(--color-asphalt);
+  }
+  .spec-toc a[aria-current] {
+    background: none;
+    border-left-color: var(--color-red);
+    padding-left: 20px;
+    color: var(--color-asphalt);
+    font-weight: 700;
+  }
+}
+.spec-sec mark {
+  background: color-mix(in srgb, var(--color-blue) 24%, transparent);
+  color: inherit;
+  padding: 0 2px;
+}
+
+/* Category grid: with 3n+1 models the last card spans the row as a wide card */
+@media (min-width: 1024px) {
+  .card-wide {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    grid-template-rows: auto;
+  }
+  .card-wide > :first-child {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+  .card-wide .card-body {
+    align-content: center;
+    padding: 32px;
+  }
+  .card-wide dl {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .thumb:hover img {
+    opacity: 1;
+  }
+  .spec-sec tbody tr:hover {
+    background: var(--color-paper);
+  }
+  .spec-sec tbody tr:hover th {
+    color: var(--color-asphalt);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .line:hover::after {
     opacity: 1;
@@ -524,6 +692,22 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* The new gallery photo opens like a shutter */
+  .gallery-stage.swap img:not([hidden]) {
+    animation: wipe 700ms var(--ease-in-out) backwards;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .thumb:hover img {
+      transform: scale(1.12);
+    }
+  }
+
+  /* Cards rise again when the grid is re-sorted */
+  .sorted .card {
+    animation: rise 600ms var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 60ms);
+  }
+
   @supports (animation-timeline: scroll()) {
     .scroll-progress {
       display: block;
@@ -536,6 +720,14 @@
 }
 
 @keyframes progress {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+@keyframes wipe {
   from {
     clip-path: inset(0 100% 0 0);
   }
