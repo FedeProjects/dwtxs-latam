@@ -155,6 +155,17 @@ const uiPt = {
   'model.contact.lead':
     'Conte a obra e o terreno. Respondemos com a cotação e as condições para este modelo.',
   'form.model': 'Modelo: {model}',
+  'form.accessory': 'Acessório: {model}',
+  'wa.messageAccessory': 'Olá! Gostaria de informações sobre o {name} DWTXS.',
+  'accessories.title': 'Acessórios para perfuração direcional',
+  'accessories.description':
+    'Recicladores e misturadores de lama DWTXS para perfuração direcional: preparo e reaproveitamento da lama de bentonita na obra.',
+  'accessories.photos': 'Fotos do equipamento',
+  'accessories.highlights': 'Destaques',
+  'accessories.quote': 'Pedir cotação',
+  'accessories.contact.title': 'Pedir cotação',
+  'accessories.contact.lead':
+    'Conte o porte da perfuratriz e a obra. Respondemos com a cotação e as condições.',
   'model.keySpecs': 'Dados principais',
   'model.specSheet': 'Ficha técnica',
   'model.specNote':
@@ -289,6 +300,17 @@ const uiEs: Record<UiKey, string> = {
   'model.contact.lead':
     'Cuéntenos la obra y el terreno. Le respondemos con la cotización y las condiciones para este modelo.',
   'form.model': 'Modelo: {model}',
+  'form.accessory': 'Accesorio: {model}',
+  'wa.messageAccessory': '¡Hola! Quisiera información sobre el {name} DWTXS.',
+  'accessories.title': 'Accesorios para perforación direccional',
+  'accessories.description':
+    'Recicladores y mezcladores de lodo DWTXS para perforación direccional: preparación y reutilización del lodo de bentonita en la obra.',
+  'accessories.photos': 'Fotos del equipo',
+  'accessories.highlights': 'Destacados',
+  'accessories.quote': 'Pedir cotización',
+  'accessories.contact.title': 'Pedir cotización',
+  'accessories.contact.lead':
+    'Cuéntenos el porte de la perforadora y la obra. Le respondemos con la cotización y las condiciones.',
   'model.keySpecs': 'Datos principales',
   'model.specSheet': 'Ficha técnica',
   'model.specNote':

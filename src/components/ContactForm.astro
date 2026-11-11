@@ -4,14 +4,16 @@ import { fill, useTranslations } from '../i18n/utils';
 
 interface Props {
   lang: Lang;
-  /** Model code sent with the enquiry when the form sits on a model page. */
+  /** Model code (or accessory name) sent with the enquiry from a product page. */
   model?: string;
+  /** Preselected inquiry reason. */
+  reason?: 'machine' | 'accessories' | 'other';
   /** On the red band the submit button turns charcoal so it stays visible. */
   onBand?: boolean;
 }
 
 // UI only for now: the endpoint, honeypot and Turnstile are wired in Phase 3 (PROJECT_SPEC D-04).
-const { lang, model, onBand = false } = Astro.props;
+const { lang, model, reason = 'machine', onBand = false } = Astro.props;
 const t = useTranslations(lang);
 const field =
   'bg-paper text-asphalt focus:border-asphalt w-full min-w-0 rounded-xl border-2 border-transparent px-3.5 py-3 text-[17px]/[1.3] transition-colors outline-none';
@@ -23,7 +25,7 @@ const label = 'grid min-w-0 gap-1.5 text-[15px] font-medium';
     <>
       <input type="hidden" name="model" value={model} />
       <span class="bg-asphalt text-concrete justify-self-start rounded-full px-4 py-2.5 font-bold md:col-span-2">
-        {fill(t('form.model'), { model })}
+        {fill(t(reason === 'accessories' ? 'form.accessory' : 'form.model'), { model })}
       </span>
     </>
   )}
@@ -46,9 +48,15 @@ const label = 'grid min-w-0 gap-1.5 text-[15px] font-medium';
   <label class:list={[label, 'md:col-span-2']}>
     {t('form.reason')}
     <select class={field} name="reason">
-      <option value="machine">{t('form.reasonMachine')}</option>
-      <option value="accessories">{t('form.reasonAccessories')}</option>
-      <option value="other">{t('form.reasonOther')}</option>
+      <option value="machine" selected={reason === 'machine'}>
+        {t('form.reasonMachine')}
+      </option>
+      <option value="accessories" selected={reason === 'accessories'}>
+        {t('form.reasonAccessories')}
+      </option>
+      <option value="other" selected={reason === 'other'}>
+        {t('form.reasonOther')}
+      </option>
     </select>
   </label>
   <label class:list={[label, 'md:col-span-2']}>

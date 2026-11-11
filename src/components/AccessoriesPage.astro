@@ -1,0 +1,151 @@
+---
+import { getCollection } from 'astro:content';
+import { routes } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { fill, homePath, pagePath, useTranslations } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { whatsappUrl } from '../site';
+import Accent from './Accent.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import ContactForm from './ContactForm.astro';
+import Gallery from './Gallery.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const contactId = routes[lang].contact;
+
+const accessories = (await getCollection('accessories')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const alternates = Object.fromEntries(
+  (['pt', 'es'] as const).map((l) => [l, pagePath(l, 'accessories')]),
+) as Record<Lang, string>;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t('accessories.title')} · ${t('site.name')}`}
+  description={t('accessories.description')}
+  alternates={alternates}
+>
+  <div class="gut">
+    <div class="mx-auto max-w-330">
+      <Breadcrumbs
+        lang={lang}
+        items={[{ label: t('nav.home'), href: homePath(lang) }, { label: t('nav.accessories') }]}
+      />
+
+      <div class="grid items-end gap-x-16 gap-y-6 pt-10 pb-9 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)]">
+        <h1 class="h1" data-split>
+          <Accent text={t('home.mud.title')} tone="blue" />
+        </h1>
+        <p class="max-w-[44ch]" data-rise>
+          {t('home.mud.lead')}
+        </p>
+      </div>
+
+      <!-- Jump links to each accessory (plain anchors, no JS) -->
+      <nav
+        class="border-asphalt flex flex-wrap gap-2.5 border-t-2 pt-5.5"
+        aria-label={t('nav.accessories')}
+      >
+        {accessories.map((acc) => (
+          <a class="chip" href={`#${acc.id}`}>
+            {acc.data.i18n[lang].name}
+          </a>
+        ))}
+      </nav>
+
+      {accessories.map((acc, i) => {
+        const text = acc.data.i18n[lang];
+        const reversed = i % 2 === 1;
+        return (
+          <section
+            class:list={[
+              'section grid scroll-mt-24 items-start gap-x-14 gap-y-8',
+              reversed
+                ? 'lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]'
+                : 'lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]',
+            ]}
+            id={acc.id}
+            aria-labelledby={`h-${acc.id}`}
+          >
+            <div class:list={['min-w-0', reversed && 'lg:order-2']}>
+              <Gallery
+                lang={lang}
+                code={text.name}
+                images={acc.data.images}
+                alt={text.name}
+                label={t('accessories.photos')}
+              />
+            </div>
+            <div class="min-w-0">
+              <span class="text-blue-ink mb-4 block text-[26px] font-black" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <h2 class="h2" id={`h-${acc.id}`} data-split>
+                <Accent text={text.name} tone={reversed ? 'blue' : 'red'} />
+              </h2>
+              <p class="mt-5 text-[22px] font-medium" data-rise>
+                {text.summary}
+              </p>
+              <p class="mt-5 max-w-[52ch]" data-rise style="--d:100ms">
+                {text.description}
+              </p>
+              <ul class="mt-7 grid gap-4" aria-label={t('accessories.highlights')}>
+                {text.highlights.map((h, j) => (
+                  <li
+                    class="bar-item relative pl-6 font-medium"
+                    data-rise
+                    style={`--d:${150 + j * 100}ms`}
+                  >
+                    {h}
+                  </li>
+                ))}
+              </ul>
+              <div class="mt-8 flex flex-wrap gap-2.5" data-rise style="--d:200ms">
+                <a class="btn" href={`#${contactId}`}>
+                  {t('accessories.quote')}
+                </a>
+                <a
+                  class="btn btn-ghost"
+                  href={whatsappUrl(
+                    fill(t('wa.messageAccessory'), { name: text.name.toLowerCase() }),
+                  )}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {t('contact.whatsapp')}
+                </a>
+              </div>
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+
+  <!-- Quote request on the red band, inquiry reason preset to accessories -->
+  <section
+    class="band-red gut mt-[clamp(72px,9vw,140px)] py-[clamp(72px,9vw,140px)]"
+    id={contactId}
+    aria-labelledby="h-quote"
+  >
+    <div class="mx-auto grid max-w-330 gap-x-16 gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div>
+        <h2 class="h2" id="h-quote" data-split>
+          {t('accessories.contact.title')}
+        </h2>
+        <p class="mt-4.5 max-w-[36ch]" data-rise>
+          {t('accessories.contact.lead')}
+        </p>
+      </div>
+      <ContactForm lang={lang} reason="accessories" onBand />
+    </div>
+  </section>
+</BaseLayout>
