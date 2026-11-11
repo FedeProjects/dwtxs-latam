@@ -102,7 +102,7 @@ src/
   content/
     models/          # one YAML per model (ddw10-04.yaml, ...)
     accessories/     # one YAML per accessory
-    pages/           # long texts, one Markdown per page and language (about.pt.md, ...)
+    pages/           # long texts, one Markdown per page or section and language (about-dw.pt.md, ...)
     specs.ts         # whitelists: spec sections, row keys, translatable values, key specs
   content.config.ts  # collection schemas (Zod)
   i18n/
@@ -176,6 +176,7 @@ The web sheet and the PDF brochure disagree for several models (e.g. DDW360/130,
 **D-08 — Long texts in a `pages` collection (2026-10-24).**
 Alternative: paragraphs as keys in `ui.ts`.
 Reason: About and All Terrain texts are long and formatted; Markdown per page and language is easier to edit and is validated like the other collections.
+Update 2026-11-11: About is split into one file per section (`about-dw`, `about-dwtxs`), so each section gets its own layout (light ground / blue band) and can be removed on its own if the client changes what the page tells. DW Máquinas company data lives in `src/site.ts` (`company`) and shows "[a confirmar]" while empty.
 
 **D-09 — Photos and client review (2026-10-24).**
 Photos come from dwtxs.cn (selection recorded in the photo selection sheet): one main + max 6 gallery photos per model, converted to sRGB JPEG ≤ 2400 px. Montage banners and photos with third-party dealer branding (FARCO, DWTXS.RU) are excluded. No separate content draft: the client reviews texts and specs on the Phase 2 preview site.
@@ -252,7 +253,8 @@ Goal: every page navigable in both languages.
 - [x] Category pages (3) with `ModelCard` grid; All Terrain explainer
 - [x] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
 - [x] Accessories page (highlights only until the manufacturer sends technical data)
-- [ ] About, Contact pages (form UI only)
+- [x] About page (company data shows "[a confirmar]" until the client sends it)
+- [ ] Contact page (form UI only)
 - [ ] 404 page in both languages
 - [ ] Header at 768px: the one-row layout (logo, links, language, theme) does not fit and wraps. Move the mobile-menu breakpoint from `md` to `lg`
 - [ ] Header hides on scroll down and shows on scroll up (small addition to `motion.ts` + CSS transform). Keep it visible while the mobile menu is open or focus is inside it; small threshold against jitter; no slide with `prefers-reduced-motion`; Home overlay header unchanged over the hero. Add it to D-12 when done
@@ -260,7 +262,7 @@ Goal: every page navigable in both languages.
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** build the **About and Contact pages** (form UI only) and the **404** in both languages, with the same pattern as the category, model and accessories pages (`Breadcrumbs`, title with split rule and `Accent`, brand bands, `ContactForm` on the red band). Work goes on a feature branch from `main` (`feat/phase-2-accessories` holds the Accessories page); one PR to `main`.
+**Next step (start here in a new session):** build the **Contact page** (form UI only) and the **404** in both languages, with the same pattern as the category, model, accessories and about pages (`Breadcrumbs`, title with split rule and `Accent`, brand bands, `ContactForm` on the red band). Work goes on a feature branch from `main` (`feat/phase-2-about` holds the About page); one PR to `main`.
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
@@ -303,7 +305,8 @@ Goal: leads reach the client's inbox.
 
 - [TBD] Destination email for the form.
 - [TBD] WhatsApp business number (with country code) and default prefilled message.
-- [TBD] DW Máquinas legal data: name, CNPJ (if shown), address, phone.
+- [TBD] DW Máquinas legal data: name, CNPJ (if shown), address, phone, email (`company` in `src/site.ts`).
+- [TBD] Does the client want the About page to tell the Trader MAC and DWTXS stories? Each one is a separate section file and can be dropped.
 - [TBD] Where tradermacusa.com is hosted, and whether DNS for `dwtxslatam.com` can be managed by us (needed for Cloudflare Pages).
 - [TBD] Official DWTXS logo as vector (SVG/AI/EPS) and a square icon for the favicon (D-15 uses a traced SVG).
 - [TBD] Years in business: tradermacusa.com says "+20 años" (home), "más de 50" (nosotros) and "desde 1966" (history). The site uses "50+".
