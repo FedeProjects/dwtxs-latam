@@ -78,6 +78,7 @@ const alternates = Object.fromEntries(
   title={`${t(`${key}.title`)} · ${t('site.name')}`}
   description={fill(t(`${key}.description`), { min, max })}
   alternates={alternates}
+  image={models[0].data.images[0]}
 >
   <div class="gut">
     <div class="mx-auto max-w-330">

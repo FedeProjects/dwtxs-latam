@@ -78,7 +78,7 @@ Source: client document "Web DWTXS LATAM".
 | Runtime | Node LTS inside the Dev Container |
 | Quality | ESLint + Prettier + `astro check` |
 | CI | GitHub Actions: install, check, lint, build on every PR |
-| Hosting | Vercel (preview on Hobby now, Pro before going public) (D-05) |
+| Hosting | Production on Bana Hosting (shared cPanel, LiteSpeed) via FTP/SFTP from GitHub Actions; Vercel Hobby for the demo and PR previews (D-17) |
 
 ### 6.2 Routes
 
@@ -111,7 +111,7 @@ src/
     utils.ts         # getLangFromUrl, t(), localizePath()
   layouts/BaseLayout.astro
   pages/             # pt at root, es/ mirrors it
-public/              # favicon, robots.txt, og defaults, video/ (D-12)
+public/              # favicon, .htaccess (D-17), video/ (D-12); robots.txt is generated (src/pages/robots.txt.ts)
 docs/prototypes/     # approved HTML prototypes, Phase 2 visual reference (D-11)
 ```
 
@@ -165,6 +165,7 @@ Reason: hosting-agnostic and zero maintenance. Revisit if the free tier limits a
 **D-05 — Static output, hosting-agnostic.**
 Reason: the client may migrate the site into Trader MAC USA. Static files deploy to Cloudflare Pages, any CDN or shared hosting.
 Update 2026-10-25: hosting is **Vercel**, where the developer already has an account. Previews run on the Hobby plan; Hobby is non-commercial, so the project moves to **Pro before the site is public or shared widely**. `main` deploys to the production `*.vercel.app` URL used as the client demo; every PR gets its own preview URL. The site keeps `noindex` until launch.
+Update 2026-11-11: production moves to Bana Hosting (D-17); Vercel stays as the demo and PR previews, so the Pro plan is not needed.
 
 **D-06 — Specs as key specs + full spec sheet (2026-10-24).**
 Alternative: only 6–10 numeric key specs.
@@ -183,6 +184,7 @@ Photos come from dwtxs.cn (selection recorded in the photo selection sheet): one
 
 **D-10 — URLs without trailing slash (2026-10-24).**
 `trailingSlash: 'never'` + `build.format: 'file'`: pages are generated as `maquinas/convencional.html` and served as `/maquinas/convencional`, so static hosts (Cloudflare Pages) do not add a redirect to the slash version.
+On Apache/LiteSpeed (Bana, D-17) the same is done by `public/.htaccess`.
 On Vercel this needs `vercel.json` with `cleanUrls: true` (serves `es.html` at `/es` and redirects `/es.html` to `/es`) and `trailingSlash: false`; without it every page except `/` returns 404.
 
 **D-11 — Visual direction "Obra" (2026-10-25).**
@@ -220,6 +222,14 @@ Rollback: git tags `palette-dwtxs-v4` (full v4 trial), `palette-dwtxs-v2a` (band
 Alternatives: Formspree (free plan 50 submissions/month, reCAPTCHA, custom honeypot only on Business); Cloudflare Turnstile as in the original stack (on Web3Forms only in the paid plan); hCaptcha from day one.
 Chosen: Web3Forms free plan (250 submissions/month per third-party sources [verify on web3forms.com]) with its `botcheck` honeypot and no captcha, so no third-party script hurts Lighthouse. Add hCaptcha (free on Web3Forms) only if spam appears. Leads go by email only (no CRM; Pipedrive not required).
 The access key is `PUBLIC_WEB3FORMS_KEY` (`.env.example`): public by design, it only sends to the inbox it was created for, so swapping the destination means creating a new key and changing the env var. `ContactForm` posts straight to the endpoint without JS; with JS it validates in the page language (browser messages follow the browser language) and shows the result inline. Without a key the form shows a notice pointing to WhatsApp.
+
+**D-17 — Production hosting: Bana Hosting; domain at Squarespace (2026-11-11).**
+The client chose Bana Hosting (shared plans with cPanel; reviews mention LiteSpeed, which reads `.htaccess`, and free SSL [confirm with Bana]). The domain `dwtxslatam.com` is registered at Squarespace.
+- `public/.htaccess` does what `vercel.json` does on Vercel: clean URLs without trailing slash (D-10), `/404.html` as error page, HTTPS redirect, compression and long cache for hashed assets. Vercel ignores it.
+- Shared hosting does not build: GitHub Actions builds and uploads `dist/` by FTP/SFTP (Phase 5). Build-time variables (`PUBLIC_WEB3FORMS_KEY`, `SITE_URL`) and the FTP credentials live in GitHub secrets/variables, never in the repo.
+- Vercel (Hobby) stays as the client demo (`dwtxs-latam.vercel.app`) and PR previews until launch; Pro is no longer needed (updates D-05).
+- `site` reads `SITE_URL` (the vercel.app demo until launch) and falls back to `https://dwtxslatam.com`. The launch switch is `indexable` in `src/site.ts`: while false, every page has `noindex` and `robots.txt` disallows crawling.
+- DNS: point the domain to Bana from Squarespace (A/CNAME records or nameservers). If the domain has email (MX records), copy them first.
 
 ## 8. Phases
 
@@ -269,7 +279,7 @@ Goal: every page navigable in both languages.
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 **Closed 2026-11-11:** layout checked by the developer at 375/768/1440px.
 
-**Next step (start here in a new session):** Phase 3 end-to-end test (see below).
+**Next step (start here in a new session):** Phase 4 Lighthouse (mobile) and axe audit, and fixes. Phase 3 is waiting for the client email.
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
@@ -283,11 +293,12 @@ Goal: leads reach the client's inbox.
 **Done when:** a test submission from pt and es arrives at the client email with all fields, and the honeypot is active.
 
 ### Phase 4 — SEO, performance, accessibility
-- [ ] `SEO` component: title, description, canonical, hreflang, OG
-- [ ] JSON-LD: Organization, Product, BreadcrumbList
-- [ ] Sitemap + robots.txt
+- [x] `SEO` component: title, description, canonical, hreflang (+ `x-default` = pt), Open Graph and Twitter card; the 404 has no canonical/alternates
+- [x] JSON-LD: Organization on the Home (only confirmed company fields), Product per model (no price, so not eligible for Google product rich results), BreadcrumbList from `Breadcrumbs`
+- [x] Sitemap (`@astrojs/sitemap`, both languages with alternates) + generated robots.txt (Disallow until launch)
+- [x] `.htaccess` for Bana Hosting (D-17)
 - [ ] Lighthouse audit (mobile) and fixes; axe accessibility check
-- [ ] OG images (default + per category)
+- [x] OG images: the page's own photo cropped to 1200×630 at build (model main photo, first model of the line, first accessory, about factory photo; jobsite photo by default). No text overlay, to avoid a new dependency
 
 **Done when:** Lighthouse ≥ 95 on Home, a category and a model page; no axe errors; sitemap includes both languages.
 
@@ -315,7 +326,8 @@ Goal: leads reach the client's inbox.
 - [TBD] WhatsApp business number (with country code) and default prefilled message.
 - [TBD] DW Máquinas legal data: name, CNPJ (if shown), address, phone, email (`company` in `src/site.ts`).
 - [TBD] Does the client want the About page to tell the Trader MAC and DWTXS stories? Each one is a separate section file and can be dropped.
-- [TBD] Where tradermacusa.com is hosted, and whether DNS for `dwtxslatam.com` can be managed by us (needed for Cloudflare Pages).
+- [TBD] Bana Hosting: FTP/SFTP access, plan, and confirmation of SSL and LiteSpeed/Apache (`.htaccess`).
+- [TBD] Who manages DNS for `dwtxslatam.com` at Squarespace, and does the domain have email (MX records) that must be kept?
 - [TBD] Official DWTXS logo as vector (SVG/AI/EPS) and a square icon for the favicon (D-15 uses a traced SVG).
 - [TBD] Years in business: tradermacusa.com says "+20 años" (home), "más de 50" (nosotros) and "desde 1966" (history). The site uses "50+".
 - [TBD] Does DW Máquinas sell DWTXS spare parts and tools in Brazil? (Home services block)

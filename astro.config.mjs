@@ -1,10 +1,15 @@
 // @ts-check
+import process from 'node:process';
 import { defineConfig, fontProviders } from 'astro/config';
 
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  // Absolute URLs for canonical, hreflang, Open Graph and the sitemap. SITE_URL points to the
+  // vercel.app demo until launch; without it the final domain is used (D-17).
+  site: process.env.SITE_URL || 'https://dwtxslatam.com',
   output: 'static',
   // URLs without trailing slash: /maquinas/convencional (D-10).
   trailingSlash: 'never',
@@ -32,6 +37,12 @@ export default defineConfig({
       subsets: ['latin'],
       fallbacks: ['Helvetica Neue', 'Arial', 'sans-serif'],
     },
+  ],
+
+  integrations: [
+    sitemap({
+      i18n: { defaultLocale: 'pt', locales: { pt: 'pt-BR', es: 'es' } },
+    }),
   ],
 
   vite: {

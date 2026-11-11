@@ -17,6 +17,7 @@ import Accent from './Accent.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import ContactForm from './ContactForm.astro';
 import Gallery from './Gallery.astro';
+import JsonLd from './JsonLd.astro';
 import ModelCard from './ModelCard.astro';
 import SpecsTable from './SpecsTable.astro';
 
@@ -52,7 +53,20 @@ const alternates = Object.fromEntries(
   description={text.summary}
   alternates={alternates}
   model={code}
+  image={images[0]}
 >
+  <JsonLd
+    data={{
+      '@type': 'Product',
+      name: text.name,
+      mpn: code,
+      description: text.summary,
+      category: labels.categories[category],
+      brand: { '@type': 'Brand', name: 'DWTXS' },
+      image: images.map((img) => new URL(img.src, Astro.site).href),
+      url: new URL(modelPath(lang, category, model.id), Astro.site).href,
+    }}
+  />
   <div class="gut">
     <div class="mx-auto max-w-330">
       <Breadcrumbs
