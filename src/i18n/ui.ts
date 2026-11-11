@@ -99,7 +99,11 @@ const uiPt = {
   'contact.whatsapp': 'WhatsApp',
   'contact.email': 'E-mail',
   'contact.address': 'Endereço',
-  'contact.addressValue': 'DW Máquinas, Brasil [a confirmar]',
+  'contact.phone': 'Telefone',
+  'contact.lead':
+    'Conte o que precisa: máquina, acessórios ou suporte. Responda pelo canal que preferir.',
+  'contact.description':
+    'Fale com a DW Máquinas, distribuidora DWTXS no Brasil: formulário, WhatsApp, e-mail e endereço.',
   'form.name': 'Nome',
   'form.company': 'Empresa',
   'form.email': 'E-mail',
@@ -163,7 +167,6 @@ const uiPt = {
   'about.data.address': 'Endereço',
   'about.data.phone': 'Telefone',
   'about.data.email': 'E-mail',
-  'about.tbd': '[a confirmar]',
   'about.photos': 'Fotos da DWTXS',
   'about.photo.customers': 'Clientes conhecendo uma perfuratriz DDW',
   'about.photo.factory': 'Maxi-Rig DWTXS em frente à fábrica',
@@ -260,7 +263,11 @@ const uiEs: Record<UiKey, string> = {
   'contact.whatsapp': 'WhatsApp',
   'contact.email': 'Correo electrónico',
   'contact.address': 'Dirección',
-  'contact.addressValue': 'DW Máquinas, Brasil [a confirmar]',
+  'contact.phone': 'Teléfono',
+  'contact.lead':
+    'Cuéntenos qué necesita: máquina, accesorios o soporte. Escríbanos por el canal que prefiera.',
+  'contact.description':
+    'Contacte a DW Máquinas, distribuidor DWTXS en Brasil: formulario, WhatsApp, correo y dirección.',
   'form.name': 'Nombre',
   'form.company': 'Empresa',
   'form.email': 'Correo electrónico',
@@ -325,7 +332,6 @@ const uiEs: Record<UiKey, string> = {
   'about.data.address': 'Dirección',
   'about.data.phone': 'Teléfono',
   'about.data.email': 'Email',
-  'about.tbd': '[a confirmar]',
   'about.photos': 'Fotos de DWTXS',
   'about.photo.customers': 'Clientes conociendo una perforadora DDW',
   'about.photo.factory': 'Maxi-Rig DWTXS frente a la fábrica',

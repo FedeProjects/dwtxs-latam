@@ -99,7 +99,7 @@ const alternates = Object.fromEntries(
             {companyData.map(({ label, value }, i) => (
               <div class:list={['border-line border-b py-4', i % 2 === 0 && 'sm:pr-4']}>
                 <dt class="text-muted text-sm">{label}</dt>
-                <dd class="mt-1 font-medium">{value || t('about.tbd')}</dd>
+                <dd class="mt-1 font-medium">{value || t('common.tbd')}</dd>
               </div>
             ))}
           </dl>

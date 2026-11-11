@@ -15,6 +15,7 @@ import {
   useTranslations,
 } from '../i18n/utils';
 import Accent from './Accent.astro';
+import ContactDetails from './ContactDetails.astro';
 import ContactForm from './ContactForm.astro';
 import ModelCard from './ModelCard.astro';
 
@@ -336,20 +337,9 @@ const services = [
       <p class="mt-4.5 max-w-[36ch]" data-rise>
         {t('home.enquiry.lead')}
       </p>
-      <dl class="mt-7 grid gap-3.5" data-rise style="--d:100ms">
-        <div>
-          <dt class="text-sm">{t('contact.whatsapp')}</dt>
-          <dd class="mt-0.5 font-bold">{t('common.tbd')}</dd>
-        </div>
-        <div>
-          <dt class="text-sm">{t('contact.email')}</dt>
-          <dd class="mt-0.5 font-bold">{t('common.tbd')}</dd>
-        </div>
-        <div>
-          <dt class="text-sm">{t('contact.address')}</dt>
-          <dd class="mt-0.5 font-bold">{t('contact.addressValue')}</dd>
-        </div>
-      </dl>
+      <div class="mt-7" data-rise style="--d:100ms">
+        <ContactDetails lang={lang} />
+      </div>
     </div>
     <ContactForm lang={lang} onBand />
   </div>

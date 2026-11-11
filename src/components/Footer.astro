@@ -2,6 +2,7 @@
 import { CATEGORIES } from '../content/specs';
 import type { Lang } from '../i18n/ui';
 import { categoryPath, homePath, pagePath, useCatalogLabels, useTranslations } from '../i18n/utils';
+import { company, whatsappNumber } from '../site';
 import Logo from './Logo.astro';
 
 interface Props {
@@ -60,10 +61,10 @@ const columns = [
           <h2 class="mb-3 text-base tracking-normal">{t('footer.contact')}</h2>
           <ul class="grid gap-2 text-base">
             <li>
-              {t('contact.whatsapp')} {t('common.tbd')}
+              {t('contact.whatsapp')} {whatsappNumber ? `+${whatsappNumber}` : t('common.tbd')}
             </li>
             <li>
-              {t('contact.email')} {t('common.tbd')}
+              {t('contact.email')} {company.email || t('common.tbd')}
             </li>
           </ul>
         </div>
