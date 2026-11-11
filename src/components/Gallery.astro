@@ -9,11 +9,17 @@ interface Props {
   /** Model code, for the alt texts. */
   code: string;
   images: ImageMetadata[];
+  /** Alt text base; defaults to "<machine> <code>". */
+  alt?: string;
+  /** Accessible name of the photo group; defaults to the model one. */
+  label?: string;
 }
 
 // Main photo with arrows, counter and thumbnails. Without JS only the first photo shows (D-12).
-const { lang, code, images } = Astro.props;
+const { lang, code, images, alt, label } = Astro.props;
 const t = useTranslations(lang);
+const altBase = alt ?? `${t('common.machineAlt')} ${code}`;
+const groupLabel = label ?? t('model.photos');
 const total = images.length;
 const photoLabel = (n: number) => fill(t('model.photo'), { n, total });
 ---
@@ -22,7 +28,7 @@ const photoLabel = (n: number) => fill(t('model.photo'), { n, total });
   <div
     class="gallery-stage bg-line relative aspect-4/3 overflow-hidden"
     role="group"
-    aria-label={t('model.photos')}
+    aria-label={groupLabel}
     tabindex="0"
     data-pan
     data-stage
@@ -30,7 +36,7 @@ const photoLabel = (n: number) => fill(t('model.photo'), { n, total });
     {images.map((image, i) => (
       <Image
         src={image}
-        alt={`${t('common.machineAlt')} ${code}, ${photoLabel(i + 1).toLowerCase()}`}
+        alt={`${altBase}, ${photoLabel(i + 1).toLowerCase()}`}
         widths={[720, 1080, 1440]}
         sizes="(max-width: 1023px) 100vw, 58vw"
         loading={i === 0 ? 'eager' : 'lazy'}
@@ -72,11 +78,7 @@ const photoLabel = (n: number) => fill(t('model.photo'), { n, total });
     </div>
   </div>
 
-  <div
-    class="mt-2 hidden grid-cols-7 gap-2 [.js_&]:grid"
-    role="group"
-    aria-label={t('model.photos')}
-  >
+  <div class="mt-2 hidden grid-cols-7 gap-2 [.js_&]:grid" role="group" aria-label={groupLabel}>
     {images.map((image, i) => (
       <button
         type="button"

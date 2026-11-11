@@ -1,6 +1,6 @@
 # PROJECT_SPEC — DWTXS LATAM website
 
-> Living document. Update it when a decision changes. Last update: 2026-10-25.
+> Living document. Update it when a decision changes. Last update: 2026-11-11.
 
 ## 1. Overview
 
@@ -251,12 +251,13 @@ Goal: every page navigable in both languages.
 - [x] Light/dark theme for every page (D-13)
 - [x] Category pages (3) with `ModelCard` grid; All Terrain explainer
 - [x] Model detail page (`getStaticPaths`), `SpecsTable`, gallery, CTAs
-- [ ] Accessories, About, Contact pages (form UI only)
+- [x] Accessories page (highlights only until the manufacturer sends technical data)
+- [ ] About, Contact pages (form UI only)
 - [ ] 404 page in both languages
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** build the **Accessories, About and Contact pages** (form UI only) and the **404** in both languages, with the same pattern as the category and model pages (`Breadcrumbs`, title with split rule and `Accent`, brand bands, `ContactForm` on the red band). Work is stacked on `feat/phase-2-model` (on top of `feat/phase-2-categories`), not merged to `main` yet so production does not change before the client review; one PR from the top branch to `main`.
+**Next step (start here in a new session):** build the **About and Contact pages** (form UI only) and the **404** in both languages, with the same pattern as the category, model and accessories pages (`Breadcrumbs`, title with split rule and `Accent`, brand bands, `ContactForm` on the red band). Work goes on a feature branch from `main` (`feat/phase-2-accessories` holds the Accessories page); one PR to `main`.
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
@@ -305,6 +306,7 @@ Goal: leads reach the client's inbox.
 - [TBD] Years in business: tradermacusa.com says "+20 años" (home), "más de 50" (nosotros) and "desde 1966" (history). The site uses "50+".
 - [TBD] Does DW Máquinas sell DWTXS spare parts and tools in Brazil? (Home services block)
 - [TBD] Authorization to use DWTXS photos and texts.
+- [TBD] Technical data for the mud recycler and mud mixer (capacity, power, dimensions): DWTXS does not publish it; the Accessories page shows highlights only (FR-06).
 - [TBD] Is analytics needed (GA4 / Cloudflare Web Analytics)?
 - [TBD] Confirm default language pt-BR, and who the Spanish version targets.
 - [TBD] Number of client review rounds included.
