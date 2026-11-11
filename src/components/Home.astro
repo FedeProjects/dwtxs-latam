@@ -20,6 +20,7 @@ import Accent from './Accent.astro';
 import ContactDetails from './ContactDetails.astro';
 import ContactForm from './ContactForm.astro';
 import JsonLd from './JsonLd.astro';
+import { bandPoster, heroPoster } from './posters';
 import ModelCard from './ModelCard.astro';
 
 interface Props {
@@ -30,6 +31,8 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 const { categories } = useCatalogLabels(lang);
 const contactId = routes[lang].contact;
+const hero = await heroPoster();
+const band = await bandPoster();
 
 // schema.org Organization: only the company fields the client has confirmed (src/site.ts).
 const organization = Object.fromEntries(
@@ -112,7 +115,7 @@ const services = [
   <video
     class="hero-video absolute inset-0 size-full object-cover object-[72%_50%]"
     src="/video/rig.mp4"
-    poster="/video/rig.jpg"
+    poster={hero.src}
     autoplay
     muted
     loop
@@ -325,13 +328,12 @@ const services = [
 >
   <video
     class="band-video absolute inset-0 size-full object-cover"
-    src="/video/drone.mp4"
-    poster="/video/drone.jpg"
-    autoplay
+    data-src="/video/drone.mp4"
+    poster={band.src}
     muted
     loop
     playsinline
-    preload="metadata"
+    preload="none"
     aria-hidden="true"
   ></video>
   <div class="relative z-1 mx-auto w-full max-w-330">

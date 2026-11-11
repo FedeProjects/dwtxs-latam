@@ -13,6 +13,26 @@ if (reduce) {
   });
 }
 
+// Below-the-fold ambient videos (data-src) only download when they come near the viewport;
+// with reduced motion they stay on their poster and are never fetched.
+if (!reduce) {
+  const lazyVideos = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        const video = e.target as HTMLVideoElement;
+        video.src = video.dataset.src ?? '';
+        video.play().catch(() => {});
+        lazyVideos.unobserve(video);
+      }
+    },
+    { rootMargin: '300px 0px' },
+  );
+  document
+    .querySelectorAll<HTMLVideoElement>('video[data-src]')
+    .forEach((v) => lazyVideos.observe(v));
+}
+
 // Wrap each word of a heading in a mask; screen readers keep the plain text through aria-label.
 // Words inside an element (the accent span) keep that element's class.
 document.querySelectorAll<HTMLElement>('[data-split]').forEach((el) => {

@@ -1,10 +1,12 @@
 ---
 import Home from '../../components/Home.astro';
 import { homePath, useTranslations } from '../../i18n/utils';
+import { heroPoster } from '../../components/posters';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const lang = 'es';
 const t = useTranslations(lang);
+const hero = await heroPoster();
 ---
 
 <BaseLayout
@@ -14,5 +16,6 @@ const t = useTranslations(lang);
   alternates={{ pt: homePath('pt'), es: homePath('es') }}
   overlayHeader
 >
+  <link slot="head" rel="preload" as="image" href={hero.src} fetchpriority="high" />
   <Home lang={lang} />
 </BaseLayout>

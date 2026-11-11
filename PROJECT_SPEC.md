@@ -198,7 +198,7 @@ The font is self-hosted with Astro's built-in Fonts API (Google provider, downlo
 - One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up, hover pan and the card edge light (D-15 v4), plus the interactive bits of the prototypes (category sort, gallery, spec-sheet filter). The prototype's line tabs became links to the three category pages (real URLs, no JS); only the sort needs the script, and without JS the cards keep the line order. Content is visible without JS (`html.js` gate).
 - Header (2026-11-11), in the header's own script next to the mobile menu: the sticky header of the inner pages slides away on scroll down and comes back on scroll up (8 px threshold; it stays while the mobile menu or the machines submenu is open, or while focus is inside it; no slide with `prefers-reduced-motion`; the Home overlay header is unchanged). The machines submenu is a `<details>` that works without JS; the script only closes it on Escape or an outside click.
 - Scroll-driven animations: put `animation-timeline` / `animation-range` in a separate rule with a different selector from the `animation` shorthand. Lightning CSS (Tailwind's minifier) otherwise folds them into one invalid shorthand and the browser drops the animation; it also rewrites `animation-range: entry exit` wrongly, so use `cover`. SVG paths cannot be view-timeline subjects: name the timeline on the `<svg>`.
-- Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
+- Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). Their posters live in `src/assets/images/general/` and are optimized at build; the hero poster is preloaded (Home LCP), and the band video has no `src` until it nears the viewport (`data-src`, motion script), so it is never downloaded with reduced motion or without JS (poster only). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
 
 **D-13 — Light and dark theme (2026-10-25).**
 Alternatives: light only (the approved prototypes); `dark:` classes on every component.
@@ -279,7 +279,7 @@ Goal: every page navigable in both languages.
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 **Closed 2026-11-11:** layout checked by the developer at 375/768/1440px.
 
-**Next step (start here in a new session):** Phase 4 Lighthouse (mobile) and axe audit, and fixes. Phase 3 is waiting for the client email.
+**Next step (start here in a new session):** Phase 5 (launch) once the client sends the pending data: form email, WhatsApp number, company data, Bana FTP access and DNS. Phase 3 is waiting for the client email.
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
@@ -297,10 +297,11 @@ Goal: leads reach the client's inbox.
 - [x] JSON-LD: Organization on the Home (only confirmed company fields), Product per model (no price, so not eligible for Google product rich results), BreadcrumbList from `Breadcrumbs`
 - [x] Sitemap (`@astrojs/sitemap`, both languages with alternates) + generated robots.txt (Disallow until launch)
 - [x] `.htaccess` for Bana Hosting (D-17)
-- [ ] Lighthouse audit (mobile) and fixes; axe accessibility check
+- [x] Lighthouse audit (mobile) and fixes; axe accessibility check (2026-11-11, local build). Lighthouse mobile: Home 97 / 100 / 100, category 100 / 100 / 100, model 99 / 100 / 100 (performance / accessibility / best practices); SEO 100 with `indexable = true` (69 while the preview keeps `noindex`). axe (WCAG 2.2 AA + best practices, 12 pages × light/dark): no violations after wrapping the floating WhatsApp button in an `<aside>` landmark. Fixes: Home video posters optimized at build (WebP) and the hero poster preloaded as LCP, drone video loads only near the viewport, first gallery photo with `fetchpriority=high`. Re-run on the production host before launch (compression and cache come from `.htaccess`)
 - [x] OG images: the page's own photo cropped to 1200×630 at build (model main photo, first model of the line, first accessory, about factory photo; jobsite photo by default). No text overlay, to avoid a new dependency
 
 **Done when:** Lighthouse ≥ 95 on Home, a category and a model page; no axe errors; sitemap includes both languages.
+**Closed 2026-11-11** (local audit; re-check on Bana before launch).
 
 ### Phase 5 — Launch & handoff
 - [ ] Client review round (max. 2 rounds included in budget [confirm with client])

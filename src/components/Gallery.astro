@@ -40,6 +40,7 @@ const photoLabel = (n: number) => fill(t('model.photo'), { n, total });
         widths={[720, 1080, 1440]}
         sizes="(max-width: 1023px) 100vw, 58vw"
         loading={i === 0 ? 'eager' : 'lazy'}
+        fetchpriority={i === 0 ? 'high' : undefined}
         class="absolute inset-0 size-full object-cover"
         hidden={i !== 0}
         data-photo
