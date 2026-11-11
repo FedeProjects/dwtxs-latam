@@ -194,6 +194,7 @@ The font is self-hosted with Astro's built-in Fonts API (Google provider, downlo
 
 **D-12 — Client JS and video exceptions (2026-10-25).**
 - One small vanilla script (~40 lines, no library) for reveal-on-enter, masked words, count-up, hover pan and the card edge light (D-15 v4), plus the interactive bits of the prototypes (category sort, gallery, spec-sheet filter). The prototype's line tabs became links to the three category pages (real URLs, no JS); only the sort needs the script, and without JS the cards keep the line order. Content is visible without JS (`html.js` gate).
+- Header (2026-11-11), in the header's own script next to the mobile menu: the sticky header of the inner pages slides away on scroll down and comes back on scroll up (8 px threshold; it stays while the mobile menu or the machines submenu is open, or while focus is inside it; no slide with `prefers-reduced-motion`; the Home overlay header is unchanged). The machines submenu is a `<details>` that works without JS; the script only closes it on Escape or an outside click.
 - Scroll-driven animations: put `animation-timeline` / `animation-range` in a separate rule with a different selector from the `animation` shorthand. Lightning CSS (Tailwind's minifier) otherwise folds them into one invalid shorthand and the browser drops the animation; it also rewrites `animation-range: entry exit` wrongly, so use `cover`. SVG paths cannot be view-timeline subjects: name the timeline on the `<svg>`.
 - Two AI-generated ambient videos in `public/video/` (Home hero `rig.mp4`, trenchless band `drone.mp4`; ping-pong loops, muted, ~2 MB each). The hero clip shows a garbled brand ("DWTKS DDW-7540 AT"): never caption them as real jobs or machines; the client must approve them, and the hero clip should be regenerated without text before launch [TBD].
 
@@ -256,13 +257,13 @@ Goal: every page navigable in both languages.
 - [x] About page (company data shows "[a confirmar]" until the client sends it)
 - [x] Contact page (form UI only). Contact channels come from `src/site.ts` (`ContactDetails`, also used on the Home and in the footer) and show "[a confirmar]" while empty
 - [x] 404 page: one bilingual page (pt and es blocks), because static hosts like Vercel serve a single `404.html` for every missing path
-- [ ] Header at 768px: the one-row layout (logo, links, language, theme) does not fit and wraps. Move the mobile-menu breakpoint from `md` to `lg`
-- [ ] Header hides on scroll down and shows on scroll up (small addition to `motion.ts` + CSS transform). Keep it visible while the mobile menu is open or focus is inside it; small threshold against jitter; no slide with `prefers-reduced-motion`; Home overlay header unchanged over the hero. Add it to D-12 when done
-- [ ] Header "Máquinas" link goes to `/#maquinas` on the Home (there is no `/maquinas` page in §6.2). Recommended: a submenu with the three lines linking to the category pages (no new route)
+- [x] Header at 768px: the mobile menu now runs up to `lg` (1024px), so tablets get the toggle instead of a wrapped row
+- [x] Header hides on scroll down and shows on scroll up (inner pages; D-12)
+- [x] Header "Máquinas" is a submenu (`<details>`, works without JS) with the three lines and their model count; no `/maquinas` index page
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** the three **header follow-ups** above, then the layout check at 375/768/1440px of every page. Work goes on a feature branch from `main` (`feat/phase-2-404` holds the 404, stacked on `feat/phase-2-contact` and `feat/phase-2-about`); one PR to `main` per branch.
+**Next step (start here in a new session):** the layout check at 375/768/1440px of every page in both themes, then close Phase 2. Work goes on a feature branch from `main` (`feat/phase-2-header` holds the header follow-ups); one PR to `main` per branch.
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form

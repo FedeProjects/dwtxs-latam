@@ -1,6 +1,15 @@
 ---
+import { getCollection } from 'astro:content';
+import { CATEGORIES } from '../content/specs';
 import type { Lang } from '../i18n/ui';
-import { categoryPath, homePath, pagePath, useTranslations } from '../i18n/utils';
+import {
+  categoryPath,
+  fill,
+  homePath,
+  pagePath,
+  useCatalogLabels,
+  useTranslations,
+} from '../i18n/utils';
 import LanguageSwitcher from './LanguageSwitcher.astro';
 import Logo from './Logo.astro';
 import ThemeToggle from './ThemeToggle.astro';
@@ -14,13 +23,25 @@ interface Props {
 
 const { lang, alternates, overlay = false } = Astro.props;
 const t = useTranslations(lang);
-const path = Astro.url.pathname;
+const { categories } = useCatalogLabels(lang);
+// With build.format 'file' (D-10) the build sees '/acessorios.html': compare without the extension.
+const path = Astro.url.pathname.replace(/\.html$/, '');
 // Category and model pages live under the machines segment: mark "Machines" as the current section.
 const machinesPrefix = categoryPath(lang, 'conventional').replace(/\/[^/]+$/, '');
 const inMachines = path.startsWith(`${machinesPrefix}/`);
 
+// "Machines" opens a submenu with the three lines (no /maquinas index page in PROJECT_SPEC §6.2).
+const models = await getCollection('models');
+const lines = CATEGORIES.map((c) => ({
+  href: categoryPath(lang, c),
+  label: categories[c],
+  count: fill(t('category.count'), { count: models.filter((m) => m.data.category === c).length }),
+}));
+
+const linkClass =
+  'hover:decoration-current aria-[current=page]:decoration-red aria-[current=location]:decoration-red underline decoration-transparent decoration-2 underline-offset-[6px] transition-[text-decoration-color,text-underline-offset] duration-300 hover:underline-offset-[3px]';
+
 const links = [
-  { href: `${homePath(lang)}#maquinas`, label: t('nav.machines') },
   { href: pagePath(lang, 'accessories'), label: t('nav.accessories') },
   { href: pagePath(lang, 'about'), label: t('nav.about') },
   { href: pagePath(lang, 'contact'), label: t('nav.contact') },
@@ -32,7 +53,7 @@ const links = [
     'gut z-20',
     overlay
       ? 'text-on-media absolute inset-x-0 top-0'
-      : 'bg-chrome text-on-chrome sticky top-0 border-b border-on-chrome/10',
+      : 'header-autohide bg-chrome text-on-chrome sticky top-0 border-b border-on-chrome/10',
   ]}
 >
   <div class="brand-rule absolute inset-x-0 top-0 h-1" aria-hidden="true"></div>
@@ -44,27 +65,54 @@ const links = [
     <nav
       id="site-nav"
       aria-label={t('nav.label')}
-      class="flex flex-wrap gap-x-5.5 gap-y-1 font-medium max-md:order-3 max-md:w-full max-md:pb-2.5 md:ml-auto [.js_&]:max-md:hidden [.js_&]:max-md:flex-col [.js_&]:max-md:gap-3 [.js_&]:max-md:py-4 [.js_&]:max-md:text-xl [.js_&]:max-md:data-open:flex"
+      class="flex flex-wrap items-center gap-x-5.5 gap-y-1 font-medium max-lg:order-3 max-lg:w-full max-lg:pb-2.5 lg:ml-auto [.js_&]:max-lg:hidden [.js_&]:max-lg:flex-col [.js_&]:max-lg:items-start [.js_&]:max-lg:gap-3 [.js_&]:max-lg:py-4 [.js_&]:max-lg:text-xl [.js_&]:max-lg:data-open:flex"
       data-intro={overlay ? '' : undefined}
     >
-      {links.map(({ href, label }) => (
-        <a
-          href={href}
-          aria-current={
-            href === path
-              ? 'page'
-              : inMachines && label === t('nav.machines')
-                ? 'location'
-                : undefined
-          }
-          class="hover:decoration-current aria-[current=page]:decoration-red aria-[current=location]:decoration-red underline decoration-transparent decoration-2 underline-offset-[6px] transition-[text-decoration-color,text-underline-offset] duration-300 hover:underline-offset-[3px]"
+      <details class="relative" data-submenu>
+        <summary
+          aria-current={inMachines ? 'location' : undefined}
+          class:list={[
+            linkClass,
+            'flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden',
+          ]}
         >
+          {t('nav.machines')}
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            class="submenu-chevron size-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M6 9l6 6 6-6"></path>
+          </svg>
+        </summary>
+        <ul class="grid gap-1 max-lg:mt-2 max-lg:pl-4 lg:bg-chrome lg:text-on-chrome lg:absolute lg:top-full lg:left-[-12px] lg:z-30 lg:mt-3 lg:w-64 lg:rounded-2xl lg:p-2 lg:shadow-xl">
+          {lines.map(({ href, label, count }) => (
+            <li>
+              <a
+                href={href}
+                aria-current={href === path ? 'page' : undefined}
+                class="aria-[current=page]:decoration-red flex items-baseline justify-between gap-4 rounded-xl px-3 py-2 underline decoration-transparent decoration-2 underline-offset-[6px] transition-colors lg:hover:bg-on-chrome/10"
+              >
+                <span>{label}</span>
+                <span class="text-sm opacity-75">{count}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+      {links.map(({ href, label }) => (
+        <a href={href} aria-current={href === path ? 'page' : undefined} class={linkClass}>
           {label}
         </a>
       ))}
     </nav>
 
-    <div class="max-md:ml-auto" data-intro={overlay ? '' : undefined}>
+    <div class="max-lg:ml-auto" data-intro={overlay ? '' : undefined}>
       <LanguageSwitcher lang={lang} alternates={alternates} />
     </div>
 
@@ -72,7 +120,7 @@ const links = [
 
     <button
       type="button"
-      class="hidden size-10 place-items-center rounded-full ring-2 ring-current md:hidden! [.js_&]:grid"
+      class="hidden size-10 place-items-center rounded-full ring-2 ring-current lg:hidden! [.js_&]:grid"
       aria-label={t('nav.menu')}
       aria-expanded="false"
       aria-controls="site-nav"
@@ -102,4 +150,44 @@ const links = [
     toggle.setAttribute('aria-expanded', String(open));
     nav?.toggleAttribute('data-open', open);
   });
+
+  // Machines submenu (<details>, works without JS): close it with Escape or a click outside.
+  const submenus = document.querySelectorAll<HTMLDetailsElement>('[data-submenu]');
+  document.addEventListener('click', (e) => {
+    submenus.forEach((d) => {
+      if (!d.contains(e.target as Node)) d.open = false;
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    submenus.forEach((d) => {
+      if (!d.open) return;
+      d.open = false;
+      d.querySelector('summary')?.focus();
+    });
+  });
+
+  // Sticky header (inner pages): slides away on scroll down, comes back on scroll up (D-12).
+  // It stays while the mobile menu or the submenu is open, or while focus is inside it.
+  const header = document.querySelector<HTMLElement>('.header-autohide');
+  if (header) {
+    let lastY = scrollY;
+    addEventListener(
+      'scroll',
+      () => {
+        const y = scrollY;
+        const delta = y - lastY;
+        if (Math.abs(delta) < 8) return;
+        lastY = y;
+        const keep =
+          y < header.offsetHeight ||
+          toggle?.getAttribute('aria-expanded') === 'true' ||
+          header.contains(document.activeElement) ||
+          header.querySelector('details[open]') !== null;
+        header.toggleAttribute('data-hidden', delta > 0 && !keep);
+      },
+      { passive: true },
+    );
+    header.addEventListener('focusin', () => header.removeAttribute('data-hidden'));
+  }
 </script>
