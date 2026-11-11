@@ -255,19 +255,19 @@ Goal: every page navigable in both languages.
 - [x] Accessories page (highlights only until the manufacturer sends technical data)
 - [x] About page (company data shows "[a confirmar]" until the client sends it)
 - [x] Contact page (form UI only). Contact channels come from `src/site.ts` (`ContactDetails`, also used on the Home and in the footer) and show "[a confirmar]" while empty
-- [ ] 404 page in both languages
+- [x] 404 page: one bilingual page (pt and es blocks), because static hosts like Vercel serve a single `404.html` for every missing path
 - [ ] Header at 768px: the one-row layout (logo, links, language, theme) does not fit and wraps. Move the mobile-menu breakpoint from `md` to `lg`
 - [ ] Header hides on scroll down and shows on scroll up (small addition to `motion.ts` + CSS transform). Keep it visible while the mobile menu is open or focus is inside it; small threshold against jitter; no slide with `prefers-reduced-motion`; Home overlay header unchanged over the hero. Add it to D-12 when done
 - [ ] Header "Máquinas" link goes to `/#maquinas` on the Home (there is no `/maquinas` page in §6.2). Recommended: a submenu with the three lines linking to the category pages (no new route)
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
-**Next step (start here in a new session):** build the **404** in both languages (same pattern as the other pages), then the three header follow-ups above. Work goes on a feature branch from `main` (`feat/phase-2-contact` holds the Contact page, stacked on `feat/phase-2-about`); one PR to `main` per branch.
+**Next step (start here in a new session):** the three **header follow-ups** above, then the layout check at 375/768/1440px of every page. Work goes on a feature branch from `main` (`feat/phase-2-404` holds the 404, stacked on `feat/phase-2-contact` and `feat/phase-2-about`); one PR to `main` per branch.
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
 Goal: leads reach the client's inbox.
-- [ ] Choose provider (Web3Forms vs Formspree) after checking current limits [verify]. If the client needs leads in **Pipedrive** (see §10): first try the provider's webhook into Pipedrive; only if that is not enough, one on-demand Astro endpoint (`prerender = false` + Vercel adapter, token in an env var, email fallback), recorded as a new decision that updates D-04/D-05. Islands do not help: they run in the browser and would expose the API token
+- [ ] Choose provider (Web3Forms vs Formspree) after checking current limits [verify]. Leads go by email only: the client confirmed (2026-11-11) that the Pipedrive CRM used on tradermacusa.com is not required
 - [ ] Wire `ContactForm`: client validation, honeypot, Turnstile, success/error states in both languages
 - [ ] Prefill `model` from model pages
 - [ ] Test end to end with the client email
@@ -304,7 +304,6 @@ Goal: leads reach the client's inbox.
 ## 10. Open questions
 
 - [TBD] Destination email for the form.
-- [TBD] Does the client need form leads in Pipedrive (their CRM for tradermacusa.com) or is email enough? If Pipedrive: plan/add-ons, API access, which data the lead needs, and whether it goes to the Trader MAC USA pipeline or a separate LATAM one. The developer believes they do not use Zapier or Make.
 - [TBD] WhatsApp business number (with country code) and default prefilled message.
 - [TBD] DW Máquinas legal data: name, CNPJ (if shown), address, phone, email (`company` in `src/site.ts`).
 - [TBD] Does the client want the About page to tell the Trader MAC and DWTXS stories? Each one is a separate section file and can be dropped.

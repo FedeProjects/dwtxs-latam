@@ -175,6 +175,11 @@ const uiPt = {
   'about.photo.stand': 'Estande da DWTXS com perfuratriz em uma feira',
   'about.cta.title': 'Vamos falar da sua obra',
   'about.cta.lead': 'Conte o que precisa perfurar. Indicamos a máquina e o suporte certos.',
+  'notFound.title': 'Página não encontrada',
+  'notFound.text':
+    'O endereço pode ter mudado ou não existe. Veja as máquinas ou volte para o início.',
+  'notFound.home': 'Ir para o início',
+  'notFound.machines': 'Ver máquinas',
   'form.accessory': 'Acessório: {model}',
   'wa.messageAccessory': 'Olá! Gostaria de informações sobre o {name} DWTXS.',
   'accessories.title': 'Acessórios para perfuração direcional',
@@ -341,6 +346,11 @@ const uiEs: Record<UiKey, string> = {
   'about.cta.title': 'Hablemos de su obra',
   'about.cta.lead':
     'Cuéntenos qué necesita perforar. Le indicamos la máquina y el soporte adecuados.',
+  'notFound.title': 'Página no encontrada',
+  'notFound.text':
+    'La dirección puede haber cambiado o no existe. Vea las máquinas o vuelva al inicio.',
+  'notFound.home': 'Ir al inicio',
+  'notFound.machines': 'Ver máquinas',
   'form.accessory': 'Accesorio: {model}',
   'wa.messageAccessory': '¡Hola! Quisiera información sobre el {name} DWTXS.',
   'accessories.title': 'Accesorios para perforación direccional',
