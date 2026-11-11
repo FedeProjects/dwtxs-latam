@@ -1,0 +1,58 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { company, whatsappNumber, whatsappUrl } from '../site';
+
+interface Props {
+  lang: Lang;
+}
+
+// Contact channels from src/site.ts; each one shows "to be confirmed" until the client sends it.
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const items = [
+  {
+    label: t('contact.whatsapp'),
+    value: whatsappNumber && `+${whatsappNumber}`,
+    href: whatsappNumber && whatsappUrl(t('wa.message')),
+    external: true,
+  },
+  {
+    label: t('contact.email'),
+    value: company.email,
+    href: company.email && `mailto:${company.email}`,
+  },
+  {
+    label: t('contact.phone'),
+    value: company.phone,
+    href: company.phone && `tel:${company.phone.replace(/[^\d+]/g, '')}`,
+  },
+  { label: t('contact.address'), value: company.address },
+];
+---
+
+<dl class="grid gap-3.5">
+  {items.map(({ label, value, href, external }) => (
+    <div>
+      <dt class="text-sm">{label}</dt>
+      <dd class="mt-0.5 font-bold">
+        {value ? (
+          href ? (
+            <a
+              href={href}
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener' : undefined}
+            >
+              {value}
+            </a>
+          ) : (
+            value
+          )
+        ) : (
+          t('common.tbd')
+        )}
+      </dd>
+    </div>
+  ))}
+</dl>

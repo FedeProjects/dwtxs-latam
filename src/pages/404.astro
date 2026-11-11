@@ -1,0 +1,52 @@
+---
+import Accent from '../components/Accent.astro';
+import { locales, type Lang } from '../i18n/ui';
+import { categoryPath, homePath, useTranslations } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Static hosts serve one 404.html for every missing path, whatever the language prefix,
+// so this page speaks both languages instead of guessing.
+const langs: Lang[] = ['pt', 'es'];
+const t = useTranslations('pt');
+---
+
+<BaseLayout
+  lang="pt"
+  title={`404 · ${t('site.name')}`}
+  description={t('notFound.text')}
+  alternates={{ pt: homePath('pt'), es: homePath('es') }}
+>
+  <div class="gut">
+    <div class="mx-auto max-w-330 pt-[clamp(40px,6vw,96px)] pb-[clamp(72px,9vw,140px)]">
+      <h1
+        class="text-blue-ink text-[clamp(120px,22vw,300px)] leading-[0.85] font-black tracking-[-0.05em]"
+        data-split
+      >
+        404
+      </h1>
+      <div class="border-asphalt mt-10 grid gap-x-16 gap-y-12 border-t-2 pt-10 md:grid-cols-2">
+        {langs.map((lang, i) => {
+          const tl = useTranslations(lang);
+          return (
+            <section lang={locales[lang]} aria-labelledby={`h-404-${lang}`}>
+              <h2 class="h2" id={`h-404-${lang}`} data-split>
+                <Accent text={tl('notFound.title')} tone={i === 0 ? 'red' : 'blue'} />
+              </h2>
+              <p class="mt-5 max-w-[42ch]" data-rise>
+                {tl('notFound.text')}
+              </p>
+              <div class="mt-7 flex flex-wrap gap-2.5" data-rise style="--d:100ms">
+                <a class="btn" href={homePath(lang)}>
+                  {tl('notFound.home')}
+                </a>
+                <a class="btn btn-ghost" href={categoryPath(lang, 'conventional')}>
+                  {tl('notFound.machines')}
+                </a>
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,74 @@
+---
+import type { Lang } from '../i18n/ui';
+import { homePath, pagePath, useTranslations } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { whatsappUrl } from '../site';
+import Accent from './Accent.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import ContactDetails from './ContactDetails.astro';
+import ContactForm from './ContactForm.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const alternates = Object.fromEntries(
+  (['pt', 'es'] as const).map((l) => [l, pagePath(l, 'contact')]),
+) as Record<Lang, string>;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t('nav.contact')} · ${t('site.name')}`}
+  description={t('contact.description')}
+  alternates={alternates}
+>
+  <div class="gut">
+    <div class="mx-auto max-w-330">
+      <Breadcrumbs
+        lang={lang}
+        items={[{ label: t('nav.home'), href: homePath(lang) }, { label: t('nav.contact') }]}
+      />
+
+      <div class="grid items-end gap-x-16 gap-y-6 pt-10 pb-[clamp(40px,5vw,72px)] lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)]">
+        <h1 class="h1" data-split>
+          <Accent text={t('nav.contact')} tone="red" />
+        </h1>
+        <p class="max-w-[44ch]" data-rise>
+          {t('contact.lead')}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Channels and enquiry form on the red band, like the Home enquiry -->
+  <section class="band-red gut py-[clamp(72px,9vw,140px)]" aria-labelledby="h-enq">
+    <div class="mx-auto grid max-w-330 gap-x-16 gap-y-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <div>
+        <h2 class="h2" id="h-enq" data-split>
+          {t('home.enquiry.title')}
+        </h2>
+        <p class="mt-4.5 max-w-[36ch]" data-rise>
+          {t('home.enquiry.lead')}
+        </p>
+        <div class="mt-7" data-rise style="--d:100ms">
+          <ContactDetails lang={lang} />
+        </div>
+        <a
+          class="btn btn-ghost-light mt-8"
+          href={whatsappUrl(t('wa.message'))}
+          target="_blank"
+          rel="noopener"
+          data-rise
+          style="--d:150ms"
+        >
+          {t('category.cta.whatsapp')}
+        </a>
+      </div>
+      <ContactForm lang={lang} onBand />
+    </div>
+  </section>
+</BaseLayout>

@@ -272,6 +272,11 @@
     background: currentColor;
   }
 
+  /* Same prose on the light ground: blue markers */
+  .band-prose.on-ground li::before {
+    background: var(--color-blue);
+  }
+
   /* "Discover" link with a red bar that grows */
   .more {
     @apply inline-flex items-center gap-2 font-bold;

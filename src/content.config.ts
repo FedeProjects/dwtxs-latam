@@ -84,11 +84,11 @@ const accessories = defineCollection({
     }),
 });
 
-/** Long-form page texts, one Markdown file per page and language: about.pt.md, about.es.md… */
+/** Long-form page texts, one Markdown file per page (or page section) and language: about-dw.pt.md, all-terrain.es.md… */
 const pages = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/pages' }),
   schema: z.object({
-    page: z.enum(['about', 'all-terrain']),
+    page: z.enum(['about-dw', 'about-dwtxs', 'all-terrain']),
     lang: z.enum(['pt', 'es']),
     title: text,
     description: text,

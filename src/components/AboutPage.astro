@@ -1,0 +1,181 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import customersPhoto from '../assets/images/general/about-2.jpg';
+import fairPhoto from '../assets/images/general/about-3.jpg';
+import hallPhoto from '../assets/images/general/about-5.jpg';
+import standPhoto from '../assets/images/general/about-6.jpg';
+import factoryPhoto from '../assets/images/general/about-7.jpg';
+import type { Lang } from '../i18n/ui';
+import { homePath, pagePath, useTranslations } from '../i18n/utils';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company, whatsappUrl } from '../site';
+import Accent from './Accent.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// One Markdown file per section and language (D-08), so each section can be dropped on its own.
+const section = async (page: 'about-dw' | 'about-dwtxs') => {
+  const [entry] = await getCollection('pages', (p) => p.data.page === page && p.data.lang === lang);
+  return { title: entry.data.title, Content: (await render(entry)).Content };
+};
+const dw = await section('about-dw');
+const dwtxs = await section('about-dwtxs');
+
+const companyData = [
+  { label: t('about.data.legalName'), value: company.legalName },
+  { label: t('about.data.taxId'), value: company.taxId },
+  { label: t('about.data.address'), value: company.address },
+  { label: t('about.data.phone'), value: company.phone },
+  { label: t('about.data.email'), value: company.email },
+];
+
+const strip = [
+  { src: hallPhoto, alt: t('about.photo.hall') },
+  { src: fairPhoto, alt: t('about.photo.fair') },
+  { src: standPhoto, alt: t('about.photo.stand') },
+];
+
+const alternates = Object.fromEntries(
+  (['pt', 'es'] as const).map((l) => [l, pagePath(l, 'about')]),
+) as Record<Lang, string>;
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${t('nav.about')} · ${t('site.name')}`}
+  description={t('about.description')}
+  alternates={alternates}
+>
+  <div class="gut">
+    <div class="mx-auto max-w-330">
+      <Breadcrumbs
+        lang={lang}
+        items={[{ label: t('nav.home'), href: homePath(lang) }, { label: t('nav.about') }]}
+      />
+
+      <div class="grid items-end gap-x-16 gap-y-6 pt-10 pb-9 lg:grid-cols-[minmax(0,8fr)_minmax(0,4fr)]">
+        <h1 class="h1" data-split>
+          <Accent text={t('nav.about')} tone="red" />
+        </h1>
+        <p class="max-w-[44ch]" data-rise>
+          {t('about.description')}
+        </p>
+      </div>
+
+      <!-- DW Máquinas: distributor text, services and company data -->
+      <section
+        class="border-asphalt grid items-start gap-x-16 gap-y-10 border-t-2 pt-[clamp(40px,5vw,72px)] md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+        aria-labelledby="h-dw"
+      >
+        <div class="aspect-4/5" data-pan data-shutter>
+          <Image
+            src={customersPhoto}
+            alt={t('about.photo.customers')}
+            widths={[480, 720, 960]}
+            sizes="(max-width: 767px) 100vw, 40vw"
+            loading="eager"
+            class="size-full object-cover"
+          />
+        </div>
+        <div class="min-w-0">
+          <h2 class="h2" id="h-dw" data-split>
+            <Accent text={dw.title} tone="blue" />
+          </h2>
+          <div class="band-prose on-ground mt-6" data-rise>
+            <dw.Content />
+          </div>
+
+          <h3 class="mt-12 text-[28px]" data-rise>
+            {t('about.data.title')}
+          </h3>
+          <dl class="border-blue mt-4 grid border-t-3 sm:grid-cols-2" data-rise style="--d:100ms">
+            {companyData.map(({ label, value }, i) => (
+              <div class:list={['border-line border-b py-4', i % 2 === 0 && 'sm:pr-4']}>
+                <dt class="text-muted text-sm">{label}</dt>
+                <dd class="mt-1 font-medium">{value || t('common.tbd')}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- DWTXS: the manufacturer, on the blue band -->
+  <section
+    class="band-blue gut mt-[clamp(72px,9vw,140px)] py-[clamp(72px,9vw,140px)]"
+    aria-labelledby="h-dwtxs"
+  >
+    <div class="mx-auto max-w-330">
+      <div class="grid items-center gap-x-16 gap-y-10 md:grid-cols-2">
+        <div>
+          <h2 class="h2" id="h-dwtxs" data-split>
+            {dwtxs.title}
+          </h2>
+          <div class="band-prose mt-6" data-rise>
+            <dwtxs.Content />
+          </div>
+        </div>
+        <div class="aspect-4/3" data-pan data-shutter>
+          <Image
+            src={factoryPhoto}
+            alt={t('about.photo.factory')}
+            widths={[640, 960, 1300]}
+            sizes="(max-width: 767px) 100vw, 50vw"
+            class="size-full object-cover"
+          />
+        </div>
+      </div>
+      <ul
+        class="mt-[clamp(40px,5vw,72px)] grid gap-6 sm:grid-cols-3"
+        aria-label={t('about.photos')}
+      >
+        {strip.map(({ src, alt }, i) => (
+          <li class="aspect-square" data-pan data-shutter style={`--d:${i * 120}ms`}>
+            <Image
+              src={src}
+              alt={alt}
+              widths={[400, 640, 880]}
+              sizes="(max-width: 639px) 100vw, 33vw"
+              class="size-full object-cover"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Closing call to action on the red band -->
+  <section class="band-red gut py-[clamp(72px,9vw,140px)]" aria-labelledby="h-cta">
+    <div class="mx-auto flex max-w-330 flex-wrap items-end justify-between gap-x-12 gap-y-8">
+      <div>
+        <h2 class="h2 max-w-[13ch]" id="h-cta" data-split>
+          {t('about.cta.title')}
+        </h2>
+        <p class="mt-4.5 max-w-[40ch]" data-rise>
+          {t('about.cta.lead')}
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2.5" data-rise style="--d:150ms">
+        <a class="btn btn-ink" href={pagePath(lang, 'contact')}>
+          {t('category.cta.contact')}
+        </a>
+        <a
+          class="btn btn-ghost-light"
+          href={whatsappUrl(t('wa.message'))}
+          target="_blank"
+          rel="noopener"
+        >
+          {t('category.cta.whatsapp')}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
