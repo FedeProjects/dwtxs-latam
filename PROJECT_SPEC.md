@@ -254,6 +254,9 @@ Goal: every page navigable in both languages.
 - [x] Accessories page (highlights only until the manufacturer sends technical data)
 - [ ] About, Contact pages (form UI only)
 - [ ] 404 page in both languages
+- [ ] Header at 768px: the one-row layout (logo, links, language, theme) does not fit and wraps. Move the mobile-menu breakpoint from `md` to `lg`
+- [ ] Header hides on scroll down and shows on scroll up (small addition to `motion.ts` + CSS transform). Keep it visible while the mobile menu is open or focus is inside it; small threshold against jitter; no slide with `prefers-reduced-motion`; Home overlay header unchanged over the hero. Add it to D-12 when done
+- [ ] Header "Máquinas" link goes to `/#maquinas` on the Home (there is no `/maquinas` page in §6.2). Recommended: a submenu with the three lines linking to the category pages (no new route)
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
 
