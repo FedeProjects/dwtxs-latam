@@ -72,7 +72,7 @@ Source: client document "Web DWTXS LATAM".
 | Content | Astro Content Collections (YAML/MD in repo, Zod schemas) |
 | i18n | Astro built-in i18n routing + typed UI dictionaries |
 | Images | `astro:assets` (`<Image>` / `<Picture>`) |
-| Form | Third-party form endpoint (Web3Forms or Formspree) [decide in Phase 3] + honeypot + Cloudflare Turnstile |
+| Form | Web3Forms (free plan) + honeypot; hCaptcha only if spam appears (D-16) |
 | SEO | `@astrojs/sitemap`, custom `<SEO>` component |
 | Package manager | pnpm |
 | Runtime | Node LTS inside the Dev Container |
@@ -216,6 +216,11 @@ The client sent the DWTXS logo (no vector) and seven brand colours without roles
 - Brand motion (2026-10-30, kept from the v4 "Perfuração" trial): a fixed split rule fills with scroll progress (red, then blue); line panels take their machines' colour on hover (red, Maxi-Rig blue); model cards get a red-to-blue edge light that follows the pointer; the mud system cards draw the red|blue split rule along their bottom edge on hover or keyboard focus, and their "learn more" link grows a line like the line panels (a mud-tank fill was tried and dropped as too loud). Dropped after review: the model code ticker, the bore profile over the drone video and that band's zoom drift (the band stays a plain video, as in v2a). Tag `palette-dwtxs-v4` keeps the full trial.
 Rollback: git tags `palette-dwtxs-v4` (full v4 trial), `palette-dwtxs-v2a` (bands + title accents, no motion extras), `palette-dwtxs-v3` (charcoal lines band, tinted hero), `palette-dwtxs-v2` (bands, no accents), `palette-dwtxs-v1` (accents only), `palette-acero` and `palette-obra`.
 
+**D-16 — Form provider: Web3Forms, honeypot first (2026-11-11).**
+Alternatives: Formspree (free plan 50 submissions/month, reCAPTCHA, custom honeypot only on Business); Cloudflare Turnstile as in the original stack (on Web3Forms only in the paid plan); hCaptcha from day one.
+Chosen: Web3Forms free plan (250 submissions/month per third-party sources [verify on web3forms.com]) with its `botcheck` honeypot and no captcha, so no third-party script hurts Lighthouse. Add hCaptcha (free on Web3Forms) only if spam appears. Leads go by email only (no CRM; Pipedrive not required).
+The access key is `PUBLIC_WEB3FORMS_KEY` (`.env.example`): public by design, it only sends to the inbox it was created for, so swapping the destination means creating a new key and changing the env var. `ContactForm` posts straight to the endpoint without JS; with JS it validates in the page language (browser messages follow the browser language) and shows the result inline. Without a key the form shows a notice pointing to WhatsApp.
+
 ## 8. Phases
 
 Each task should fit one Claude Code session.
@@ -262,18 +267,20 @@ Goal: every page navigable in both languages.
 - [x] Header "Máquinas" is a submenu (`<details>`, works without JS) with the three lines and their model count; no `/maquinas` index page
 
 **Done when:** all routes in §6.2 render in pt and es, language switch keeps the equivalent page, layout checked at 375/768/1440px.
+**Closed 2026-11-11:** layout checked by the developer at 375/768/1440px.
 
-**Next step (start here in a new session):** the layout check at 375/768/1440px of every page in both themes, then close Phase 2. Work goes on a feature branch from `main` (`feat/phase-2-header` holds the header follow-ups); one PR to `main` per branch.
+**Next step (start here in a new session):** Phase 3 end-to-end test (see below).
 Open content checks: DDW800/240 engine power is in hp (1860 hp) while the rest is in kW (kept as the manufacturer publishes it); the DDW35/15AT main photo seems to show FARCO branding (D-09).
 
 ### Phase 3 — Contact form
 Goal: leads reach the client's inbox.
-- [ ] Choose provider (Web3Forms vs Formspree) after checking current limits [verify]. Leads go by email only: the client confirmed (2026-11-11) that the Pipedrive CRM used on tradermacusa.com is not required
-- [ ] Wire `ContactForm`: client validation, honeypot, Turnstile, success/error states in both languages
-- [ ] Prefill `model` from model pages
-- [ ] Test end to end with the client email
+- [x] Choose provider: Web3Forms (D-16). Leads go by email only: the client confirmed (2026-11-11) that the Pipedrive CRM used on tradermacusa.com is not required
+- [x] Wire `ContactForm`: validation in the page language, honeypot, sending/success/error states in both languages; posts straight to the endpoint without JS
+- [x] Prefill `model` from model and accessory pages (hidden field + email subject)
+- [ ] Set `PUBLIC_WEB3FORMS_KEY` in Vercel (Production and Preview) with a key for the developer's inbox; test from pt, es and a model page
+- [ ] Replace the key with one created for the client email [TBD] and test end to end
 
-**Done when:** a test submission from pt and es arrives at the client email with all fields, and spam protection is active.
+**Done when:** a test submission from pt and es arrives at the client email with all fields, and the honeypot is active.
 
 ### Phase 4 — SEO, performance, accessibility
 - [ ] `SEO` component: title, description, canonical, hreflang, OG
