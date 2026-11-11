@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
+import JsonLd from './JsonLd.astro';
 
 interface Props {
   lang: Lang;
@@ -10,7 +11,21 @@ interface Props {
 
 const { lang, items } = Astro.props;
 const t = useTranslations(lang);
+
+// Same trail as schema.org BreadcrumbList; the current page uses its own URL (without .html, D-10).
+const here = Astro.url.pathname.replace(/\.html$/, '');
+const trail = {
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map(({ label, href }, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: label,
+    item: new URL(href ?? here, Astro.site).href,
+  })),
+};
 ---
+
+<JsonLd data={trail} />
 
 <nav aria-label={t('crumbs.label')} class="text-muted pt-6 text-[15px]">
   <ol class="flex flex-wrap gap-1.5">

@@ -1,0 +1,12 @@
+---
+interface Props {
+  /** schema.org object, serialized as JSON-LD. */
+  data: Record<string, unknown>;
+}
+
+const { data } = Astro.props;
+// Escape '<' so no text can close the script element.
+const json = JSON.stringify({ '@context': 'https://schema.org', ...data }).replace(/</g, '\\u003c');
+---
+
+<script type="application/ld+json" set:html={json} />
