@@ -272,6 +272,19 @@
     background: currentColor;
   }
 
+  /* Sticky header slides away on scroll down (Header.astro script, D-12) */
+  @media (prefers-reduced-motion: no-preference) {
+    .header-autohide {
+      transition: transform 300ms var(--ease-out);
+    }
+  }
+  .header-autohide[data-hidden] {
+    transform: translateY(-100%);
+  }
+  [data-submenu][open] .submenu-chevron {
+    transform: rotate(180deg);
+  }
+
   /* Same prose on the light ground: blue markers */
   .band-prose.on-ground li::before {
     background: var(--color-blue);
